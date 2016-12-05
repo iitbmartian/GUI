@@ -4,7 +4,7 @@
   <!-- Included URDF/XACRO Files -->
   <xacro:include filename="$(find husky_description)/urdf/decorations.urdf.xacro" />
   <xacro:include filename="$(find husky_description)/urdf/wheel.urdf.xacro" />
-  <xacro:include filename="$(find ur_description)/urdf/ur5.urdf.xacro" />
+  <!--<xacro:include filename="$(find ur_description)/urdf/ur5.urdf.xacro" />-->
 
   <property name="M_PI" value="3.14159"/>
 
@@ -124,16 +124,17 @@
       <xacro:property name="reflect" value="-1" />
 
       <!-- Spawn arm -->
-      <xacro:ur5_robot prefix="ur5_arm_" joint_limited="true"/>
+<!--    <xacro:ur5_robot prefix="ur5_arm_" joint_limited="true"/> -->
 
       <!-- Join arm -->
-      <joint name="ur5_arm_base" type="fixed">
+      
+<!--      <joint name="ur5_arm_base" type="fixed">
         <parent link="top_plate_link" />
         <child link="ur5_arm_base_link" />
         <origin xyz="0.3058 0 0.0065" rpy="0.0 0.0 -1.57" />
       </joint>
 
-
+-->
 
 
 </robot>
