@@ -2,8 +2,8 @@
 <robot name="mars_rover_iitb" xmlns:xacro="http://ros.org/wiki/xacro">
 
   <!-- Included URDF/XACRO Files -->
-  <!-- <xacro:include filename="$(find msi_2k16_17_urdf)/urdf/decorations.urdf.xacro" /> -->
-  <xacro:include filename="$(find msi_2k16_17_urdf)/urdf/wheel.urdf.xacro" />
+  <!-- <xacro:include filename="$(find husky_description)/urdf/decorations.urdf.xacro" /> -->
+  <xacro:include filename="$(find husky_description)/urdf/wheel.urdf.xacro" />
   <!--<xacro:include filename="$(find ur_description)/urdf/ur5.urdf.xacro" />-->
 
   <property name="M_PI" value="3.14159"/>
@@ -18,13 +18,14 @@
 
   <property name="wheel_L" value="0.11" />
   <property name="wheel_R" value="0.17" />
+  <property name="wheel_length" value="0.11" />
+  <property name="wheel_radius" value="0.17" />
 
 
   <!-- Wheel Mounting Positions -->
-  <xacro:property name="wheelbase" value="0.54" />
-  <xacro:property name="track" value="0.375" />
+  <xacro:property name="wheelbase" value="1.08" />
+  <xacro:property name="track" value="0.75" />
   <xacro:property name="wheel_vertical_offset" value="${-base_z_size/4}" />
-
   
 
     <!-- Base link is the center of the robot's bottom plate -->
@@ -40,7 +41,7 @@
     <link name="base_footprint"/>
 
     <joint name="base_footprint_joint" type="fixed">
-      <origin xyz="0 0 ${wheel_vertical_offset}" rpy="0 0 0" />
+      <origin xyz="0 0 ${wheel_vertical_offset - wheel_R}" rpy="0 0 0" />
       <parent link="base_link" />
       <child link="base_footprint" />
     </joint>
@@ -72,39 +73,40 @@
     </gazebo>
 
     <!-- wheel macros -->
-
+    <xacro:property name="front_left_origin">
+   <origin xyz="${wheelbase/2} ${track/2} ${wheel_vertical_offset}" rpy="0 0 0" />
+  </xacro:property>
 <xacro:property name="front_right_origin">
- 	 <origin xyz="${wheelbase/2} ${-track/2} ${wheel_vertical_offset}" rpy="0 0 0" />
-	</xacro:property>
+   <origin xyz="${wheelbase/2} ${-track/2} ${wheel_vertical_offset}" rpy="0 0 0" />
+  </xacro:property>
 <xacro:property name="rear_left_origin">
- 	 <origin xyz="${-wheelbase/2} ${track/2} ${wheel_vertical_offset}" rpy="0 0 0" />
-	</xacro:property>
+   <origin xyz="${-wheelbase/2} ${track/2} ${wheel_vertical_offset}" rpy="0 0 0" />
+  </xacro:property>
 <xacro:property name="rear_right_origin">
- 	 <origin xyz="${-wheelbase/2} ${-track/2} ${wheel_vertical_offset}" rpy="0 0 0" />
-	</xacro:property>
+   <origin xyz="${-wheelbase/2} ${-track/2} ${wheel_vertical_offset}" rpy="0 0 0" />
+  </xacro:property>
 
+    <xacro:husky_wheel wheel_prefix="front_left"> 
+  <origin xyz="${wheelbase/2} ${track/2} ${wheel_vertical_offset}" rpy="0 0 0" />
+  </xacro:husky_wheel>
+    <xacro:husky_wheel wheel_prefix="front_right"> 
+<origin xyz="${wheelbase/2} ${-track/2} ${wheel_vertical_offset}" rpy="0 0 0" />
+</xacro:husky_wheel>
+    <xacro:husky_wheel wheel_prefix="rear_left" > 
+ <origin xyz="${-wheelbase/2} ${track/2} ${wheel_vertical_offset}" rpy="0 0 0" />
+</xacro:husky_wheel>
+    <xacro:husky_wheel wheel_prefix="rear_right"> 
+<origin xyz="${-wheelbase/2} ${-track/2} ${wheel_vertical_offset}" rpy="0 0 0" />
+</xacro:husky_wheel>
 
-<xacro:husky_wheel wheel_prefix="front_left"> 
-	<origin xyz="${wheelbase/2} ${track/2} ${wheel_vertical_offset}" rpy="0 0 0" />
-	</xacro:husky_wheel>
-<xacro:husky_wheel wheel_prefix="front_right"> 
-	<origin xyz="${wheelbase/2} ${-track/2} ${wheel_vertical_offset}" rpy="0 0 0" />
+   <xacro:husky_wheel wheel_prefix="center_left" > 
+ <origin xyz="0 ${track/2} ${wheel_vertical_offset}" rpy="0 0 0" />
 </xacro:husky_wheel>
-<xacro:husky_wheel wheel_prefix="rear_left" > 
-	<origin xyz="${-wheelbase/2} ${track/2} ${wheel_vertical_offset}" rpy="0 0 0" />
-</xacro:husky_wheel>
-<xacro:husky_wheel wheel_prefix="rear_right"> 
-	<origin xyz="${-wheelbase/2} ${-track/2} ${wheel_vertical_offset}" rpy="0 0 0" />
-</xacro:husky_wheel>
-
-<xacro:husky_wheel wheel_prefix="center_left" > 
-	<origin xyz="0 ${track/2} ${wheel_vertical_offset}" rpy="0 0 0" />
-</xacro:husky_wheel>
-<xacro:husky_wheel wheel_prefix="center_right"> 
-	<origin xyz="0 ${-track/2} ${wheel_vertical_offset}" rpy="0 0 0" />
+    <xacro:husky_wheel wheel_prefix="center_right"> 
+<origin xyz="0 ${-track/2} ${wheel_vertical_offset}" rpy="0 0 0" />
 </xacro:husky_wheel>
     <!-- Decorations MAcro --> 
-<xacro:husky_decorate />
+    <xacro:husky_decorate />
 
     
 
