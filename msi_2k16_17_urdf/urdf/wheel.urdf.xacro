@@ -35,13 +35,13 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
 			<visual>
 				<xacro:insert_block name="joint_pose"/>
 				<geometry>
-					<mesh filename="package://husky_description/meshes/wheel.dae" />
+					<mesh filename="package://msi_2k16_17_urdf/meshes/wheel.dae" />
 				</geometry>
 			</visual>
 			<collision>
 				<xacro:insert_block name="joint_pose"/>
 				<geometry>
-					<cylinder length="${wheel_length}" radius="${wheel_radius}" />
+					<cylinder length="${wheel_L}" radius="${wheel_R}" />
 				</geometry>
 			</collision>
 		</link>

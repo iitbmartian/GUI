@@ -8,6 +8,12 @@ Also, you will need to clone [Husky repository](https://github.com/husky/husky),
 For more info on the same, refer to :- </br>
 [Tutorials on URDF and Xacro: 1, 2, 4](http://wiki.ros.org/urdf/Tutorials) </br>
 
+_After any changes in directory structure or packages, run the following **without fail**:_  [current_dir: catkin_ws]
+```(bash)
+catkin_make
+source devel/setup.bash
+```
+
 ---
 ### ROS-URDF
 Joints can be of the following kinds:
@@ -24,3 +30,9 @@ _Note that all angle measurements are in **radians**._
 
 
 Defining inertia can get crucial for Gazebo modelling. The values are to be given as 3D inertia tensors, and a simple reference can be found [here](https://en.wikipedia.org/wiki/List_of_moments_of_inertia). Accurate data can be obtained from [SolidWorks](https://forum.solidworks.com/thread/59325) or [Inventor](http://forums.autodesk.com/t5/inventor-forum/calculate-moment-of-inertia/td-p/3027000).
+
+While running the tutorials **do not** download the `urdf_tutorials` package from GH. It is an in-built ROS package. Just download the `urdf` folder.
+
+---
+* Changed the symbolic links in the main xacro file `msi.xacro`. The changes in dimensions finally work!  
+* For changing the dimensions in the xacro file.
