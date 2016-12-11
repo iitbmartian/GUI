@@ -6,6 +6,10 @@
   <xacro:include filename="$(find husky_description)/urdf/wheel.urdf.xacro" />
   <!--<xacro:include filename="$(find ur_description)/urdf/ur5.urdf.xacro" />-->
 
+  <material name="chassis">
+    <color rgba="0.67 0.78 0.85 1" />
+  </material>
+
   <property name="M_PI" value="3.14159"/>
 
   <!-- Base Size -->
@@ -25,7 +29,7 @@
   <!-- Wheel Mounting Positions -->
   <xacro:property name="wheelbase" value="1.08" />
   <xacro:property name="track" value="0.75" />
-  <xacro:property name="wheel_vertical_offset" value="${-base_z_size/4}" />
+  <xacro:property name="wheel_vertical_offset" value="${-base_z_size/2}" />
   
 
     <!-- Base link is the center of the robot's bottom plate -->
@@ -34,6 +38,7 @@
       <geometry>
         <box size="${base_x_size} ${base_y_size} ${base_z_size}"/>
       </geometry>
+      <material name="chassis"/>
     </visual>
   </link>
 
