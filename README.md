@@ -45,7 +45,16 @@ Finally winding up the URDF business after a ton of issues. One thing: there's s
 ---  
 
 ### Gazebo
-Note that although the latest version `7.x` is supposedly the best(and GUI \_/\\\_), and runs on _ALL_ platforms, for linking with ROS, there are compatiblity and ROS Indigo needs to `ros_pkgs` from `gazebo2`. (ROS Kinetic is fine with this version). So if the latest version was downloaded from deb/tarball, purge it (might have to use the Software Centre for that) and run a simple, modest `sudo apt-get install gazebo2`.
+Note that although the latest version `7.x` is supposedly the best(and GUI \_/\\\_), and runs on _ALL_ platforms, for linking with ROS, there are compatiblity and ROS Indigo needs to `ros_pkgs` from `gazebo2`. (ROS Kinetic is fine with this version). So if the latest version was downloaded from deb/tarball, purge it (might have to use the Software Centre for that) and run a simple, modest:
+```
+sudo apt-get install gazebo2
+sudo apt-get install ros-indigo-gazebo-ros
+```
+
+ [_Important!_ ] The [gazebo_ros_control](http://gazebosim.org/tutorials?tut=ros_control) tutorial will explain how to use Rviz to monitor the state of your simulated robot by publishing `/joint_states` directly from Gazebo. **Would be requied!**
+
+ [_TBD Later_] We can actually add a desert-like terrain in the GUI at URC. Check out [DEM](http://gazebosim.org/tutorials/?tut=dem).
+
 
 ---
 
@@ -58,4 +67,3 @@ Note that although the latest version `7.x` is supposedly the best(and GUI \_/\\
 - [ ] Gazebo intro and tuts: Deadline : 14/12/16
 - [ ] Gazebo integration and basic movement: Deadline : 17/12/16
 - [ ] Full intergation of movement in GUI: Deadline : 20/12/16
->>>>>>> c017d994a0edc6d6f6839323d20e52b582423a94
