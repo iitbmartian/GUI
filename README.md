@@ -59,6 +59,7 @@ Okay, so Gazebo seems nice and has been set up as of date. The model has been lo
 ``` bash
 cd ~/catkin_ws/src
 git clone https://github.com/Agrim9/GUI_MSI_2016
+cd ../
 catkin_make
 source devel/setup.bash
 
