@@ -37,7 +37,11 @@ While running the tutorials **do not** download the `urdf_tutorials` package fro
 * Changed the symbolic links in the main xacro file `msi.xacro`. The changes in dimensions finally work!  
 * For changing the dimensions in the xacro file, you can change the relative positions etc of the `base_link` and `husky_wheel`, but not the actual dimensions of the components because they are apparently conveyed in the `.dae` file, and it's root URDF is not available. What's worse? XML parse failed and hence no retro-conversion.
 * Solution? Ditched the husky chassis and made a simple box instead. Could've done that for the wheels too, but they look cool and are pretty close to our real dimensions. _Box made to scale._
-* Using the copied wheel xacro somehow ruined everything and the wheels went crazy AF! (Just when you thought it was done.! Check commit 1d3b61bcccbe5419caa51e832377b4f45a5ad261 )
+* Using the copied wheel xacro somehow ruined everything and the wheels went crazy AF! (Just when you thought it was done.! Check commit 1d3b61bcccbe5419caa51e832377b4f45a5ad261 )  
 
-Finally winding up the URDF business after a ton of issues. One thing: there's something not right by using the copied wheel.urdf.xacro and hence using the original husky file. Also, some dimensions like `wheelbase` and `wheel_vertical_offset` seem to be creating discontinuities but chuck! Sorted for now! ^_^
----
+Finally winding up the URDF business after a ton of issues. One thing: there's something not right by using the copied wheel.urdf.xacro and hence using the original husky file. Also, some dimensions like `wheelbase` and `wheel_vertical_offset` seem to be creating discontinuities but chuck! Sorted for now! ^\_^
+
+---  
+
+### Gazebo
+Note that although the latest version `7.x` is supposedly the best(and GUI \_/\\\_), and runs on _ALL_ platforms, for linking with ROS, there are compatiblity and ROS Indigo needs to `ros_pkgs` from `gazebo2`. (ROS Kinetic is fine with this version). So if the latest version was downloaded from deb/tarball, purge it (might have to use the Software Centre for that) and run a simple, modest `sudo apt-get install gazebo2`.
