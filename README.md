@@ -57,12 +57,12 @@ sudo apt-get install ros-indigo-gazebo-ros
 
 Okay, so Gazebo seems nice and has been set up as of date. The model has been loaded in an empty world with nothing else in particular (tried, but then no enthu!). The repo has taken major changes and hence, I'd say it would be nice to clone this directly in your workspace (or add a remote etc.)
 ``` bash
-cd ~/catkin_ws
+cd ~/catkin_ws/src
 git clone https://github.com/Agrim9/GUI_MSI_2016
 catkin_make
 source devel/setup.bash
 
-roslaunch msi_2k16_17_gazebo msi.world
+roslaunch msi_2k16_17_gazebo msi.launch
 ```
 
 
