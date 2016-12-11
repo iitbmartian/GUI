@@ -9,7 +9,7 @@ For more info on the same, refer to :- </br>
 [Tutorials on URDF and Xacro: 1, 2, 4](http://wiki.ros.org/urdf/Tutorials) </br>
 
 _After any changes in directory structure or packages, run the following **without fail**:_  [current_dir: catkin_ws]
-```(bash)
+```bash
 catkin_make
 source devel/setup.bash
 ```
@@ -55,6 +55,16 @@ sudo apt-get install ros-indigo-gazebo-ros
 
  [_TBD Later_] We can actually add a desert-like terrain in the GUI at URC. Check out [DEM](http://gazebosim.org/tutorials/?tut=dem).
 
+Okay, so Gazebo seems nice and has been set up as of date. The model has been loaded in an empty world with nothing else in particular (tried, but then no enthu!). The repo has taken major changes and hence, I'd say it would be nice to clone this directly in your workspace (or add a remote etc.)
+``` bash
+cd ~/catkin_ws
+git clone https://github.com/Agrim9/GUI_MSI_2016
+catkin_make
+source devel/setup.bash
+
+roslaunch msi_2k16_17_gazebo msi.world
+```
+
 
 ---
 
@@ -64,6 +74,6 @@ sudo apt-get install ros-indigo-gazebo-ros
 - [x] Familiarisation with URDF and Gazebo
 - [x] URDF tutorials and Husky integration
 - [ ] Final URDF model(with arm): Deadline : 13/12/16
-- [ ] Gazebo intro and tuts: Deadline : 14/12/16
+- [x] Gazebo intro and tuts: Deadline : 14/12/16
 - [ ] Gazebo integration and basic movement: Deadline : 17/12/16
 - [ ] Full intergation of movement in GUI: Deadline : 20/12/16
