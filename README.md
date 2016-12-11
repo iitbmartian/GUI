@@ -41,3 +41,12 @@ While running the tutorials **do not** download the `urdf_tutorials` package fro
 
 Finally winding up the URDF business after a ton of issues. One thing: there's something not right by using the copied wheel.urdf.xacro and hence using the original husky file. Also, some dimensions like `wheelbase` and `wheel_vertical_offset` seem to be creating discontinuities but chuck! Sorted for now! ^_^
 ---
+
+
+## Deadlines
+- [x] Familiarisation with URDF and Gazebo
+- [x] URDF tutorials and Husky integration
+- [ ] Final URDF model(with arm): Deadline : 13/12/16
+- [ ] Gazebo intro and tuts: Deadline : 14/12/16
+- [ ] Gazebo integration and basic movement: Deadline : 17/12/16
+- [ ] Full intergation of movement in GUI: Deadline : 20/12/16
