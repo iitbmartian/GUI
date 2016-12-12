@@ -3,8 +3,8 @@
 
   <!-- Included URDF/XACRO Files -->
   <!-- <xacro:include filename="$(find husky_description)/urdf/decorations.urdf.xacro" /> -->
-  <xacro:include filename="$(find husky_description)/urdf/wheel.urdf.xacro" />
-  <xacro:include filename="$(find jaco_description)/urdf/gazebo/jaco.urdf" />
+  <xacro:include filename="$(find msi_2k16_17_urdf)/urdf/wheel.urdf.xacro" />
+  <xacro:include filename="$(find msi_2k16_17_urdf)/urdf/arm.urdf" />
 
   <material name="chassis">
     <color rgba="0.67 0.78 0.85 1" />
