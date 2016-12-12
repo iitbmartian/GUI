@@ -35,9 +35,10 @@ While running the tutorials **do not** download the `urdf_tutorials` package fro
 
 ---
 * Changed the symbolic links in the main xacro file `msi.xacro`. The changes in dimensions finally work!  
-* For changing the dimensions in the included mesh file, use the following `<mesh : "Filepath://filename" scale = "multplier_x multiplier_y multiplier_z" >` 
+* For changing the dimensions in the included mesh file, use the following `<mesh : "Filepath://filename" scale = "multplier_x multiplier_y multiplier_z" >`
 * In the jaco.urdf file in opt/share, change base_link to base_link1 to avoid conflict.
 * There's something not right by using the copied wheel.urdf.xacro and hence using the original husky file. Also, some dimensions like `wheelbase` and `wheel_vertical_offset` seem to be creating discontinuities but chuck! Sorted for now! ^\_^
+* Best part: Colors are editable as no mesh file here!
 
 ---  
 
@@ -63,6 +64,7 @@ source devel/setup.bash
 roslaunch msi_2k16_17_gazebo msi.launch
 ```
 
+To add a custom world in Gazebo, add a parameter while running `world_name:=worlds/willowgarage.world` for the default, or modify the file accordingly as in `msi.launch`.
 
 ---
 
