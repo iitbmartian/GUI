@@ -4,7 +4,7 @@
   <!-- Included URDF/XACRO Files -->
   <!-- <xacro:include filename="$(find husky_description)/urdf/decorations.urdf.xacro" /> -->
   <xacro:include filename="$(find husky_description)/urdf/wheel.urdf.xacro" />
-  <!--<xacro:include filename="$(find ur_description)/urdf/ur5.urdf.xacro" />-->
+  <xacro:include filename="$(find jaco_description)/urdf/gazebo/jaco.urdf" />
 
   <material name="chassis">
     <color rgba="0.67 0.78 0.85 1" />
@@ -30,13 +30,13 @@
   <xacro:property name="wheelbase" value="1.08" />
   <xacro:property name="track" value="0.75" />
   <xacro:property name="wheel_vertical_offset" value="${-base_z_size/2}" />
-  
+
 
     <!-- Base link is the center of the robot's bottom plate -->
   <link name="base_link">
     <visual>
       <geometry>
-        <box size="${base_x_size} ${base_y_size} ${base_z_size}"/>
+         <mesh filename="package://husky_description/meshes/base_link.dae" scale="1.5 1.5 1"/>
       </geometry>
       <material name="chassis"/>
     </visual>
@@ -91,44 +91,41 @@
    <origin xyz="${-wheelbase/2} ${-track/2} ${wheel_vertical_offset}" rpy="0 0 0" />
   </xacro:property>
 
-    <xacro:husky_wheel wheel_prefix="front_left"> 
+    <xacro:husky_wheel wheel_prefix="front_left">
   <origin xyz="${wheelbase/2} ${track/2} ${wheel_vertical_offset}" rpy="0 0 0" />
   </xacro:husky_wheel>
-    <xacro:husky_wheel wheel_prefix="front_right"> 
+    <xacro:husky_wheel wheel_prefix="front_right">
 <origin xyz="${wheelbase/2} ${-track/2} ${wheel_vertical_offset}" rpy="0 0 0" />
 </xacro:husky_wheel>
-    <xacro:husky_wheel wheel_prefix="rear_left" > 
+    <xacro:husky_wheel wheel_prefix="rear_left" >
  <origin xyz="${-wheelbase/2} ${track/2} ${wheel_vertical_offset}" rpy="0 0 0" />
 </xacro:husky_wheel>
-    <xacro:husky_wheel wheel_prefix="rear_right"> 
+    <xacro:husky_wheel wheel_prefix="rear_right">
 <origin xyz="${-wheelbase/2} ${-track/2} ${wheel_vertical_offset}" rpy="0 0 0" />
 </xacro:husky_wheel>
 
-   <xacro:husky_wheel wheel_prefix="center_left" > 
+   <xacro:husky_wheel wheel_prefix="center_left" >
  <origin xyz="0 ${track/2} ${wheel_vertical_offset}" rpy="0 0 0" />
 </xacro:husky_wheel>
-    <xacro:husky_wheel wheel_prefix="center_right"> 
+    <xacro:husky_wheel wheel_prefix="center_right">
 <origin xyz="0 ${-track/2} ${wheel_vertical_offset}" rpy="0 0 0" />
 </xacro:husky_wheel>
-    <!-- Decorations MAcro --> 
+    <!-- Decorations MAcro -->
     <xacro:husky_decorate />
 
-    
+
 
       <xacro:property name="reflect" value="-1" />
 
-      <!-- Spawn arm -->
-<!--    <xacro:ur5_robot prefix="ur5_arm_" joint_limited="true"/> -->
 
       <!-- Join arm -->
-      
-<!--      <joint name="ur5_arm_base" type="fixed">
-        <parent link="top_plate_link" />
-        <child link="ur5_arm_base_link" />
-        <origin xyz="0.3058 0 0.0065" rpy="0.0 0.0 -1.57" />
+
+     <joint name="jaco_arm_base" type="fixed">
+        <parent link="base_link" />
+        <child link="base_link1" />
+        <origin xyz="0.4 0 0" rpy="0 0 0" />
       </joint>
 
--->
 
 
 </robot>
