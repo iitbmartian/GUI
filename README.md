@@ -3,7 +3,7 @@ GUI for controlling various subsystems of the Mars Rover Project, IIT-Bombay.
 
 ### Getting Started with Visualising
 Clone the repo, copy the msi_2k16_17_urdf folder to src in your catkin workspace, and after that, go to *[..]/msi_2k16_17_urdf/launch* and run `roslaunch msi_2k16_17_urdf display.launch` to get rviz loaded with the xacro file. After that, change the fixed_frame parameter to **\base_link** and load *robot model* from the options to get the model on the panel. </br>
-Also, you will need to clone [Husky repository](https://github.com/husky/husky), and copy the **husky_description** directory to */opt/ros/<version>/share* for the xacro to run. </br>
+You will need to clone [Husky repository](https://github.com/husky/husky) and [Jaco Arm Repo](https://github.com/ksatyaki/JacoROS/), and copy the **husky_description**, and **jaco_description** directory to */opt/ros/<version>/share* for the xacro to run. </br>
 </br>
 For more info on the same, refer to :- </br>
 [Tutorials on URDF and Xacro: 1, 2, 4](http://wiki.ros.org/urdf/Tutorials) </br>
@@ -35,12 +35,9 @@ While running the tutorials **do not** download the `urdf_tutorials` package fro
 
 ---
 * Changed the symbolic links in the main xacro file `msi.xacro`. The changes in dimensions finally work!  
-* For changing the dimensions in the xacro file, you can change the relative positions etc of the `base_link` and `husky_wheel`, but not the actual dimensions of the components because they are apparently conveyed in the `.dae` file, and it's root URDF is not available. What's worse? XML parse failed and hence no retro-conversion.
-* Solution? Ditched the husky chassis and made a simple box instead. Could've done that for the wheels too, but they look cool and are pretty close to our real dimensions. _Box made to scale._
-<<<<<<< HEAD
-* Using the copied wheel xacro somehow ruined everything and the wheels went crazy AF! (Just when you thought it was done.! Check commit 1d3b61bcccbe5419caa51e832377b4f45a5ad261 )  
-
-Finally winding up the URDF business after a ton of issues. One thing: there's something not right by using the copied wheel.urdf.xacro and hence using the original husky file. Also, some dimensions like `wheelbase` and `wheel_vertical_offset` seem to be creating discontinuities but chuck! Sorted for now! ^\_^
+* For changing the dimensions in the included mesh file, use the following `<mesh : "Filepath://filename" scale = "multplier_x multiplier_y multiplier_z" >` 
+* In the jaco.urdf file in opt/share, change base_link to base_link1 to avoid conflict.
+* There's something not right by using the copied wheel.urdf.xacro and hence using the original husky file. Also, some dimensions like `wheelbase` and `wheel_vertical_offset` seem to be creating discontinuities but chuck! Sorted for now! ^\_^
 
 ---  
 
@@ -74,7 +71,7 @@ roslaunch msi_2k16_17_gazebo msi.launch
 ## Deadlines
 - [x] Familiarisation with URDF and Gazebo
 - [x] URDF tutorials and Husky integration
-- [ ] Final URDF model(with arm): Deadline : 13/12/16
+- [ ] Final URDF model(with arm): Deadline : 14/12/16
 - [x] Gazebo intro and tuts: Deadline : 14/12/16
 - [ ] Gazebo integration and basic movement: Deadline : 17/12/16
 - [ ] Full intergation of movement in GUI: Deadline : 20/12/16
