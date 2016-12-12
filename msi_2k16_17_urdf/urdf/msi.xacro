@@ -22,7 +22,7 @@
 
   <property name="wheel_L" value="0.18" />
   <property name="wheel_R" value="0.17" />
-  <property name="wheel_length" value="0.17" />
+  <property name="wheel_length" value="0.18" />
   <property name="wheel_radius" value="0.17" />
 
 
@@ -36,8 +36,7 @@
   <link name="base_link">
     <visual>
       <geometry>
-         <mesh filename="package://husky_description/msi_files/chassis.stl" scale="0.01 0.01 0.01"/>
-         <!-- <mesh filename="package://msi_files/rover.stl"> -->
+         <mesh filename="package://msi_2k16_17_urdf/meshes/chassis.stl" scale="0.01 0.01 0.01"/>
       </geometry>
       <origin xyz="0 0 0" rpy="0 0 ${+M_PI/2}"/>
       <material name="chassis"/>
@@ -113,7 +112,7 @@
 <origin xyz="0 ${-track/2} ${wheel_vertical_offset}" rpy="0 0 0" />
 </xacro:husky_wheel>
     <!-- Decorations MAcro -->
-    <xacro:husky_decorate />
+    <!-- <xacro:husky_decorate /> -->
 
 
 
