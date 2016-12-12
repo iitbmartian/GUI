@@ -96,7 +96,7 @@
     </collision>
   </link>
   <gazebo reference="jaco_base_link">
-    <material>Gazebo/Orange</material>
+    <material>Gazebo/Yellow</material>
     <turnGravityOff>true</turnGravityOff>
   </gazebo>
   <joint name="jaco_joint_1" type="revolute">
@@ -128,7 +128,7 @@
     </collision>
   </link>
   <gazebo reference="jaco_link_1">
-    <material>Gazebo/Red</material>
+    <material>Gazebo/Yellow</material>
     <turnGravityOff>true</turnGravityOff>
   </gazebo>
   <joint name="jaco_joint_2" type="revolute">
@@ -159,7 +159,7 @@
     </collision>
   </link>
   <gazebo reference="jaco_link_2">
-    <material>Gazebo/Orange</material>
+    <material>Gazebo/Yellow</material>
     <turnGravityOff>true</turnGravityOff>
   </gazebo>
   <joint name="jaco_joint_3" type="revolute">
@@ -190,7 +190,7 @@
     </collision>
   </link>
   <gazebo reference="jaco_link_3">
-    <material>Gazebo/Red</material>
+    <material>Gazebo/Yellow</material>
     <turnGravityOff>true</turnGravityOff>
   </gazebo>
   <joint name="jaco_joint_4" type="revolute">
@@ -221,7 +221,7 @@
     </collision>
   </link>
   <gazebo reference="jaco_link_4">
-    <material>Gazebo/Orange</material>
+    <material>Gazebo/Yellow</material>
     <turnGravityOff>true</turnGravityOff>
   </gazebo>
   <joint name="jaco_joint_5" type="revolute">
@@ -252,7 +252,7 @@
     </collision>
   </link>
   <gazebo reference="jaco_link_5">
-    <material>Gazebo/Red</material>
+    <material>Gazebo/Yellow</material>
     <turnGravityOff>true</turnGravityOff>
   </gazebo>
   <joint name="jaco_joint_6" type="revolute">
@@ -287,7 +287,7 @@
     </collision>
   </link>
   <gazebo reference="jaco_link_6">
-    <material>Gazebo/Orange</material>
+    <material>Gazebo/Yellow</material>
     <turnGravityOff>true</turnGravityOff>
   </gazebo>
   <joint name="jaco_gripper_tool_frame_joint" type="fixed">
@@ -329,7 +329,7 @@
     </collision>
   </link>
   <gazebo reference="jaco_finger_link_1">
-    <material>Gazebo/Orange</material>
+    <material>Gazebo/Yellow</material>
     <turnGravityOff>true</turnGravityOff>
   </gazebo>
   <joint name="jaco_finger_joint_2" type="revolute">
@@ -360,7 +360,7 @@
     </collision>
   </link>
   <gazebo reference="jaco_finger_link_2">
-    <material>Gazebo/Orange</material>
+    <material>Gazebo/Yellow</material>
     <turnGravityOff>true</turnGravityOff>
   </gazebo>
   <joint name="jaco_finger_joint_3" type="revolute">
@@ -391,7 +391,7 @@
     </collision>
   </link>
   <gazebo reference="jaco_finger_link_3">
-    <material>Gazebo/Orange</material>
+    <material>Gazebo/Yellow</material>
     <turnGravityOff>true</turnGravityOff>
   </gazebo>
 </robot>

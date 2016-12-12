@@ -17,6 +17,13 @@
   <property name="base_y_size" value="0.59" />
   <property name="base_z_size" value="0.35" />
 
+  <property name="rocker_wheel_x" value="0.4947" />
+  <property name="rocker_wheel_y" value="0.1083" />
+  <property name="rocker_wheel_z" value="-0.2738" />
+
+  <property name="bogie_wheel_x" value="0.2348" />
+  <property name="bogie_wheel_y" value="0.1146" />
+  <property name="bogie_wheel_z" value="-0.1932" />
 
   <!-- Wheel Properties -->
 
@@ -38,12 +45,12 @@
       <geometry>
          <mesh filename="package://msi_2k16_17_urdf/meshes/chassis.stl" scale="0.01 0.01 0.01"/>
       </geometry>
-      <origin xyz="0 0 0" rpy="0 0 ${+M_PI/2}"/>
+      <origin xyz="0 0 0" rpy="0 0 ${-M_PI/2}"/>
       <material name="chassis"/>
     </visual>
   </link>
 
-  <link name="rocker_left">
+  <link name="rocker_R">
      <visual>
       <geometry>
          <mesh filename="package://msi_2k16_17_urdf/meshes/rocker.stl" scale="0.01 0.01 0.01"/>
@@ -61,16 +68,16 @@
     </inertial>
   </link>
 
-  <joint name="rocker_left_to_chassis" type="revolute">
-      <origin xyz=" 0 ${base_y_size/2 + 0.07} 0" rpy="0 0 0"/>
+  <joint name="rocker_R_to_chassis" type="revolute">
+      <origin xyz=" 0 ${base_y_size/2 + 0.09} 0" rpy="0 0 0"/>
       <parent link="base_link"/>
-      <child link="rocker_left"/>
+      <child link="rocker_R"/>
       
-<limit effort="100" lower="-0.17" upper="0.17" velocity="1"/>
+<limit effort="20" lower="-0.17" upper="0.17" velocity="1"/>
       <axis xyz="0 1 0" rpy="0 0 0" />
   </joint>
 
-  <link name="rocker_right">
+  <link name="rocker_L">
      <visual>
       <geometry>
          <mesh filename="package://msi_2k16_17_urdf/meshes/rocker.stl" scale="0.01 0.01 0.01"/>
@@ -88,67 +95,67 @@
     </inertial>
   </link>
 
-  <joint name="rocker_right_to_chassis" type="revolute">
+  <joint name="rocker_L_to_chassis" type="revolute">
       <origin xyz=" 0 ${-base_y_size/2 - 0.02} 0" rpy="0 0 0"/>
       <parent link="base_link"/>
-      <child link="rocker_right"/>
+      <child link="rocker_L"/>
       
-<limit effort="100" lower="-0.17" upper="0.17" velocity="1"/>
+<limit effort="20" lower="-0.17" upper="0.17" velocity="1"/>
       <axis xyz="0 1 0" rpy="0 0 0" />
   </joint>
 
 
-  <link name="bogie_left">
+  <link name="bogie_R">
     <visual>
      <geometry>
        <mesh filename="package://msi_2k16_17_urdf/meshes/bogie.stl" scale="0.01 0.01 0.01"/>
      </geometry>
-      <origin xyz="-0.202 -0.0444 -0.1434" rpy="0 0 0"/>
-      <material name="chassis"/>
-    </visual>
-    <inertial>
-      <origin xyz="0 0 1" rpy="0 0 0"/>
-      <mass value="1"/>
-      <inertia
-        ixx="1.0" ixy="0.0" ixz="0.0"
-        iyy="1.0" iyz="0.0"
-        izz="1.0"/>
-    </inertial>
-  </link>
-
-  <joint name="bogie_left_to_rocker" type="revolute">
-      <origin xyz="0 0 0 " rpy="0 0 0"/>
-      <parent link="rocker_left"/>
-      <child link="bogie_left"/>
-      
-<limit effort="100" lower="-0.17" upper="0.17" velocity="1"/>
-      <axis xyz="0 1 0" rpy="0 0 0" />
-  </joint>
-
-  <link name="bogie_right">
-    <visual>
-     <geometry>
-       <mesh filename="package://msi_2k16_17_urdf/meshes/bogie.stl" scale="0.01 0.01 0.01"/>
-     </geometry>
-      <origin xyz="-0.202 -0.044 -0.1434 " rpy="0 0 0"/>
-      <material name="chassis"/>
-    </visual>
-    <inertial>
-      <origin xyz="0 0 1" rpy="0 0 0"/>
-      <mass value="1"/>
-      <inertia
-        ixx="1.0" ixy="0.0" ixz="0.0"
-        iyy="1.0" iyz="0.0"
-        izz="1.0"/>
-    </inertial>
-  </link>
-
-  <joint name="bogie_right_to_roc" type="revolute">
       <origin xyz="0 0 0" rpy="0 0 0"/>
-      <parent link="rocker_right"/>
-      <child link="bogie_right"/>      
+      <material name="chassis"/>
+    </visual>
+    <inertial>
+      <origin xyz="0 0 1" rpy="0 0 0"/>
+      <mass value="1"/>
+      <inertia
+        ixx="1.0" ixy="0.0" ixz="0.0"
+        iyy="1.0" iyz="0.0"
+        izz="1.0"/>
+    </inertial>
+  </link>
+
+  <joint name="bogie_R_to_rocker" type="revolute">
+      <origin xyz="-0.202 -0.0444 -0.1434" rpy="0 0 0"/>
+      <parent link="rocker_R"/>
+      <child link="bogie_R"/>
       
-<limit effort="100" lower="-0.17" upper="0.17" velocity="1"/>
+<limit effort="20" lower="-0.17" upper="0.17" velocity="1"/>
+      <axis xyz="0 1 0" rpy="0 0 0" />
+  </joint>
+
+  <link name="bogie_L">
+    <visual>
+     <geometry>
+       <mesh filename="package://msi_2k16_17_urdf/meshes/bogie.stl" scale="0.01 0.01 0.01"/>
+     </geometry>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <material name="chassis"/>
+    </visual>
+    <inertial>
+      <origin xyz="0 0 1" rpy="0 0 0"/>
+      <mass value="1"/>
+      <inertia
+        ixx="1.0" ixy="0.0" ixz="0.0"
+        iyy="1.0" iyz="0.0"
+        izz="1.0"/>
+    </inertial>
+  </link>
+
+  <joint name="bogie_L_to_rocker" type="revolute">
+      <origin xyz="-0.202 -0.044 -0.1434 " rpy="0 0 0"/>
+      <parent link="rocker_L"/>
+      <child link="bogie_L"/>      
+      
+<limit effort="20" lower="-0.17" upper="0.17" velocity="1"/>
       <axis xyz="0 1 0" rpy="0 0 0" />
   </joint>
 
@@ -190,38 +197,32 @@
     </gazebo>
 
     <!-- wheel macros -->
-    <xacro:property name="front_left_origin">
-   <origin xyz="${wheelbase/2} ${track/2} ${wheel_vertical_offset}" rpy="0 0 0" />
-  </xacro:property>
-<xacro:property name="front_right_origin">
-   <origin xyz="${wheelbase/2} ${-track/2} ${wheel_vertical_offset}" rpy="0 0 0" />
-  </xacro:property>
-<xacro:property name="rear_left_origin">
-   <origin xyz="${-wheelbase/2} ${track/2} ${wheel_vertical_offset}" rpy="0 0 0" />
-  </xacro:property>
-<xacro:property name="rear_right_origin">
-   <origin xyz="${-wheelbase/2} ${-track/2} ${wheel_vertical_offset}" rpy="0 0 0" />
-  </xacro:property>
 
-    <xacro:husky_wheel wheel_prefix="front_left">
-  <origin xyz="${wheelbase/2} ${track/2} ${wheel_vertical_offset}" rpy="0 0 0" />
-  </xacro:husky_wheel>
-    <xacro:husky_wheel wheel_prefix="front_right">
-<origin xyz="${wheelbase/2} ${-track/2} ${wheel_vertical_offset}" rpy="0 0 0" />
-</xacro:husky_wheel>
-    <xacro:husky_wheel wheel_prefix="rear_left" >
- <origin xyz="${-wheelbase/2} ${track/2} ${wheel_vertical_offset}" rpy="0 0 0" />
-</xacro:husky_wheel>
-    <xacro:husky_wheel wheel_prefix="rear_right">
-<origin xyz="${-wheelbase/2} ${-track/2} ${wheel_vertical_offset}" rpy="0 0 0" />
-</xacro:husky_wheel>
+    <xacro:husky_wheel wheel_prefix="front_L" parent="bogie_L">
+  <origin xyz="${-bogie_wheel_x} ${-bogie_wheel_y} ${bogie_wheel_z}" rpy="0 0 0" />
+    </xacro:husky_wheel>
 
-   <xacro:husky_wheel wheel_prefix="center_left" >
- <origin xyz="0 ${track/2} ${wheel_vertical_offset}" rpy="0 0 0" />
-</xacro:husky_wheel>
-    <xacro:husky_wheel wheel_prefix="center_right">
-<origin xyz="0 ${-track/2} ${wheel_vertical_offset}" rpy="0 0 0" />
-</xacro:husky_wheel>
+    <xacro:husky_wheel wheel_prefix="front_R" parent="bogie_R">
+  <origin xyz="${-bogie_wheel_x} ${bogie_wheel_y} ${bogie_wheel_z}" rpy="0 0 0" />
+    </xacro:husky_wheel>
+
+    <xacro:husky_wheel wheel_prefix="rear_L" parent="rocker_L">
+  <origin xyz="${rocker_wheel_x} ${-rocker_wheel_y} ${rocker_wheel_z}" rpy="0 0 0" />
+    </xacro:husky_wheel>
+
+    <xacro:husky_wheel wheel_prefix="rear_R" parent="rocker_R">
+  <origin xyz="${rocker_wheel_x} ${rocker_wheel_y} ${rocker_wheel_z}" rpy="0 0 0" />
+    </xacro:husky_wheel>
+
+    <xacro:husky_wheel wheel_prefix="center_L" parent="bogie_L">
+  <origin xyz="${bogie_wheel_x} ${-bogie_wheel_y} ${bogie_wheel_z}" rpy="0 0 0" />
+    </xacro:husky_wheel>
+
+    <xacro:husky_wheel wheel_prefix="center_R" parent="bogie_R">
+  <origin xyz="${bogie_wheel_x} ${bogie_wheel_y} ${bogie_wheel_z}" rpy="0 0 0" />
+    </xacro:husky_wheel>
+
+
     <!-- Decorations MAcro -->
     <!-- <xacro:husky_decorate /> -->
 
@@ -235,7 +236,7 @@
      <joint name="jaco_arm_base" type="fixed">
         <parent link="base_link" />
         <child link="base_link1" />
-        <origin xyz="${base_x_size -0.7} 0 0" rpy="0 0 0" />
+        <origin xyz=" -0.2 0 0" rpy="0 0 ${M_PI}" />
       </joint>
 
 
