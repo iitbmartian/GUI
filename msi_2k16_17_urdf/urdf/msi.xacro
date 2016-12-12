@@ -20,9 +20,9 @@
 
   <!-- Wheel Properties -->
 
-  <property name="wheel_L" value="0.11" />
+  <property name="wheel_L" value="0.18" />
   <property name="wheel_R" value="0.17" />
-  <property name="wheel_length" value="0.11" />
+  <property name="wheel_length" value="0.17" />
   <property name="wheel_radius" value="0.17" />
 
 
@@ -36,8 +36,10 @@
   <link name="base_link">
     <visual>
       <geometry>
-         <mesh filename="package://husky_description/meshes/base_link.dae" scale="1.5 1.5 1"/>
+         <mesh filename="package://husky_description/msi_files/chassis.stl" scale="0.01 0.01 0.01"/>
+         <!-- <mesh filename="package://msi_files/rover.stl"> -->
       </geometry>
+      <origin xyz="0 0 0" rpy="0 0 ${+M_PI/2}"/>
       <material name="chassis"/>
     </visual>
   </link>
@@ -123,7 +125,7 @@
      <joint name="jaco_arm_base" type="fixed">
         <parent link="base_link" />
         <child link="base_link1" />
-        <origin xyz="0.4 0 0" rpy="0 0 0" />
+        <origin xyz="${base_x_size -0.7} 0 0" rpy="0 0 0" />
       </joint>
 
 
