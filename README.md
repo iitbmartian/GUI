@@ -3,7 +3,7 @@ GUI for controlling various subsystems of the Mars Rover Project, IIT-Bombay.
 
 ### Getting Started with Visualising
 Clone the repo, copy the msi_2k16_17_urdf folder to src in your catkin workspace, and after that, go to *[..]/msi_2k16_17_urdf/launch* and run `roslaunch msi_2k16_17_urdf display.launch` to get rviz loaded with the xacro file. After that, change the fixed_frame parameter to **\base_link** and load *robot model* from the options to get the model on the panel. </br>
-You will need to clone [Husky repository](https://github.com/husky/husky) and [Jaco Arm Repo](https://github.com/ksatyaki/JacoROS/), and copy the **husky_description**, and **jaco_description** directory to */opt/ros/<version>/share* for the xacro to run. </br>
+You will need to clone [Husky repository](https://github.com/husky/husky) and [Jaco Arm Repo](https://github.com/ksatyaki/JacoROS/), and copy the **husky_description**, and **jaco_description** directory to */opt/ros/<version>/share* for the xacro to run and in the jaco.urdf file in opt/share, change base_link to base_link1 to avoid conflict.
 </br>
 For more info on the same, refer to :- </br>
 [Tutorials on URDF and Xacro: 1, 2, 4](http://wiki.ros.org/urdf/Tutorials) </br>
@@ -36,7 +36,6 @@ While running the tutorials **do not** download the `urdf_tutorials` package fro
 ---
 * Changed the symbolic links in the main xacro file `msi.xacro`. The changes in dimensions finally work!  
 * For changing the dimensions in the included mesh file, use the following `<mesh : "Filepath://filename" scale = "multplier_x multiplier_y multiplier_z" >` 
-* In the jaco.urdf file in opt/share, change base_link to base_link1 to avoid conflict.
 * There's something not right by using the copied wheel.urdf.xacro and hence using the original husky file. Also, some dimensions like `wheelbase` and `wheel_vertical_offset` seem to be creating discontinuities but chuck! Sorted for now! ^\_^
 
 ---  
