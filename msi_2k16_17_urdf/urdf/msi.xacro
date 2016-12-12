@@ -14,7 +14,7 @@
 
   <!-- Base Size -->
   <property name="base_x_size" value="1.1" />
-  <property name="base_y_size" value="0.55" />
+  <property name="base_y_size" value="0.59" />
   <property name="base_z_size" value="0.35" />
 
 
@@ -28,7 +28,7 @@
 
   <!-- Wheel Mounting Positions -->
   <xacro:property name="wheelbase" value="1.08" />
-  <xacro:property name="track" value="0.75" />
+  <xacro:property name="track" value="1.0" />
   <xacro:property name="wheel_vertical_offset" value="${-base_z_size/2}" />
 
 
@@ -42,6 +42,117 @@
       <material name="chassis"/>
     </visual>
   </link>
+
+  <link name="rocker_left">
+     <visual>
+      <geometry>
+         <mesh filename="package://msi_2k16_17_urdf/meshes/rocker.stl" scale="0.01 0.01 0.01"/>
+      </geometry>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <material name="chassis"/>
+    </visual>
+    <inertial>
+      <origin xyz="0 0 1" rpy="0 0 0"/>
+      <mass value="1"/>
+      <inertia
+        ixx="1.0" ixy="0.0" ixz="0.0"
+        iyy="1.0" iyz="0.0"
+        izz="1.0"/>
+    </inertial>
+  </link>
+
+  <joint name="rocker_left_to_chassis" type="revolute">
+      <origin xyz=" 0 ${base_y_size/2 + 0.07} 0" rpy="0 0 0"/>
+      <parent link="base_link"/>
+      <child link="rocker_left"/>
+      
+<limit effort="100" lower="-0.17" upper="0.17" velocity="1"/>
+      <axis xyz="0 1 0" rpy="0 0 0" />
+  </joint>
+
+  <link name="rocker_right">
+     <visual>
+      <geometry>
+         <mesh filename="package://msi_2k16_17_urdf/meshes/rocker.stl" scale="0.01 0.01 0.01"/>
+      </geometry>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <material name="chassis"/>
+    </visual>
+    <inertial>
+      <origin xyz="0 0 1" rpy="0 0 0"/>
+      <mass value="1"/>
+      <inertia
+        ixx="1.0" ixy="0.0" ixz="0.0"
+        iyy="1.0" iyz="0.0"
+        izz="1.0"/>
+    </inertial>
+  </link>
+
+  <joint name="rocker_right_to_chassis" type="revolute">
+      <origin xyz=" 0 ${-base_y_size/2 - 0.02} 0" rpy="0 0 0"/>
+      <parent link="base_link"/>
+      <child link="rocker_right"/>
+      
+<limit effort="100" lower="-0.17" upper="0.17" velocity="1"/>
+      <axis xyz="0 1 0" rpy="0 0 0" />
+  </joint>
+
+
+  <link name="bogie_left">
+    <visual>
+     <geometry>
+       <mesh filename="package://msi_2k16_17_urdf/meshes/bogie.stl" scale="0.01 0.01 0.01"/>
+     </geometry>
+      <origin xyz="-0.202 -0.0444 -0.1434" rpy="0 0 0"/>
+      <material name="chassis"/>
+    </visual>
+    <inertial>
+      <origin xyz="0 0 1" rpy="0 0 0"/>
+      <mass value="1"/>
+      <inertia
+        ixx="1.0" ixy="0.0" ixz="0.0"
+        iyy="1.0" iyz="0.0"
+        izz="1.0"/>
+    </inertial>
+  </link>
+
+  <joint name="bogie_left_to_rocker" type="revolute">
+      <origin xyz="0 0 0 " rpy="0 0 0"/>
+      <parent link="rocker_left"/>
+      <child link="bogie_left"/>
+      
+<limit effort="100" lower="-0.17" upper="0.17" velocity="1"/>
+      <axis xyz="0 1 0" rpy="0 0 0" />
+  </joint>
+
+  <link name="bogie_right">
+    <visual>
+     <geometry>
+       <mesh filename="package://msi_2k16_17_urdf/meshes/bogie.stl" scale="0.01 0.01 0.01"/>
+     </geometry>
+      <origin xyz="-0.202 -0.044 -0.1434 " rpy="0 0 0"/>
+      <material name="chassis"/>
+    </visual>
+    <inertial>
+      <origin xyz="0 0 1" rpy="0 0 0"/>
+      <mass value="1"/>
+      <inertia
+        ixx="1.0" ixy="0.0" ixz="0.0"
+        iyy="1.0" iyz="0.0"
+        izz="1.0"/>
+    </inertial>
+  </link>
+
+  <joint name="bogie_right_to_roc" type="revolute">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <parent link="rocker_right"/>
+      <child link="bogie_right"/>      
+      
+<limit effort="100" lower="-0.17" upper="0.17" velocity="1"/>
+      <axis xyz="0 1 0" rpy="0 0 0" />
+  </joint>
+
+
 
     <!-- Base footprint is on the ground under the robot -->
     <link name="base_footprint"/>

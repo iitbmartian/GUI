@@ -1,7 +1,7 @@
 <package>
   <name>msi_2k16_17_gazebo</name>
   <version>0.1.0</version>
-  <description>rrbot_gazebo</description>
+  <description>msi_gazebo</description>
   <maintainer email="davetcoleman@gmail.com">Dave Coleman</maintainer>
 
   <license>BSD</license>
