@@ -74,7 +74,7 @@ To add a custom world in Gazebo, add a parameter while running `world_name:=worl
 ## Deadlines
 - [x] Familiarisation with URDF and Gazebo
 - [x] URDF tutorials and Husky integration
-- [ ] Final URDF model(with arm): Deadline : 14/12/16
+- [x] Final URDF model(with arm): Deadline : 14/12/16
 - [x] Gazebo intro and tuts: Deadline : 14/12/16
-- [ ] Gazebo integration and basic movement: Deadline : 17/12/16
+- [x] Gazebo integration and basic movement: Deadline : 17/12/16
 - [ ] Full intergation of movement in GUI: Deadline : 20/12/16
