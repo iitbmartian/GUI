@@ -105,7 +105,7 @@
     <axis rpy="0 0 0" xyz="0 0 -1"/>
     <parent link="jaco_base_link"/>
     <child link="jaco_link_1"/>
-    <limit effort="30" lower="-1.57" upper="1.57" velocity="1"/>
+    <limit effort="10" lower="-0.2" upper="0.2" velocity="1"/>
   </joint>
   <link name="jaco_link_1">
     <inertial>
@@ -136,7 +136,7 @@
     <axis xyz="0 0 1"/>
     <parent link="jaco_link_1"/>
     <child link="jaco_link_2"/>
-    <limit effort="30" lower="-1.57" upper="1.57" velocity="1"/>
+    <limit effort="10" lower="-0.6" upper="0.65" velocity="1"/>
   </joint>
   <link name="jaco_link_2">
     <inertial>
@@ -167,7 +167,7 @@
     <axis xyz="0 0 -1"/>
     <parent link="jaco_link_2"/>
     <child link="jaco_link_3"/>
-    <limit effort="30" lower="-1.57" upper="1.57" velocity="1"/>
+    <limit effort="10" lower="-0.1" upper="0.1" velocity="1"/>
   </joint>
   <link name="jaco_link_3">
     <inertial>
@@ -198,7 +198,7 @@
     <axis xyz="0 0 -1"/>
     <parent link="jaco_link_3"/>
     <child link="jaco_link_4"/>
-    <limit effort="30" lower="-1.57" upper="1.57" velocity="1"/>
+    <limit effort="10" lower="2.44" upper="2.46" velocity="1"/>
   </joint>
   <link name="jaco_link_4">
     <inertial>
@@ -229,7 +229,7 @@
     <axis xyz="0 0 -1"/>
     <parent link="jaco_link_4"/>
     <child link="jaco_link_5"/>
-    <limit effort="30" lower="-1.57" upper="1.57" velocity="1"/>
+    <limit effort="10" lower="2.48" upper="2.5" velocity="1"/>
   </joint>
   <link name="jaco_link_5">
     <inertial>
@@ -262,7 +262,7 @@
     <axis xyz="0 0 -1"/>
     <parent link="jaco_link_5"/>
     <child link="jaco_link_6"/>
-    <limit effort="30" lower="-1.57" upper="1.57" velocity="1"/>
+    <limit effort="10" lower="1.86" upper="1.88" velocity="1"/>
   </joint>
   <link name="jaco_link_6">
     <inertial>
@@ -307,7 +307,7 @@
     <axis xyz="0 1 0"/>
     <parent link="jaco_link_6"/>
     <child link="jaco_finger_link_1"/>
-    <limit effort="30" lower="0.001" upper="0.5" velocity="1"/>
+    <limit effort="10" lower="0.001" upper="0.5" velocity="1"/>
   </joint>
   <link name="jaco_finger_link_1">
     <inertial>
@@ -338,7 +338,7 @@
     <axis xyz="0 1 0"/>
     <parent link="jaco_link_6"/>
     <child link="jaco_finger_link_2"/>
-    <limit effort="30" lower="0.004" upper="0.5" velocity="1"/>
+    <limit effort="10" lower="0.004" upper="0.5" velocity="1"/>
   </joint>
   <link name="jaco_finger_link_2">
     <inertial>
@@ -369,7 +369,7 @@
     <axis xyz="0 1 0"/>
     <parent link="jaco_link_6"/>
     <child link="jaco_finger_link_3"/>
-    <limit effort="30" lower="0.004" upper="0.5" velocity="1"/>
+    <limit effort="10" lower="0.004" upper="0.5" velocity="1"/>
   </joint>
   <link name="jaco_finger_link_3">
     <inertial>

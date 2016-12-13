@@ -1,9 +1,15 @@
 # GUI_MSI_2016
 GUI for controlling various subsystems of the Mars Rover Project, IIT-Bombay.
 
+![The evolution of the rover design!](evolution.jpg)
+
+
 ### Getting Started with Visualising
 Clone the repo, copy the msi_2k16_17_urdf folder to src in your catkin workspace, and after that, go to *[..]/msi_2k16_17_urdf/launch* and run `roslaunch msi_2k16_17_urdf display.launch` to get rviz loaded with the xacro file. After that, change the fixed_frame parameter to **\base_link** and load *robot model* from the options to get the model on the panel. </br>
-You will need to clone [Husky repository](https://github.com/husky/husky) and [Jaco Arm Repo](https://github.com/ksatyaki/JacoROS/), and copy the **husky_description**, and **jaco_description** directory to */opt/ros/<version>/share* for the xacro to run and in the jaco.urdf file in opt/share, change base_link to base_link1 to avoid conflict.
+~~You will need to clone [Husky repository](https://github.com/husky/husky) and [Jaco Arm Repo](https://github.com/ksatyaki/JacoROS/), and copy the **husky_description**, and **jaco_description** directory to */opt/ros/<version>/share* for the xacro to run and in the jaco.urdf file in opt/share, change base_link to base_link1 to avoid conflict.~~
+
+Just clone the repo, and you are good to go!
+
 </br>
 For more info on the same, refer to :- </br>
 [Tutorials on URDF and Xacro: 1, 2, 4](http://wiki.ros.org/urdf/Tutorials) </br>
@@ -74,7 +80,7 @@ To add a custom world in Gazebo, add a parameter while running `world_name:=worl
 ## Deadlines
 - [x] Familiarisation with URDF and Gazebo
 - [x] URDF tutorials and Husky integration
-- [ ] Final URDF model(with arm): Deadline : 14/12/16
+- [x] Final URDF model(with arm): Deadline : 14/12/16
 - [x] Gazebo intro and tuts: Deadline : 14/12/16
-- [ ] Gazebo integration and basic movement: Deadline : 17/12/16
+- [x] Gazebo integration and basic movement: Deadline : 17/12/16
 - [ ] Full intergation of movement in GUI: Deadline : 20/12/16

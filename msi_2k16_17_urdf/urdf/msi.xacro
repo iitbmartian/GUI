@@ -50,6 +50,10 @@
     </visual>
   </link>
 
+  <gazebo reference="base_link">
+    <material> Gazebo/Grey</material>
+  </gazebo>
+
   <link name="rocker_R">
      <visual>
       <geometry>
