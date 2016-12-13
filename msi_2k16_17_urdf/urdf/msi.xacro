@@ -53,7 +53,7 @@
   <link name="rocker_R">
      <visual>
       <geometry>
-         <mesh filename="package://msi_2k16_17_urdf/meshes/rocker.stl" scale="0.01 0.01 0.01"/>
+         <mesh filename="package://msi_2k16_17_urdf/meshes/rocker_MIR.stl" scale="0.01 0.01 0.01"/>
       </geometry>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <material name="chassis"/>
@@ -69,7 +69,7 @@
   </link>
 
   <joint name="rocker_R_to_chassis" type="revolute">
-      <origin xyz=" 0 ${base_y_size/2 + 0.02} 0" rpy="0 0 0"/>
+      <origin xyz=" 0 ${base_y_size/2 + 0.04} 0" rpy="0 0 0"/>
       <parent link="base_link"/>
       <child link="rocker_R"/>
 
@@ -124,7 +124,7 @@
   </link>
 
   <joint name="bogie_R_to_rocker" type="revolute">
-      <origin xyz="-0.202 -0.0444 -0.1434" rpy="0 0 0"/>
+      <origin xyz="-0.202 0.0200 -0.1434" rpy="0 0 0"/>
       <parent link="rocker_R"/>
       <child link="bogie_R"/>
 
@@ -334,20 +334,20 @@
                   </joint>
 
       <joint name="rod_to_triangle" type="fixed">
-            <origin xyz="-0.0143 0.2023 0.0345" rpy="0 0 0"/>
-            <parent link="diff_rod_main"/>
-            <child link="triangle"/>
+            <origin xyz="0.0114 0.2035 -0.0356" rpy="0 0 0"/>
+            <child link="diff_rod_main"/>
+            <parent link="triangle"/>
           </joint>
 
       <joint name="rod_to_triangle_MIR" type="fixed">
-              <origin xyz="0.0143 0.2023 -0.0345" rpy="0 0 0"/>
+              <origin xyz="0.0114 0.2035 -0.0356" rpy="0 0 0"/>
               <child link="diff_rod_main"/>
               <parent link="triangle_MIR"/>
             </joint>
 
 
       <joint name="triangle_to_srod" type="revolute">
-                <origin xyz="-0.0031 0.1036 -0.0705" rpy="0 0 0"/>
+                <origin xyz="0.0167 0.1017 -0.0729" rpy="0 0 0"/>
                 <parent link="triangle"/>
                 <child link="diff_rod_side1"/>
 
@@ -356,7 +356,7 @@
         </joint>
 
         <joint name="triangle_MIR_to_srod" type="revolute">
-                  <origin xyz="-0.0031 -0.1036 -0.0705" rpy="0 0 0"/>
+                  <origin xyz="0.0167 -0.1017 -0.0729" rpy="0 0 0"/>
                   <parent link="triangle_MIR"/>
                   <child link="diff_rod_side2"/>
 
@@ -365,15 +365,15 @@
           </joint>
 
         <joint name="srod1_to_rockerR" type="fixed">
-                      <origin xyz="${-base_x_size/2+0.0174} ${+base_y_size/2-0.3059} 0.0360" rpy="0 0 0"/>
-                      <parent link="diff_rod_side1"/>
-                      <child link="rocker_R"/>
+                      <origin xyz="${base_x_size/2-0.0281} ${-base_y_size/2+0.3052} -0.0373" rpy="0 0 0"/>
+                      <child link="diff_rod_side1"/>
+                      <parent link="rocker_R"/>
         </joint>
 
         <joint name="srod2_to_rockerL" type="fixed">
-                      <origin xyz="${-base_x_size/2+0.0174} ${-base_y_size/2+0.3059} 0.0360" rpy="0 0 0"/>
-                      <parent link="diff_rod_side2"/>
-                      <child link="rocker_L"/>
+                      <origin xyz="${base_x_size/2-0.0281} ${base_y_size/2-0.3052} -0.0373" rpy="0 0 0"/>
+                      <child link="diff_rod_side2"/>
+                      <parent link="rocker_L"/>
         </joint>
       <!-- Join arm -->
 
