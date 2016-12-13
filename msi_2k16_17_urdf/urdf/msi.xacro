@@ -231,10 +231,10 @@
       <xacro:property name="reflect" value="-1" />
 
       <!-- Differential Suspension -->
-      <link name="diff_rod_main" >
+      <link name="differential" >
          <visual>
           <geometry>
-             <mesh filename="package://msi_2k16_17_urdf/meshes/rod.stl" scale="0.01 0.01 0.01"/>
+             <mesh filename="package://msi_2k16_17_urdf/meshes/differential.stl" scale="0.01 0.01 0.01"/>
           </geometry>
           <origin xyz="0 0 0" rpy="0 0 0"/>
           <material name="chassis"/>
@@ -249,132 +249,13 @@
         </inertial>
       </link>
 
-      <link name="diff_rod_side1" >
-         <visual>
-          <geometry>
-             <mesh filename="package://msi_2k16_17_urdf/meshes/srod.stl" scale="0.01 0.01 0.01"/>
-          </geometry>
-          <origin xyz="0 0 0" rpy="0 0 0"/>
-          <material name="chassis"/>
-        </visual>
-        <inertial>
-          <origin xyz="0 0 0" rpy="0 0 0"/>
-          <mass value="1"/>
-          <inertia
-            ixx="1.0" ixy="0.0" ixz="0.0"
-            iyy="1.0" iyz="0.0"
-            izz="1.0"/>
-        </inertial>
-      </link>
-
-      <link name="diff_rod_side2" >
-         <visual>
-          <geometry>
-             <mesh filename="package://msi_2k16_17_urdf/meshes/srod.stl" scale="0.01 0.01 0.01"/>
-          </geometry>
-          <origin xyz="0 0 0" rpy="0 0 0"/>
-          <material name="chassis"/>
-        </visual>
-        <inertial>
-          <origin xyz="0 0 0" rpy="0 0 0"/>
-          <mass value="1"/>
-          <inertia
-            ixx="1.0" ixy="0.0" ixz="0.0"
-            iyy="1.0" iyz="0.0"
-            izz="1.0"/>
-        </inertial>
-      </link>
-
-      <link name="triangle" >
-         <visual>
-          <geometry>
-             <mesh filename="package://msi_2k16_17_urdf/meshes/triangle.stl" scale="0.01 0.01 0.01"/>
-          </geometry>
-          <origin xyz="0 0 0" rpy="0 0 0"/>
-          <material name="chassis"/>
-        </visual>
-        <inertial>
-          <origin xyz="0 0 0" rpy="0 0 0 "/>
-          <mass value="1"/>
-          <inertia
-            ixx="1.0" ixy="0.0" ixz="0.0"
-            iyy="1.0" iyz="0.0"
-            izz="1.0"/>
-        </inertial>
-      </link>
-
-      <link name="triangle_MIR" >
-         <visual>
-          <geometry>
-             <mesh filename="package://msi_2k16_17_urdf/meshes/triangle_MIR.stl" scale="0.01 0.01 0.01"/>
-          </geometry>
-        <origin xyz="0 0 0" rpy="0 0 0"/>
-          <material name="chassis"/>
-        </visual>
-        <inertial>
-          <origin xyz="0 0 0" rpy="0 0 0"/>
-          <mass value="1"/>
-          <inertia
-            ixx="1.0" ixy="0.0" ixz="0.0"
-            iyy="1.0" iyz="0.0"
-            izz="1.0"/>
-        </inertial>
-      </link>
-      <!-- joints for differential -->
-      <joint name="triangle_to_chassis" type="fixed">
-                  <origin xyz="${(base_x_size/2-0.0143)} 0.2023 0.0345" rpy="0 0 0"/>
+      <!-- STATIC joints for differential -->
+      <joint name="diff_to_chassis" type="fixed">
+                  <origin xyz="${base_x_size/2-0.12} 0 0" rpy="0 0 0"/>
                   <parent link="base_link"/>
-                    <child link="triangle"/>
+                    <child link="differential"/>
                   </joint>
 
-      <joint name="triangle_MIR_to_chassis" type="fixed">
-                      <origin xyz="${(base_x_size/2-0.0143)} -0.2023 0.0345" rpy="0 0 0"/>
-                      <parent link="base_link"/>
-                        <child link="triangle_MIR"/>
-                  </joint>
-
-      <joint name="rod_to_triangle" type="fixed">
-            <origin xyz="0.0114 0.2035 -0.0356" rpy="0 0 0"/>
-            <child link="diff_rod_main"/>
-            <parent link="triangle"/>
-          </joint>
-
-      <joint name="rod_to_triangle_MIR" type="fixed">
-              <origin xyz="0.0114 0.2035 -0.0356" rpy="0 0 0"/>
-              <child link="diff_rod_main"/>
-              <parent link="triangle_MIR"/>
-            </joint>
-
-
-      <joint name="triangle_to_srod" type="revolute">
-                <origin xyz="0.0167 0.1017 -0.0729" rpy="0 0 0"/>
-                <parent link="triangle"/>
-                <child link="diff_rod_side1"/>
-
-        <limit effort="20" lower="-0.10" upper="0.10" velocity="1"/>
-                <axis xyz="1 0 0" rpy="0 0 0" />
-        </joint>
-
-        <joint name="triangle_MIR_to_srod" type="revolute">
-                  <origin xyz="0.0167 -0.1017 -0.0729" rpy="0 0 0"/>
-                  <parent link="triangle_MIR"/>
-                  <child link="diff_rod_side2"/>
-
-          <limit effort="20" lower="-0.10" upper="0.10" velocity="1"/>
-                  <axis xyz="1 0 0" rpy="0 0 0" />
-          </joint>
-
-        <joint name="srod1_to_rockerR" type="fixed">
-                      <origin xyz="${base_x_size/2-0.0281} ${-base_y_size/2+0.3052} -0.0373" rpy="0 0 0"/>
-                      <child link="diff_rod_side1"/>
-                      <parent link="rocker_R"/>
-        </joint>
-
-        <joint name="srod2_to_rockerL" type="fixed">
-                      <origin xyz="${base_x_size/2-0.0281} ${base_y_size/2-0.3052} -0.0373" rpy="0 0 0"/>
-                      <child link="diff_rod_side2"/>
-                      <parent link="rocker_L"/>
-        </joint>
       <!-- Join arm -->
 
 
