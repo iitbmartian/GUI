@@ -80,7 +80,7 @@ To add a custom world in Gazebo, add a parameter while running `world_name:=worl
 
 ## GPS lat long tracking
 
-Work derived from the repository by [Gareth Cross and team https://github.com/gareth-cross/rviz_satellite/blob/master/src/tileloader.h]. Changes done to the original code to make the tiles preloaded.
+Work derived from the repository by [Gareth Cross and team](https://github.com/gareth-cross/rviz_satellite/blob/master/src/tileloader.h). Changes done to the original code to make the tiles preloaded.
 
 ## Deadlines
 - [x] Familiarisation with URDF and Gazebo
