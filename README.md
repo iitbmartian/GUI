@@ -3,6 +3,7 @@ GUI for controlling various subsystems of the Mars Rover Project, IIT-Bombay.
 
 ![The evolution of the rover design!](evolution.jpg)
 
+## Visualisation of Rover on RViz and Gazebo
 
 ### Getting Started with Visualising
 Clone the repo, copy the msi_2k16_17_urdf folder to src in your catkin workspace, and after that, go to *[..]/msi_2k16_17_urdf/launch* and run `roslaunch msi_2k16_17_urdf display.launch` to get rviz loaded with the xacro file. After that, change the fixed_frame parameter to **\base_link** and load *robot model* from the options to get the model on the panel. </br>
@@ -77,10 +78,14 @@ To add a custom world in Gazebo, add a parameter while running `world_name:=worl
 
 ---
 
+## GPS lat long tracking
+
+Work derived from the repository by [Gareth Cross and team https://github.com/gareth-cross/rviz_satellite/blob/master/src/tileloader.h]. Changes done to the original code to make the tiles preloaded.
+
 ## Deadlines
 - [x] Familiarisation with URDF and Gazebo
 - [x] URDF tutorials and Husky integration
 - [x] Final URDF model(with arm): Deadline : 14/12/16
 - [x] Gazebo intro and tuts: Deadline : 14/12/16
 - [x] Gazebo integration and basic movement: Deadline : 17/12/16
-- [ ] Full intergation of movement in GUI: Deadline : 20/12/16
+- [ ] Full intergation of movement in GUI: Deadline : 13/1/17
