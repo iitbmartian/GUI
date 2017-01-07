@@ -10,5 +10,5 @@
   <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
   <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher" />
   <node name="rviz" pkg="rviz" type="rviz" args="-d $(find msi_2k16_17_urdf)/urdf.rviz" required="true" />
-
+  <node name="Odometry" pkg="msi_2k16_17_urdf" type="Odometry" output="screen" required="true" />
 </launch>
