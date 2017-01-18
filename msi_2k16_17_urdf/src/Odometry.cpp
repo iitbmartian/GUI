@@ -13,9 +13,9 @@ int main(int argc, char** argv){
   double y = 0.0;
   double th = 0.0;
 
-  double vx = -0.01;
-  double vy = 0.01;
-  double vth = 1;
+  double vx = 0.01; //x-velocity
+  double vy = -0.01; //y-velocity
+  double vth = 0.17; //angular-velocity in radians
 
   ros::Time current_time, last_time;
   current_time = ros::Time::now();
@@ -29,10 +29,11 @@ int main(int argc, char** argv){
 
     //compute odometry in a typical way given the velocities of the robot
     double dt = (current_time - last_time).toSec();
-    double delta_x = vx;
-    double delta_y = vy;
-    double delta_th = vth * dt;
+    double delta_x = vx; //(vx * cos(th) - vy * sin(th)) * dt;
+    double delta_y = vy; //(vx * sin(th) + vy * cos(th)) * dt;
+    double delta_th =vth; // vth * dt;
 
+//updation 
     x += delta_x;
     y += delta_y;
     th += delta_th;
@@ -46,6 +47,7 @@ int main(int argc, char** argv){
     odom_trans.header.frame_id = "odom";
     odom_trans.child_frame_id = "base_link";
 
+//transform
     odom_trans.transform.translation.x = x;
     odom_trans.transform.translation.y = y;
     odom_trans.transform.translation.z = 0.0;
@@ -69,12 +71,12 @@ int main(int argc, char** argv){
     odom.child_frame_id = "base_link";
     odom.twist.twist.linear.x = vx;
     odom.twist.twist.linear.y = vy;
-    odom.twist.twist.angular.z = vth;
+    odom.twist.twist.angular.z = vth; // used in radians
 
     //publish the message
     odom_pub.publish(odom);
 
     last_time = current_time;
-    
+    r.sleep();
   }
 }
