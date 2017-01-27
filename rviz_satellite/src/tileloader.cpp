@@ -19,6 +19,7 @@
 #include <boost/regex.hpp>
 #include <ros/ros.h>
 #include <ros/package.h>
+#include <ros/console.h>
 #include <functional> // for std::hash
 
 
@@ -55,9 +56,8 @@ bool TileLoader::insideCentreTile(double lat, double lon) const {
 void TileLoader::start() {
   //  discard previous set of tiles and all pending requests
   abort();
-
-  ROS_INFO("loading %d blocks around tile=(%d,%d)", blocks_, center_tile_x_, center_tile_y_ );
-  QImage image("tiles/insti.jpg");
+  ROS_DEBUG("loading %d blocks around tile=(%d,%d)", blocks_, center_tile_x_, center_tile_y_ );
+  QImage image=QImage(":/tiles/insti.jpg");
   tiles_.push_back(MapTile(11510, 7304, 14, image));
   //  determine what range of tiles we can load
   /*

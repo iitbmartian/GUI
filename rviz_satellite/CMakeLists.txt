@@ -94,6 +94,7 @@ set(PROJECT_SOURCE_FILES
   ${${PROJECT_NAME}_SOURCES}
   ${${PROJECT_NAME}_MOCSrcs}
 )
+set(QRC_RESOURCES src/QTresources.qrc)
 
 add_library(${PROJECT_NAME}
   ${PROJECT_SOURCE_FILES}

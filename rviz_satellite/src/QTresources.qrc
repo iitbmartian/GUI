@@ -1,5 +1,5 @@
 <!DOCTYPE RCC><RCC version="1.0">
-<qresource>
+<qresource prefix="/tiles">
     <file alias="insti.jpg">tiles/insti.jpg</file>
 </qresource>
 </RCC>
