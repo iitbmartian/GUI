@@ -79,7 +79,7 @@ To add a custom world in Gazebo, add a parameter while running `world_name:=worl
 
 ## GPS lat long tracking
 
-Work derived from the repository by [Gareth Cross and team](https://github.com/gareth-cross/rviz_satellite/blob/master/src/tileloader.h). Changes done to the original code to make the tiles preloaded, as internet access may not be availaible in MDRS, Utah.
+Work derived from the repository by [Gareth Cross and team](https://github.com/gareth-cross/rviz_satellite/). Changes done to the original code to make the tiles preloaded, as internet access may not be availaible in MDRS, Utah.
 
 
 ## Deadlines
@@ -88,4 +88,4 @@ Work derived from the repository by [Gareth Cross and team](https://github.com/g
 - [x] Final URDF model(with arm): Deadline : 14/12/16
 - [x] Gazebo intro and tuts: Deadline : 14/12/16
 - [x] Gazebo integration and basic movement: Deadline : 17/12/16
-- [ ] Full intergation of movement in GUI: Deadline : 13/1/17
+
