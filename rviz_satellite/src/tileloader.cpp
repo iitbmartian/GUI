@@ -16,39 +16,35 @@
 #include <QImage>
 #include <QImageReader>
 #include <stdexcept>
-#include <boost/regex.hpp>
 #include <ros/ros.h>
 #include <ros/package.h>
-#include <ros/console.h>
 #include <functional> // for std::hash
 
 
 
-bool TileLoader::MapTile::hasImage() const { return !image_.isNull(); }
+bool TileLoader::MapTile::hasImage() const { 
+  return !image_.isNull(); }
 
-TileLoader::TileLoader(double latitude,
-                       double longitude, unsigned int blocks,unsigned int zoom,
-                       QObject *parent)
-    : QObject(parent), latitude_(latitude), longitude_(longitude), zoom_(zoom),
-      blocks_(blocks) 
-{
-  assert(blocks_ >= 0);
+TileLoader::TileLoader( double latitude, double longitude, QObject *parent)
+    : QObject(parent), latitude_(latitude), longitude_(longitude)
+ {
 
   const std::string package_path = ros::package::getPath("rviz_satellite");
   if (package_path.empty()) {
     throw std::runtime_error("package 'rviz_satellite' not found");
   }
 
-  //  calculate center tile coordinates
-  center_tile_x_ = 11510;
-  center_tile_y_ = 7304;
+  double x=11510.0, y=7304.0; 
+  latLonToTileCoords(latitude_, longitude_, 14, x, y);
+  center_tile_x_ = std::floor(x);
+  center_tile_y_ = std::floor(y);
   //  fractional component
-  origin_offset_x_ = 0;
-  origin_offset_y_ = 0;
+  origin_offset_x_ = x - center_tile_x_;
+  origin_offset_y_ = y - center_tile_y_;
 }
 
 bool TileLoader::insideCentreTile(double lat, double lon) const {
-  double x=11510.0, y=7304.0; 
+   double x=11510.0, y=7304.0; 
   latLonToTileCoords(lat, lon, 14, x, y);
   return (std::floor(x) == center_tile_x_ && std::floor(y) == center_tile_y_);
 }
@@ -56,26 +52,18 @@ bool TileLoader::insideCentreTile(double lat, double lon) const {
 void TileLoader::start() {
   //  discard previous set of tiles and all pending requests
   abort();
-  ROS_DEBUG("loading %d blocks around tile=(%d,%d)", blocks_, center_tile_x_, center_tile_y_ );
-  QImage image=QImage(":/tiles/insti.jpg");
-  tiles_.push_back(MapTile(11510, 7304, 14, image));
-  //  determine what range of tiles we can load
-  /*
-  const int min_x = std::max(0, center_tile_x_ - blocks_);
-  const int min_y = std::max(0, center_tile_y_ - blocks_);
-  const int max_x = std::min(maxTiles(), center_tile_x_ + blocks_);
-  const int max_y = std::min(maxTiles(), center_tile_y_ + blocks_);
-
-  //  initiate requests
-  for (int y = min_y; y <= max_y; y++) {
-    for (int x = min_x; x <= max_x; x++) {
-      // Generate filename
-      const QString full_path = cachedPathForTile(x, y, zoom_);
-
-    }
-  }*/
-
+   double x=11510.0, y=7304.0; 
+  ROS_INFO("loading around tile=(%d,%d)", center_tile_x_, center_tile_y_ );
+  const std::string package_path = ros::package::getPath("rviz_satellite");
+  QImage image=QImage(QDir::cleanPath(QString::fromStdString(package_path) + QDir::separator() +
+                      QString("tiles") + QDir::separator() +
+                      QString("insti.jpg")));
+  ROS_INFO("Tile Loaded");
+  tiles_.push_back(MapTile(x, y, 14, image));
+   ROS_INFO("Tile Pushed");
+      
 }
+
 
 double TileLoader::resolution() const {
   return zoomToResolution(latitude_, 14);
@@ -110,6 +98,6 @@ double TileLoader::zoomToResolution(double lat, unsigned int zoom) {
   return 156543.034 * std::cos(lat_rad) / (1 << zoom);
 }
 
-
-int TileLoader::maxTiles() const { return (1 << zoom_) - 1; }
-
+void TileLoader::abort() {
+  tiles_.clear();
+}

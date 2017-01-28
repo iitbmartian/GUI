@@ -62,21 +62,9 @@ public:
   virtual void update(float, float);
 
 protected Q_SLOTS:
-  void updateDynamicReload();
-  void updateAlpha();
   void updateTopic();
   void updateFrame();
-  void updateDrawUnder();
- // void updateObjectURI();
-  void updateZoom();
-  void updateBlocks();
-  void updateFrameConvention();
 
-  //  slots for TileLoader messages
-  //void initiatedRequest(QNetworkRequest request);
-  //void receivedImage(QNetworkRequest request);
-  //void finishedLoading();
-  //void errorOcurred(QString description);
 
 protected:
   // overrides from Display
@@ -115,7 +103,7 @@ protected:
   RosTopicProperty *topic_property_;
   TfFrameProperty *frame_property_;
   Property *dynamic_reload_property_;
-  //StringProperty *object_uri_property_;
+  StringProperty *object_uri_property_;
   IntProperty *zoom_property_;
   IntProperty *blocks_property_;
   FloatProperty *resolution_property_;
@@ -123,11 +111,6 @@ protected:
   Property *draw_under_property_;
   EnumProperty * frame_convention_property_;
 
-  float alpha_;
-  bool draw_under_;
-  //std::string object_uri_;
-  int zoom_;
-  int blocks_;
 
   //  tile management
   bool dirty_;

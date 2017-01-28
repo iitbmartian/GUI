@@ -13,6 +13,7 @@
 
 #include <QObject>
 #include <QImage>
+#include <QString>
 #include <vector>
 #include <memory>
 
@@ -21,8 +22,6 @@ class TileLoader : public QObject {
 public:
   class MapTile {
   public:
-    MapTile(int x, int y, int z)
-        : x_(x), y_(y), z_(z) {}
       
     MapTile(int x, int y, int z, QImage & image)
       : x_(x), y_(y), z_(z), image_(image) {}
@@ -36,8 +35,7 @@ public:
     /// Z tile zoom value.
     int z() const { return z_; }
 
-    
-    
+   
     /// Has a tile successfully loaded?
     bool hasImage() const;
 
@@ -51,12 +49,8 @@ public:
     int z_;
     QImage image_;
   };
-  /*
-  explicit TileLoader(const std::string &service, double latitude,
-                      double longitude, unsigned int zoom, unsigned int blocks,
-                      QObject *parent = 0);
-  */
-  explicit TileLoader(double latitude, double longitude, unsigned int zoom, unsigned int blocks, QObject *parent = 0);
+
+  explicit TileLoader(double latitude,double longitude, QObject *parent = 0);
 
   /// Start loading tiles asynchronously.
   void start();
@@ -89,6 +83,9 @@ public:
   /// Current set of tiles.
   const std::vector<MapTile> &tiles() const { return tiles_; }
 
+  /// Cancel all current requests.
+  void abort();
+
 
 public slots:
 
@@ -98,13 +95,8 @@ private slots:
 private:
 
 
-  /// Maximum number of tiles for the zoom level
-  int maxTiles() const;
-
   double latitude_;
   double longitude_;
-  unsigned int zoom_;
-  int blocks_;
   int center_tile_x_;
   int center_tile_y_;
   double origin_offset_x_;
