@@ -61,7 +61,6 @@ sudo apt-get install ros-indigo-gazebo-ros
 
  [_TBD Later_] We can actually add a desert-like terrain in the GUI at URC. Check out [DEM](http://gazebosim.org/tutorials/?tut=dem).
 
-Okay, so Gazebo seems nice and has been set up as of date. The model has been loaded in an empty world with nothing else in particular (tried, but then no enthu!). The repo has taken major changes and hence, I'd say it would be nice to clone this directly in your workspace (or add a remote etc.)
 ``` bash
 cd ~/catkin_ws/src
 git clone https://github.com/Agrim9/GUI_MSI_2016
@@ -80,7 +79,8 @@ To add a custom world in Gazebo, add a parameter while running `world_name:=worl
 
 ## GPS lat long tracking
 
-Work derived from the repository by [Gareth Cross and team](https://github.com/gareth-cross/rviz_satellite/blob/master/src/tileloader.h). Changes done to the original code to make the tiles preloaded.
+Work derived from the repository by [Gareth Cross and team](https://github.com/gareth-cross/rviz_satellite/blob/master/src/tileloader.h). Changes done to the original code to make the tiles preloaded, as internet access may not be availaible in MDRS, Utah.
+
 
 ## Deadlines
 - [x] Familiarisation with URDF and Gazebo
