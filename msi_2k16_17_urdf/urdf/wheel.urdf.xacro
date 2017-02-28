@@ -55,15 +55,7 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
     		<material> Gazebo/FlatBlack</material>
 		</gazebo>
 
-		<joint name="${wheel_prefix}_steer" type="revolute">
-			<parent link="${parent}"/>
-			<child link="${wheel_prefix}_wheel_link"/>
-			<xacro:insert_block name="joint_pose"/>
-			<axis xyz="0 0 1" rpy="0 0 0" />
-			<limit effort="20" lower="-0.52" upper="0.52" velocity="1"/>
-		</joint>
-
-		<joint name="${wheel_prefix}_drive" type="continuous">
+		<joint name="${wheel_prefix}_wheel" type="continuous">
 			<parent link="${parent}"/>
 			<child link="${wheel_prefix}_wheel_link"/>
 			<xacro:insert_block name="joint_pose"/>
