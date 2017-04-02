@@ -1,82 +1,88 @@
+#include <string>
 #include <ros/ros.h>
+#include <sensor_msgs/JointState.h>
+#include <sensor_msgs/Joy.h>
 #include <tf/transform_broadcaster.h>
-#include <nav_msgs/Odometry.h>
 
-int main(int argc, char** argv){
-  ros::init(argc, argv, "odometry_publisher");
+sensor_msgs::JointState joint_state;
+bool init_flag=true;
+ros::Publisher joint_pub;
+void joy_JSP(const sensor_msgs::Joy::ConstPtr& joy)
+{
+  
+  ROS_INFO("Message Recieved");
+  std::vector<float> axe = joy -> axes;
+  std::vector<int> but = joy -> buttons;
 
-  ros::NodeHandle n;
-  ros::Publisher odom_pub = n.advertise<nav_msgs::Odometry>("odom", 50);
-  tf::TransformBroadcaster odom_broadcaster;
+  joint_state.position[13]=0.52*axe[3];
+  joint_state.position[15]=0.52*axe[3];
+  joint_state.position[17]=-0.52*axe[3];
+  joint_state.position[19]=-0.52*axe[3];
 
-  double x = 0.0;
-  double y = 0.0;
-  double th = 0.0;
+  //update joint_state
+  ROS_INFO("Message published to JSP");
+  std::cout<<joint_state.position[13];
+  joint_pub.publish(joint_state);
+}
 
-  double vx = 0.01; //x-velocity
-  double vy = -0.01; //y-velocity
-  double vth = 0.17; //angular-velocity in radians
+int main(int argc, char** argv) {
 
-  ros::Time current_time, last_time;
-  current_time = ros::Time::now();
-  last_time = ros::Time::now();
+ros::init(argc, argv, "JSP_joy_node");
+ros::NodeHandle n;
+joint_pub = n.advertise<sensor_msgs::JointState>("joy_joint_states", 10);
+joint_state.name.resize(23);
+joint_state.position.resize(23);
 
-  ros::Rate r(1.0);
-  while(n.ok()){
+joint_state.name[0] ="jaco_joint_1";
+joint_state.name[1] ="jaco_joint_2";
+joint_state.name[2] ="jaco_joint_3";
+joint_state.name[3] ="jaco_joint_4";
+joint_state.name[4] ="jaco_joint_5";
+joint_state.name[5] ="jaco_joint_6";
+joint_state.name[6] ="jaco_finger_joint_1";
+joint_state.name[7] ="jaco_finger_joint_2";
+joint_state.name[8] ="jaco_finger_joint_3";
+joint_state.name[9] ="rocker_R_to_chassis";
+joint_state.name[10] ="rocker_L_to_chassis";
+joint_state.name[11] ="bogie_R_to_rocker";
+joint_state.name[12] ="bogie_L_to_rocker";
+joint_state.name[13] ="front_L_steer";
+joint_state.name[14] ="front_L_drive";
+joint_state.name[15] ="front_R_steer";
+joint_state.name[16] ="front_R_drive";
+joint_state.name[17] ="rear_L_steer";
+joint_state.name[18] ="rear_L_drive";
+joint_state.name[19] ="rear_R_steer";
+joint_state.name[20] ="rear_R_drive";
+joint_state.name[21] ="center_wheel_drive_L";
+joint_state.name[22] ="center_wheel_drive_R";
 
-    ros::spinOnce();               // check for incoming messages
-    current_time = ros::Time::now();
+joint_state.position[0] = 0;
+joint_state.position[1] = 0;
+joint_state.position[2] = 0;
+joint_state.position[3] = 2.45;
+joint_state.position[4] = 2.49;
+joint_state.position[5] = 1.87;
+joint_state.position[6] = 0.3;
+joint_state.position[7] = 0.25;
+joint_state.position[8] = 0.25;
+joint_state.position[9] = 0;
+joint_state.position[10] = 0;
+joint_state.position[11] = 0;
+joint_state.position[12] = 0;
+joint_state.position[14] = 0;
+joint_state.position[16] = 0;
+joint_state.position[18] = 0;
+joint_state.position[20] = 0;
+joint_state.position[21] = 0;
+joint_state.position[22] = 0;
+joint_state.position[13]=0.51;
+joint_state.position[15]=0.51;
+joint_state.position[17]=0.51;
+joint_state.position[19]=0.51;
 
-    //compute odometry in a typical way given the velocities of the robot
-    double dt = (current_time - last_time).toSec();
-    double delta_x = vx; //(vx * cos(th) - vy * sin(th)) * dt;
-    double delta_y = vy; //(vx * sin(th) + vy * cos(th)) * dt;
-    double delta_th =vth; // vth * dt;
+ros::Subscriber sub = n.subscribe("/joy", 1000, joy_JSP);
+ros::spin();
 
-//updation 
-    x += delta_x;
-    y += delta_y;
-    th += delta_th;
-
-    //since all odometry is 6DOF we'll need a quaternion created from yaw
-    geometry_msgs::Quaternion odom_quat = tf::createQuaternionMsgFromYaw(th);
-
-    //first, we'll publish the transform over tf
-    geometry_msgs::TransformStamped odom_trans;
-    odom_trans.header.stamp = current_time;
-    odom_trans.header.frame_id = "odom";
-    odom_trans.child_frame_id = "base_link";
-
-//transform
-    odom_trans.transform.translation.x = x;
-    odom_trans.transform.translation.y = y;
-    odom_trans.transform.translation.z = 0.0;
-    odom_trans.transform.rotation = odom_quat;
-
-    //send the transform
-    odom_broadcaster.sendTransform(odom_trans);
-
-    //next, we'll publish the odometry message over ROS
-    nav_msgs::Odometry odom;
-    odom.header.stamp = current_time;
-    odom.header.frame_id = "odom";
-
-    //set the position
-    odom.pose.pose.position.x = x;
-    odom.pose.pose.position.y = y;
-    odom.pose.pose.position.z = 0.0;
-    odom.pose.pose.orientation = odom_quat;
-
-    //set the velocity
-    odom.child_frame_id = "base_link";
-    odom.twist.twist.linear.x = vx;
-    odom.twist.twist.linear.y = vy;
-    odom.twist.twist.angular.z = vth; // used in radians
-
-    //publish the message
-    odom_pub.publish(odom);
-
-    last_time = current_time;
-    r.sleep();
-  }
+return 0;
 }

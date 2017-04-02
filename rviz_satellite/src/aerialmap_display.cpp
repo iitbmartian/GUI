@@ -222,7 +222,6 @@ void AerialMapDisplay::loadImagery() {
 void AerialMapDisplay::assembleScene() {
   
   if (!loader_) {
-    ROS_INFO("No tiles loaded");
     return; //  no tiles loaded, don't do anything
   }
   
