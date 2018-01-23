@@ -35,9 +35,10 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   rviz
   sensor_msgs
+  std_msgs
 )
 
-catkin_package(CATKIN_DEPENDS nav_msgs sensor_msgs)
+catkin_package(CATKIN_DEPENDS nav_msgs sensor_msgs std_msgs)
 
 set(${PROJECT_NAME}_SOURCES
   src/aerialmap_display.cpp

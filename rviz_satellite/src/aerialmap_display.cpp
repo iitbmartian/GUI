@@ -12,6 +12,8 @@
 #include <QImage>
 
 #include <ros/ros.h>
+#include <std_msgs/Float64MultiArray.h>
+
 #include <tf/transform_listener.h>
 
 #include <OGRE/OgreManualObject.h>
@@ -117,9 +119,9 @@ void AerialMapDisplay::subscribe() {
 
   if (!topic_property_->getTopic().isEmpty()) {
     try {
-      ROS_INFO("Subscribing to %s","/mavros/global_position/raw/fix");
+      ROS_INFO("Subscribing to %s","/LatLon");
       coord_sub_ =
-          update_nh_.subscribe("/mavros/global_position/raw/fix", 1,
+          update_nh_.subscribe("/LatLon", 1,
                                &AerialMapDisplay::navFixCallback, this);
 
       setStatus(StatusProperty::Ok, "Topic", "OK");
@@ -182,21 +184,24 @@ void AerialMapDisplay::update(float, float) {
   context_->queueRender();
 }
 
-void AerialMapDisplay::navFixCallback(const sensor_msgs::NavSatFixConstPtr &msg) {
+void AerialMapDisplay::navFixCallback(const std_msgs::Float64MultiArray &msg) {
   // If the new (lat,lon) falls into a different tile then we have some
   // reloading to do.
-  if (!received_msg_ ||
-      (loader_ && !loader_->insideCentreTile(msg->latitude, msg->longitude) )) {
-    ref_fix_ = *msg;
-    ROS_INFO("Reference point set to: %.12f, %.12f", ref_fix_.latitude,
-             ref_fix_.longitude);
+  const std::vector<double> cords = msg.data;
+
+  
+    //ref_fix_ = *msg;
+    ref_fix_.latitude=cords[0];
+    ref_fix_.longitude=cords[1];
+    ROS_INFO("Reference point set to: %.12f, %.12f", cords[0],
+             cords[1]);
     setStatus(StatusProperty::Warn, "Message", "Loading map tiles.");
 
     //  re-load imagery
     received_msg_ = true;
     loadImagery();
     transformAerialMap();
-  }
+  
 }
 
 void AerialMapDisplay::loadImagery() {

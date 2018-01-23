@@ -17,6 +17,7 @@
 #include <ros/time.h>
 #include <rviz/display.h>
 #include <sensor_msgs/NavSatFix.h>
+#include <std_msgs/Float64MultiArray.h>
 
 #include <OGRE/OgreTexture.h>
 #include <OGRE/OgreMaterial.h>
@@ -74,7 +75,7 @@ protected:
   virtual void subscribe();
   virtual void unsubscribe();
 
-  void navFixCallback(const sensor_msgs::NavSatFixConstPtr &msg);
+  void navFixCallback(const std_msgs::Float64MultiArray& msg);
 
   void loadImagery();
 
