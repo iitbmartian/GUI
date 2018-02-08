@@ -1,0 +1,498 @@
+<robot
+  name="aspha18_urdf">
+  <link
+    name="base_link">
+    <inertial>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <mass
+        value="2.7918" />
+      <inertia
+        ixx="0.095684"
+        ixy="0.001902"
+        ixz="-0.00027184"
+        iyy="0.058185"
+        iyz="0.00031126"
+        izz="0.14455" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://aspha18_urdf/meshes/base_link.stl" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.84314 0.81569 0.75294 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://aspha18_urdf/meshes/base_link.stl" />
+      </geometry>
+    </collision>
+  </link>
+
+  
+  <link
+    name="wheel1">
+    <inertial>
+      <origin
+      xyz="0 0 0 "
+      rpy="0 0 0" />
+      <mass
+        value="11.53" />
+      <inertia
+        ixx="0.13597"
+        ixy="1.2879E-07"
+        ixz="-9.0853E-09"
+        iyy="0.097658"
+        iyz="-3.0537E-14"
+        izz="0.097658" />
+    </inertial>
+    <visual>
+      <origin
+      xyz="0 0 0"
+      rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://aspha18_urdf/meshes/wheel1.stl" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+      xyz="0 0 0"
+      rpy="0 0 0"/>
+      <geometry>
+        <mesh
+          filename="package://aspha18_urdf/meshes/wheel1.stl" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="rotate1"
+    type="continuous">
+    <origin
+      xyz="0.46 0.43 -0.13"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="wheel1" />
+    <axis
+      xyz="1 0 0" />
+  </joint>
+
+  <link
+    name="wheel2">
+    <inertial>
+      <origin
+      xyz="0 0 0"
+      rpy="0 0 0" />
+      <mass
+        value="11.5298327680895" />
+      <inertia
+        ixx="0.135971148628003"
+        ixy="-5.63856091752789E-08"
+        ixz="1.16335845630891E-07"
+        iyy="0.0976582051487171"
+        iyz="-1.71203329291103E-13"
+        izz="0.0976582051489874" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://aspha18_urdf/meshes/wheel2.stl" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://aspha18_urdf/meshes/wheel2.stl" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="rotate2"
+    type="continuous">
+    <origin
+      xyz="-0.46 0.44 -0.13"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="wheel2" />
+    <axis
+      xyz="1 0 0" />
+  </joint>
+
+  <link
+    name="wheel3">
+    <inertial>
+      <origin
+       
+      xyz="0 0 0"
+      rpy="0 0 0" />
+      <mass
+        value="11.5298327680895" />
+      <inertia
+        ixx="0.135971148628439"
+        ixy="-2.13278075453915E-13"
+        ixz="1.49984791894007E-14"
+        iyy="0.0976582051486343"
+        iyz="2.16840434497101E-18"
+        izz="0.0976582051486343" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://aspha18_urdf/meshes/wheel3.stl" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://aspha18_urdf/meshes/wheel3.stl" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="rotate3"
+    type="continuous">
+    <origin
+      
+      xyz="0.46 -0.45 -0.13"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="wheel3" />
+    <axis
+      xyz="1 0 0" />
+  </joint>
+  
+  <link
+    name="wheel4">
+    <inertial>
+      <origin
+        
+      xyz="0 0 0"
+      rpy="0 0 0" />
+      <mass
+        value="11.5298327680895" />
+      <inertia
+        ixx="0.135971148628439"
+        ixy="-1.95838647067939E-13"
+        ixz="-9.49762849544681E-14"
+        iyy="0.097658205148634"
+        iyz="2.42861286636753E-17"
+        izz="0.097658205148634" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://aspha18_urdf/meshes/wheel4.stl" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://aspha18_urdf/meshes/wheel4.stl" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="rotate4"
+    type="continuous">
+    <origin
+      
+      xyz="-0.46 -0.44 -0.13"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="wheel4" />
+    <axis
+      xyz="1 0 0" />
+  </joint>
+  <link
+    name="base_rotn">
+    <inertial>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <mass
+        value="0.773197125339031" />
+      <inertia
+        ixx="0.00103764705393415"
+        ixy="6.58182970956898E-06"
+        ixz="5.54891502901135E-05"
+        iyy="0.00130367193834491"
+        iyz="-0.000179327606683225"
+        izz="0.000348493395648461" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://aspha18_urdf/meshes/base_rotn.stl" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.898039215686275 0.917647058823529 0.929411764705882 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://aspha18_urdf/meshes/base_rotn.stl" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="base_rot1"
+    type="continuous">
+    <origin
+      xyz="0 0.19 0.14"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="base_rotn" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="shoulder_links">
+    <inertial>
+      <origin
+        xyz="0 0.23 0.14"
+        rpy="0 0 0" />
+      <mass
+        value="0.104640684850347" />
+      <inertia
+        ixx="7.98235631104724E-05"
+        ixy="-4.92478395888344E-19"
+        ixz="4.07842412768808E-05"
+        iyy="0.000925048572837215"
+        iyz="-3.03056955059653E-18"
+        izz="0.000973974480713755" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0.23 0.14"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://aspha18_urdf/meshes/shoulder.stl" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.729411764705882 0.67843137254902 0.67843137254902 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0.23 0.14"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://aspha18_urdf/meshes/shoulder.stl" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="shoulder_joint"
+    type="revolute">
+    <origin
+      xyz="0 0 0.02"
+      rpy="0 0 0" />
+    <parent
+      link="base_rotn" />
+    <child
+      link="shoulder_links" />
+    <axis
+      xyz="1 0 0" />
+    <limit
+      lower="-0.17"
+      upper="0.17"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="elbow_link">
+    <inertial>
+      <origin
+        xyz="0 0.13 -0.13"
+        rpy="-0.67 0 0" />
+      <mass
+        value="0.0411062379032747" />
+      <inertia
+        ixx="1.21837641589144E-05"
+        ixy="-1.69964129768756E-18"
+        ixz="1.52307939635103E-06"
+        iyy="0.000132211701064061"
+        iyz="5.81115462912697E-19"
+        izz="0.00013982909112128" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0.13 -0.13"
+        rpy="-0.67 0 0" />
+      <geometry>
+        <mesh
+          filename="package://aspha18_urdf/meshes/elbow.stl" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.729411764705882 0.67843137254902 0.67843137254902 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0.13 -0.13"
+        rpy="-0.67 0 0" />
+      <geometry>
+        <mesh
+          filename="package://aspha18_urdf/meshes/elbow.stl" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="elbow_joint"
+    type="revolute">
+    <origin
+      xyz="0 0.45 0.33"
+      rpy="-0.67 0 0" />
+    <parent
+      link="shoulder_links" />
+    <child
+      link="elbow_link" />
+    <axis
+      xyz="1 0 0" />
+    <limit
+      lower="-0.20"
+      upper="0.20"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="gripper">
+    <inertial>
+      <origin
+        xyz="0.005 0.02 -0.18"
+        rpy="0 0 0" />
+      <mass
+        value="0.0411062379032747" />
+      <inertia
+        ixx="1.21837641589144E-05"
+        ixy="-1.69964129768756E-18"
+        ixz="1.52307939635103E-06"
+        iyy="0.000132211701064061"
+        iyz="5.81115462912697E-19"
+        izz="0.00013982909112128" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0.005 0.02 -0.18"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://aspha18_urdf/meshes/gripper.stl" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.729411764705882 0.67843137254902 0.67843137254902 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0.005 0.02 -0.18"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://aspha18_urdf/meshes/gripper.stl" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="gripper_joint"
+    type="revolute">
+    <origin
+
+      xyz="0.005 0.27 -0.25"
+      rpy="0 0 0" />
+    <parent
+      link="elbow_link" />
+    <child
+      link="gripper" />
+    <axis
+      xyz="1 0 0" />
+    <limit
+      lower="-0.17"
+      upper="0.17"
+      effort="0"
+      velocity="0" />
+  </joint>
+
+</robot>
+
+      <!--xyz="0.01 0.29 -0.43"-->
