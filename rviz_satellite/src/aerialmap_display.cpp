@@ -214,6 +214,8 @@ void AerialMapDisplay::loadImagery() {
   }
   
   try {
+    ROS_INFO("loading around til");
+
     loader_.reset(new TileLoader(ref_fix_.latitude,
                                  ref_fix_.longitude, this));
   } catch (std::exception &e) {
@@ -341,6 +343,7 @@ void AerialMapDisplay::assembleScene() {
 void AerialMapDisplay::transformAerialMap() {
   // pass in identity to get pose of robot wrt to the fixed frame
   // the map will be shifted so as to compensate for the center tile shifting
+  ROS_INFO("In AerialMap");
   geometry_msgs::Pose pose;
   pose.orientation.w = 1;
   pose.orientation.x = 0;

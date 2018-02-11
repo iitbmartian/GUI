@@ -17,7 +17,8 @@
     name="joint_state_publisher"
     pkg="joint_state_publisher"
     type="joint_state_publisher">
-    <param name="/use_gui" value="true"/> 
+    <param name="/use_gui" value="true"/>
+    <rosparam param="/source_list">[/URDF_JSP_pub]</rosparam> 
   </node>
   <node
     name="robot_state_publisher"
@@ -29,10 +30,10 @@
     type="rviz"
     args="-d $(find aspha18_urdf)/urdf.rviz" 
     required="true" />
-  <!--<node name="Odometry_new"
+  <node name="JSP"
         pkg="aspha18_urdf"
-        type="Odometry_new" 
+        type="JSP" 
         output="screen" 
-        required="true" />-->
+        required="true" />
 
 </launch>

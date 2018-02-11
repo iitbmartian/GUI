@@ -129,7 +129,7 @@ def L_to_Angle(ac1_L,ac2_L):
             estimated_theta=(np.arcsin(expression)-alpha)*180/np.pi
             #print(estimated_theta)
 
-    return (estimated_theta,estimated_phi)
+    return (estimated_theta*np.pi/180,estimated_phi*np.pi/180)
 
 
 def get_target_angles(theta,phi,dx,dy):
