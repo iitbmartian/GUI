@@ -1,4 +1,4 @@
-# GUI_MSI_2016
+# GUI
 GUI for controlling various subsystems of the Mars Rover Project, IIT-Bombay.
 
 ![ASPHA-18 URDF](ASPHA-18_urdf.png)
