@@ -12,15 +12,15 @@ ros::Publisher joint_pub;
 void callbackFn(const std_msgs::Float64MultiArray::ConstPtr& inp)
 {
   
-  ROS_INFO("JSP node Message Received");
+  //ROS_INFO("JSP node Message Received");
   std::vector<double> thet_phi = inp -> data;
 
   joint_state.position[5]=thet_phi[1];
   joint_state.position[6]=thet_phi[0];
-  joint_state.position[7] = -0.66;
+  joint_state.position[7] = 0;
 
   //update joint_state
-  ROS_INFO("Message published to JSP");
+  //ROS_INFO("Message published to JSP");
   joint_pub.publish(joint_state);
 }
 
