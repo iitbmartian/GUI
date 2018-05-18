@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+    #!/usr/bin/env python
 import rospy
 from std_msgs.msg import String,Float64MultiArray
 from arm_util import *
@@ -12,8 +12,8 @@ def sigint_handler(signal, frame):
 
 def callback_pot(inp):
     global pot_val1,pot_val2
-    pot_val1=inp.data[1]
-    pot_val2=inp.data[0]
+    pot_val1=inp.data[0]
+    pot_val2=inp.data[1]
     
 
 if __name__ == '__main__':
