@@ -89,18 +89,18 @@ if __name__ == '__main__':
         tseq+=1
         tmarker.header.frame_id = "/base_link"
         tmarker.type = tmarker.MESH_RESOURCE
-        tmarker.mesh_resource = "package://aspha18_urdf/meshes/tGPS.stl";
+        tmarker.mesh_resource = "package://aspha18_urdf/meshes/target.stl";
         tmarker.action = tmarker.ADD
-        tmarker.scale.x=0.4
-        tmarker.scale.y=0.4
-        tmarker.scale.z=0.4
+        tmarker.scale.x=1
+        tmarker.scale.y=1
+        tmarker.scale.z=1
         tmarker.color.g = 0.0
-        tmarker.color.a = 0.0
+        tmarker.color.a = 1.0
         tmarker.color.r = 1.0
         tmarker.color.b = 0.0
-        tmarker.pose.position.z=0
-        tmarker.pose.position.x=10
-        tmarker.pose.position.y=10
+        tmarker.pose.position.z=30
+        tmarker.pose.position.x=50
+        tmarker.pose.position.y=50
         tpub.publish(tmarker)
         #print(tmarker)
 
