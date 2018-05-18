@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 import rospy
-from std_msgs.msg import String,Float32MultiArray
+from std_msgs.msg import String,Float32MultiArray,Float64MultiArray
 from sensor_msgs.msg import Imu
 from tf.transformations import quaternion_from_euler
 from geometry_msgs.msg import Quaternion, Pose
@@ -42,9 +42,11 @@ def gps_callback(inp):
 	global tmarkerx,tmarkery
 	curr_gps=[inp.data[0],inp.data[1]]
 	theta=get_bearing(curr_gps,target_gps)
+	#print(theta*180/np.pi)
 	d=get_distance(curr_gps,target_gps)
-	tmarkerx=d*np.cos(theta)
-	tmarkery=d*np.sin(theta)
+	#print(d)
+	tmarkerx=d*np.cos(theta)*const_fac
+	tmarkery=d*np.sin(theta)*const_fac
 
 if __name__ == '__main__':
 
@@ -58,8 +60,8 @@ if __name__ == '__main__':
     # Global variables to store x,y of target marker
     tmarkerx=0
     tmarkery=0
-    target_gps=[19,72]
-    const_fac=1
+    target_gps=[19.133205,72.916430]
+    const_fac=1000
     #Default Values
     r_time = rospy.Rate(1)
     while True:
@@ -89,16 +91,16 @@ if __name__ == '__main__':
         tmarker.type = tmarker.MESH_RESOURCE
         tmarker.mesh_resource = "package://aspha18_urdf/meshes/tGPS.stl";
         tmarker.action = tmarker.ADD
-        tmarker.scale.x=1
-        tmarker.scale.y=1
-        tmarker.scale.z=1
-        tmarker.color.g = 0.2
-        tmarker.color.a = 1.0
-        tmarker.color.r = 0.2
-        tmarker.color.b = 0.2
+        tmarker.scale.x=0.4
+        tmarker.scale.y=0.4
+        tmarker.scale.z=0.4
+        tmarker.color.g = 0.0
+        tmarker.color.a = 0.0
+        tmarker.color.r = 1.0
+        tmarker.color.b = 0.0
         tmarker.pose.position.z=0
-        tmarker.pose.position.x=tmarkerx
-        tmarker.pose.position.y=tmarkery
+        tmarker.pose.position.x=10
+        tmarker.pose.position.y=10
         tpub.publish(tmarker)
         #print(tmarker)
 
