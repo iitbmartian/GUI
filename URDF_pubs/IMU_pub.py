@@ -4,7 +4,7 @@ from std_msgs.msg import String,Float32MultiArray,Float64MultiArray
 from sensor_msgs.msg import Imu
 from tf.transformations import quaternion_from_euler
 from geometry_msgs.msg import Quaternion, Pose
-from visualization_msgs.msg import Marker
+from visualization_msgs.msg import Marker,MarkerArray
 from arm_util import *
 import signal
 import sys
@@ -26,7 +26,7 @@ def callback_IMU(inp):
     seq+=1
     marker.header.frame_id = "/kinect2_rgb_optical_frame"
     marker.type = marker.ARROW
-    qt_arr=quaternion_from_euler(orientation[1],-orientation[2]+2,orientation[0])
+    qt_arr=quaternion_from_euler(0,-orientation[2],0)
     qt=Quaternion(qt_arr[0],qt_arr[1],qt_arr[2],qt_arr[3])
     marker.action = marker.ADD
     marker.pose.orientation = qt
@@ -60,7 +60,7 @@ def callback_IMU(inp):
     marker_rover.color.a = 1.0
     marker_rover.color.r = 0.2
     marker_rover.color.b = 0.2
-    qt_arr2=quaternion_from_euler(orientation[0],orientation[1],orientation[2]+2.71)
+    qt_arr2=quaternion_from_euler(0,0,orientation[2]-1.57)
     qt2=Quaternion(qt_arr2[0],qt_arr2[1],qt_arr2[2],qt_arr2[3])
 
     marker_rover.pose.orientation = qt2
@@ -99,33 +99,44 @@ def get_distance(pos1, pos2):
 # Callback function for LatLon publisher
 def gps_callback(inp):
     global tseq,tpub
+    
     curr_gps=[inp.data[0],inp.data[1]]
-    theta=get_bearing(curr_gps,target_gps)
-    #print(theta*180/np.pi)
-    d=get_distance(curr_gps,target_gps)
-    #print(d)
-    tmarkerx=d*np.cos(theta-1.57)*const_fac
-    tmarkery=d*np.sin(theta-1.57)*const_fac
+    num_targets=len(target_gps)
+    markerArray = MarkerArray()
 
-    tmarker=Marker()
-    tmarker.header.stamp=  rospy.Time.now()
-    tmarker.header.seq=tseq
-    tseq+=1
-    tmarker.header.frame_id = "/base_link"
-    tmarker.type = tmarker.MESH_RESOURCE
-    tmarker.mesh_resource = "package://aspha18_urdf/meshes/tGPS.stl";
-    tmarker.action = tmarker.ADD
-    tmarker.scale.x=0.15
-    tmarker.scale.y=0.15
-    tmarker.scale.z=0.15
-    tmarker.color.g = 0.2
-    tmarker.color.a = 1.0
-    tmarker.color.r = 1.0
-    tmarker.color.b = 0.2
-    tmarker.pose.position.z=0
-    tmarker.pose.position.x=tmarkerx
-    tmarker.pose.position.y=tmarkery
-    tpub.publish(tmarker)
+
+    for i in range(num_targets):
+        theta=get_bearing(curr_gps,target_gps[i])
+        #print(theta*180/np.pi)
+        d=get_distance(curr_gps,target_gps[i])
+        #print(d)
+        tmarkerx=d*np.cos(-theta)*const_fac
+        tmarkery=d*np.sin(-theta)*const_fac
+        
+        tmarker=Marker()
+        tmarker.header.stamp=  rospy.Time.now()
+        tmarker.header.seq=tseq
+        tseq+=1
+        tmarker.header.frame_id = "/base_link"
+        tmarker.type = tmarker.MESH_RESOURCE
+
+        tmarker.mesh_resource = "package://aspha18_urdf/meshes/Target_"+str(i+1)+".STL";
+        tmarker.action = tmarker.ADD
+        tmarker.scale.x=0.15
+        tmarker.scale.y=0.15
+        tmarker.scale.z=0.15
+        tmarker.color.g = 0.2
+        tmarker.color.a = 1.0
+        tmarker.color.r = 1.0
+        tmarker.color.b = 0.2
+        tmarker.pose.position.z=5
+        tmarker.pose.position.x=tmarkerx
+        tmarker.pose.position.y=tmarkery
+        tmarker.id=i
+        markerArray.markers.append(tmarker)
+    
+    
+    tpub.publish(markerArray)
     
 
 if __name__ == '__main__':
@@ -133,17 +144,19 @@ if __name__ == '__main__':
     signal.signal(signal.SIGINT, sigint_handler)
     seq=0
     tseq=0
-    rospy.init_node('IMU_conv', anonymous=True)
     orientation=np.zeros(3)
+    target_gps=[[38.37205324,-110.70453928],[38.37190412,-110.70397175]]
+    #target_gps=[19.13294634,72.91607273]
+    const_fac=1000
+    
+    rospy.init_node('IMU_conv', anonymous=True)
     pub=rospy.Publisher("IMU_msg",Marker,queue_size=10)
     pub2=rospy.Publisher("Path_msg",Marker,queue_size=10)
     rospy.Subscriber("IMU", Float32MultiArray, callback_IMU)
-    tpub=rospy.Publisher("Target_msg",Marker,queue_size=10)
+    tpub=rospy.Publisher("Target_msg",MarkerArray,queue_size=10)
     rospy.Subscriber("LatLon", Float64MultiArray, gps_callback)
     # Global variables to store x,y of target marker
-    target_gps=[19.13307356,72.91640433]
-    #target_gps=[19.13294634,72.91607273]
-    const_fac=1000
+    #target_gps=[38.37190412,-110.70397175]
     
     #Default Values
     rospy.spin()

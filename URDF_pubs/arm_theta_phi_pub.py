@@ -41,7 +41,7 @@ if __name__ == '__main__':
             print("Theta = "+str(theta*180/np.pi)+" Phi = "+str(phi*180/np.pi))
             counter=0
         counter+=1
-        pot_val=Float64MultiArray(data=[theta+0.57,phi-0.63])
+        pot_val=Float64MultiArray(data=[theta+1.22,phi-0.52])
         pub.publish(pot_val)
         r_time.sleep()
 
