@@ -318,10 +318,10 @@
     name="base_rotn">
     <inertial>
       <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
+        xyz="-0.113 0.087 0.1"
+        rpy="3.14 0 0.125" />
       <mass
-        value="0.773197125339031" />
+        value="0.773197125339031" /> 
       <inertia
         ixx="0.00103764705393415"
         ixy="6.58182970956898E-06"
@@ -332,11 +332,11 @@
     </inertial>
     <visual>
       <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
+        xyz="-0.113 0.087 0.1"
+        rpy="3.14 0 0.125" />
       <geometry>
         <mesh
-          filename="package://rover_description/meshes/base_rotn.stl" />
+          filename="package://rover_description/meshes/base_rotation.STL" scale="0.001 0.001 0.001" />
       </geometry>
       <material
         name="">
@@ -346,11 +346,11 @@
     </visual>
     <collision>
       <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
+        xyz="-0.113 0.087 0.1"
+        rpy="3.14 0 0.125" />
       <geometry>
         <mesh
-          filename="package://rover_description/meshes/base_rotn.stl" />
+          filename="package://rover_description/meshes/base_rotation.STL" scale="0.001 0.001 0.001" />
       </geometry>
     </collision>
   </link>
@@ -358,7 +358,7 @@
     name="base_rotation"
     type="continuous">
     <origin
-      xyz="0 0.19 0.14"
+      xyz="0 0.19 0.12"
       rpy="0 0 0" />
     <parent
       link="base_link" />
@@ -374,7 +374,7 @@
     name="shoulder_links">
     <inertial>
       <origin
-        xyz="0 0.23 0.14"
+        xyz="0 0.21 0.155"
         rpy="0 0 0" />
       <mass
         value="0.104640684850347" />
@@ -388,7 +388,7 @@
     </inertial>
     <visual>
       <origin
-        xyz="0 0.23 0.14"
+        xyz="0 0.21 0.155"
         rpy="0 0 0" />
       <geometry>
         <mesh
@@ -402,7 +402,7 @@
     </visual>
     <collision>
       <origin
-        xyz="0 0.23 0.14"
+        xyz="0 0.21 0.155"
         rpy="0 0 0" />
       <geometry>
         <mesh
@@ -414,7 +414,7 @@
     name="shoulder_joint"
     type="revolute">
     <origin
-      xyz="0 0 0.02"
+      xyz="0 0.009 0.04"
       rpy="0 0 0" />
     <parent
       link="base_rotn" />
@@ -432,7 +432,7 @@
     name="elbow_link">
     <inertial>
       <origin
-        xyz="0 0.13 -0.13"
+        xyz="0 0.135 -0.1275"
         rpy="-0.67 0 0" />
       <mass
         value="0.0411062379032747" />
@@ -446,7 +446,7 @@
     </inertial>
     <visual>
       <origin
-        xyz="0 0.13 -0.13"
+        xyz="0 0.135 -0.1275"
         rpy="-0.67 0 0" />
       <geometry>
         <mesh
@@ -460,7 +460,7 @@
     </visual>
     <collision>
       <origin
-        xyz="0 0.13 -0.13"
+        xyz="0 0.135 -0.1275"
         rpy="-0.67 0 0" />
       <geometry>
         <mesh
@@ -472,7 +472,7 @@
     name="elbow_joint"
     type="revolute">
     <origin
-      xyz="0 0.45 0.33"
+      xyz="0 0.43 0.345"
       rpy="-0.67 0 0" />
     <parent
       link="shoulder_links" />
