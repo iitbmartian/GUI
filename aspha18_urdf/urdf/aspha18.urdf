@@ -545,6 +545,159 @@
       effort="0"
       velocity="0" />
   </joint>
+  <link
+    name="bio_assembly">
+    <inertial>
+      <origin
+        xyz="0.1 0.096 -0.38"
+        rpy="0 0 3.14"/>
+      <mass
+        value="5"/>
+      <inertia
+        ixx="1.21837641589144E-05"
+        ixy="-1.69964129768756E-18"
+        ixz="1.52307939635103E-06"
+        iyy="0.000132211701064061"
+        iyz="5.81115462912697E-19"
+        izz="0.00013982909112128" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0.1 0.096 -0.38"
+        rpy="0 0 3.14"/>
+      <geometry>
+        <mesh
+          filename="package://rover_description/meshes/bio_assembly.STL" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.729411764705882 0.67843137254902 0.67843137254902 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0.1 0.096 -0.38"
+        rpy="0 0 3.14"/>
+      <geometry>
+        <mesh
+          filename="package://rover_description/meshes/bio_assembly.STL" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision> 
+  </link>
+  <joint
+    name="bio_assembly_joint"
+    type="fixed">
+    <origin
+      xyz="0 -0.3 0.1"
+      rpy="0 0 0"/>
+    <parent
+      link="base_link"/>
+    <child
+      link="bio_assembly"/>
+  </joint>
+  <link
+    name="camera_mount">
+    <inertial>
+      <origin
+        xyz="-0.1 -0.268 -0.014"
+        rpy="0 0 0"/>
+      <mass
+        value="5"/>
+      <inertia
+        ixx="1.21837641589144E-05"
+        ixy="-1.69964129768756E-18"
+        ixz="1.52307939635103E-06"
+        iyy="0.000132211701064061"
+        iyz="5.81115462912697E-19"
+        izz="0.00013982909112128" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="-0.1 -0.268 -0.014"
+        rpy="0 0 0"/>
+      <geometry>
+        <mesh
+          filename="package://rover_description/meshes/camera_mount.STL" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.729411764705882 0.67843137254902 0.67843137254902 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="-0.1 -0.268 -0.014"
+        rpy="0 0 0"/>
+      <geometry>
+        <mesh
+          filename="package://rover_description/meshes/camera_mount.STL" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision> 
+  </link>
+  <joint
+    name="camera_mount_joint"
+    type="fixed">
+    <origin
+      xyz="-0.2 0.09 0.12"
+      rpy="0 0 0"/>
+    <parent
+      link="base_link"/>
+    <child
+      link="camera_mount"/>
+  </joint>
+  <link
+    name="com_mount">
+    <inertial>
+      <origin
+        xyz="-0.08 -0.01 0.0081"
+        rpy="0 0 0"/>
+      <mass
+        value="5"/>
+      <inertia
+        ixx="1.21837641589144E-05"
+        ixy="-1.69964129768756E-18"
+        ixz="1.52307939635103E-06"
+        iyy="0.000132211701064061"
+        iyz="5.81115462912697E-19"
+        izz="0.00013982909112128" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="-0.08 -0.01 0.0081"
+        rpy="0 0 0"/>
+      <geometry>
+        <mesh
+          filename="package://rover_description/meshes/com_mount.STL" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.729411764705882 0.67843137254902 0.67843137254902 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="-0.08 -0.01 0.0081"
+        rpy="0 0 0"/>
+      <geometry>
+        <mesh
+          filename="package://rover_description/meshes/com_mount.STL" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision> 
+  </link>
+  <joint
+    name="com_mount_joint"
+    type="fixed">
+    <origin
+      xyz="-0.15 -0.255 0.175"
+      rpy="0 0 0"/>
+    <parent
+      link="base_link"/>
+    <child
+      link="com_mount"/>
+  </joint>
 
 </robot>
 
