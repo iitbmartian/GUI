@@ -1,5 +1,5 @@
 <robot
-  name="rover_description">
+  name="aspha18_urdf">
   <link
     name="base_link">
     <inertial>
@@ -22,7 +22,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://rover_description/meshes/base_link.stl" />
+          filename="package://aspha18_urdf/meshes/base_link.stl" />
       </geometry>
       <material
         name="">
@@ -36,7 +36,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://rover_description/meshes/base_link.stl" />
+          filename="package://aspha18_urdf/meshes/base_link.stl" />
       </geometry>
     </collision>
   </link>
@@ -117,7 +117,7 @@
       rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://rover_description/meshes/wheel1.stl" />
+          filename="package://aspha18_urdf/meshes/wheel1.stl" />
       </geometry>
       <material
         name="">
@@ -131,7 +131,7 @@
       rpy="0 0 0"/>
       <geometry>
         <mesh
-          filename="package://rover_description/meshes/wheel1.stl" />
+          filename="package://aspha18_urdf/meshes/wheel1.stl" />
       </geometry>
     </collision>
   </link>
@@ -171,7 +171,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://rover_description/meshes/wheel2.stl" />
+          filename="package://aspha18_urdf/meshes/wheel2.stl" />
       </geometry>
       <material
         name="">
@@ -185,7 +185,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://rover_description/meshes/wheel2.stl" />
+          filename="package://aspha18_urdf/meshes/wheel2.stl" />
       </geometry>
     </collision>
   </link>
@@ -226,7 +226,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://rover_description/meshes/wheel3.stl" />
+          filename="package://aspha18_urdf/meshes/wheel3.stl" />
       </geometry>
       <material
         name="">
@@ -240,7 +240,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://rover_description/meshes/wheel3.stl" />
+          filename="package://aspha18_urdf/meshes/wheel3.stl" />
       </geometry>
     </collision>
   </link>
@@ -282,7 +282,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://rover_description/meshes/wheel4.stl" />
+          filename="package://aspha18_urdf/meshes/wheel4.stl" />
       </geometry>
       <material
         name="">
@@ -296,7 +296,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://rover_description/meshes/wheel4.stl" />
+          filename="package://aspha18_urdf/meshes/wheel4.stl" />
       </geometry>
     </collision>
   </link>
@@ -336,7 +336,7 @@
         rpy="3.14 0 0.125" />
       <geometry>
         <mesh
-          filename="package://rover_description/meshes/base_rotation.STL" scale="0.001 0.001 0.001" />
+          filename="package://aspha18_urdf/meshes/base_rotation.STL" scale="0.001 0.001 0.001" />
       </geometry>
       <material
         name="">
@@ -350,7 +350,7 @@
         rpy="3.14 0 0.125" />
       <geometry>
         <mesh
-          filename="package://rover_description/meshes/base_rotation.STL" scale="0.001 0.001 0.001" />
+          filename="package://aspha18_urdf/meshes/base_rotation.STL" scale="0.001 0.001 0.001" />
       </geometry>
     </collision>
   </link>
@@ -392,7 +392,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://rover_description/meshes/shoulder.stl" />
+          filename="package://aspha18_urdf/meshes/shoulder.stl" />
       </geometry>
       <material
         name="">
@@ -406,7 +406,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://rover_description/meshes/shoulder.stl" />
+          filename="package://aspha18_urdf/meshes/shoulder.stl" />
       </geometry>
     </collision>
   </link>
@@ -450,7 +450,7 @@
         rpy="-0.67 0 0" />
       <geometry>
         <mesh
-          filename="package://rover_description/meshes/elbow.stl" />
+          filename="package://aspha18_urdf/meshes/elbow.stl" />
       </geometry>
       <material
         name="">
@@ -464,7 +464,7 @@
         rpy="-0.67 0 0" />
       <geometry>
         <mesh
-          filename="package://rover_description/meshes/elbow.stl" />
+          filename="package://aspha18_urdf/meshes/elbow.stl" />
       </geometry>
     </collision>
   </link>
@@ -508,7 +508,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://rover_description/meshes/gripper.stl" />
+          filename="package://aspha18_urdf/meshes/gripper.stl" />
       </geometry>
       <material
         name="">
@@ -522,7 +522,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://rover_description/meshes/gripper.stl" />
+          filename="package://aspha18_urdf/meshes/gripper.stl" />
       </geometry>
     </collision>
   </link>
@@ -567,7 +567,7 @@
         rpy="0 0 3.14"/>
       <geometry>
         <mesh
-          filename="package://rover_description/meshes/bio_assembly.STL" scale="0.001 0.001 0.001"/>
+          filename="package://aspha18_urdf/meshes/bio_assembly.STL" scale="0.001 0.001 0.001"/>
       </geometry>
       <material
         name="">
@@ -581,7 +581,7 @@
         rpy="0 0 3.14"/>
       <geometry>
         <mesh
-          filename="package://rover_description/meshes/bio_assembly.STL" scale="0.001 0.001 0.001"/>
+          filename="package://aspha18_urdf/meshes/bio_assembly.STL" scale="0.001 0.001 0.001"/>
       </geometry>
     </collision> 
   </link>
@@ -618,7 +618,7 @@
         rpy="0 0 0"/>
       <geometry>
         <mesh
-          filename="package://rover_description/meshes/camera_mount.STL" scale="0.001 0.001 0.001"/>
+          filename="package://aspha18_urdf/meshes/camera_mount.STL" scale="0.001 0.001 0.001"/>
       </geometry>
       <material
         name="">
@@ -632,7 +632,7 @@
         rpy="0 0 0"/>
       <geometry>
         <mesh
-          filename="package://rover_description/meshes/camera_mount.STL" scale="0.001 0.001 0.001"/>
+          filename="package://aspha18_urdf/meshes/camera_mount.STL" scale="0.001 0.001 0.001"/>
       </geometry>
     </collision> 
   </link>
@@ -669,7 +669,7 @@
         rpy="0 0 0"/>
       <geometry>
         <mesh
-          filename="package://rover_description/meshes/com_mount.STL" scale="0.001 0.001 0.001"/>
+          filename="package://aspha18_urdf/meshes/com_mount.STL" scale="0.001 0.001 0.001"/>
       </geometry>
       <material
         name="">
@@ -683,7 +683,7 @@
         rpy="0 0 0"/>
       <geometry>
         <mesh
-          filename="package://rover_description/meshes/com_mount.STL" scale="0.001 0.001 0.001"/>
+          filename="package://aspha18_urdf/meshes/com_mount.STL" scale="0.001 0.001 0.001"/>
       </geometry>
     </collision> 
   </link>
