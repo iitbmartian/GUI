@@ -1,18 +1,14 @@
 <?xml version="1.0" ?>
 <sdf version="1.5">
-  <world name="default">
-    <!-- A global light source -->
-    <include>
-      <uri>model://sun</uri>
-    </include>
+
     <model name="heightmap">
       <static>true</static>
-      <link name="link">
+       <link name="link">
         <collision name="collision">
           <geometry>
             <heightmap>
-              <uri>file://media/dem/volcano.tif</uri>
-              <size>129 129 80</size>
+              <uri>model://rover_ws/src/GUI/aspha18_urdf/heightmap/landscape.png</uri>
+              <size>129 129 10</size>
               <pos>0 0 0</pos>
             </heightmap>
           </geometry>
@@ -44,13 +40,12 @@
                 <min_height>4</min_height>
                 <fade_dist>5</fade_dist>
               </blend>
-              <uri>file://media/dem/volcano.tif</uri>
-              <size>129 129 80</size>
+              <uri>model://rover_ws/src/GUI/aspha18_urdf/heightmap/landscape.png</uri>
+              <size>129 129 10</size>
               <pos>0 0 0</pos>
             </heightmap>
           </geometry>
         </visual>
       </link>
     </model>
-  </world>
 </sdf>
