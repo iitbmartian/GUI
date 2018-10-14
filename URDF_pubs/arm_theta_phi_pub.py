@@ -35,13 +35,14 @@ if __name__ == '__main__':
     r_time = rospy.Rate(100)
     counter=1
     while True:
-        L1,L2=get_act_lengths(pot_val2,pot_val1)
+        L1,L2=get_act_lengths(pot_val1,pot_val2)
         theta,phi=L_to_Angle(L1,L2)
         if(counter%200==0):
+            print("L1 = "+str(L1)+ " L2= "+str(L2))
             print("Theta = "+str(theta*180/np.pi)+" Phi = "+str(phi*180/np.pi))
             counter=0
         counter+=1
-        pot_val=Float64MultiArray(data=[theta+1.22,phi-0.52])
+        pot_val=Float64MultiArray(data=[3.14-phi+theta-1.1,phi-0.8])
         pub.publish(pot_val)
         r_time.sleep()
 

@@ -178,10 +178,10 @@ def get_target_angles(theta,phi,dx,dy):
 def get_act_lengths(pot1,pot2):
     Pot1_Max=1729
     Pot1_Min=140
-    Pot2_Max=1717
-    Pot2_Min=73  
-    L1=((pot1-Pot1_Min)/(Pot1_Max-Pot1_Min))*10+25
-    L2=((pot2-Pot2_Min)/(Pot2_Max-Pot2_Min))*10+25
+    Pot2_Max=1670
+    Pot2_Min=73
+    L1=-((pot1-Pot1_Min)/(Pot1_Max-Pot1_Min))*10+35
+    L2=-((pot2-Pot2_Min)/(Pot2_Max-Pot2_Min))*10+35
     return (L1,L2)
 
 '''
