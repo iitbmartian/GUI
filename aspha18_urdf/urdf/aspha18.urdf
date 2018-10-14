@@ -41,7 +41,7 @@
     </collision>
   </link>
 
-    <link
+<!--     <link
     name="kinect2_rgb_optical_frame">
     <color rgba="1 0 0 0"/>
     <inertial>
@@ -79,9 +79,9 @@
         <box size="0.1 0.6 0.1"/>
       </geometry>
     </collision>
-  </link>
+  </link> -->
 
-  <joint
+<!--   <joint
     name="kinect_joint"
     type="fixed">
     <origin
@@ -92,7 +92,7 @@
     <child
       link="kinect2_rgb_optical_frame" />
   </joint>
-
+ -->
 
   
   <link
@@ -698,6 +698,52 @@
     <child
       link="com_mount"/>
   </joint>
+
+      <link
+    name="camera_depth_frame">
+    <color rgba="1 0 0 0"/>
+    <inertial>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <mass
+        value="2.7918" />
+      <inertia
+        ixx="0.095684"
+        ixy="0.001902"
+        ixz="-0.00027184"
+        iyy="0.058185"
+        iyz="0.00031126"
+        izz="0.14455" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <box size="0.02 0.05 0.05"/>
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.84314 0.81569 0.75294 1" />
+      </material>
+    </visual>
+  </link>
+
+  <joint
+    name="depthcam_joint"
+    type="fixed">
+    <origin
+      xyz="0.05 0.02 -0.2"
+      rpy="-1.5 0 0" />
+    <parent
+      link="gripper" />
+    <child
+      link="camera_depth_frame" />
+  </joint>
+
+
 
 </robot>
 

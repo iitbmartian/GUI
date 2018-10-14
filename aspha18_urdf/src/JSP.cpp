@@ -48,7 +48,7 @@ joint_state.position[3] = 0;
 joint_state.position[4] = 0;
 joint_state.position[5] = 0;
 joint_state.position[6] = 0;
-joint_state.position[7] = -0.66;
+joint_state.position[7] = -0.84;
 
 ros::Subscriber sub = n.subscribe("/Theta_Phi", 1000, callbackFn);
 ros::spin();
