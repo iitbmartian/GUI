@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<!-- <link rel="stylesheet" type="text/css" href="style.css">
+<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+ -->
+
+</style>
+</head>
+<body>
+<!-- 
+
+<div class="keys">
+  <div ><i class="fa fa-arrow-up"></i></div>
+  <br />
+  <div ><i class="fa fa-arrow-left"></i></div>  
+  <div ><i class="fa fa-arrow-down"></i></div>
+  <div ><i class="fa fa-arrow-right"></i></div>
+</div>
+ -->{% block content %}
+
+    <h1>GUI</h1>
+    <form action="" method="POST"> 
+    {% csrf_token %}
+        {{ form.as_p }}
+    <input type="submit" name="action" value="Up" ></input>
+    <input type="submit" name="action" value="Left" ></input>
+    <input type="submit" name="action" value="Down" ></i></input>
+    <input type="submit" name="action" value="Right" ></input>
+    <input type="submit" name="action" value="Ac1_Up" ></input>
+    <input type="submit" name="action" value="Ac1_Down" ></input>
+    <input type="submit" name="action" value="Ac2_Up" ></input>
+    <input type="submit" name="action" value="Ac2_Down" ></input>
+    <input type="submit" name="action" value="Ac3_Up" ></input>
+    <input type="submit" name="action" value="Ac3_Down" ></input>
+    <input type="submit" name="action" value="Ac4_Up" ></input>
+    <input type="submit" name="action" value="Ac4_Down" ></input>
+    <input type="submit" name="action" value="Grip_Up" ></input>
+    <input type="submit" name="action" value="Grip_Down" ></input>    
+    <input type="submit" name="action" value="Stop_All" ></input>
+    </form>
+    {{output}}
+
+  <div class="row server-stream">
+      <!-- <span style="border: 1px solid black; "> -->
+        <div id="video_pane" style="margin: auto; border: 1px solid black; display: table;">
+          
+        <object type="application/x-shockwave-flash" id="flash_video_obj" name="flash_video_obj" class="video-display" data="http://192.168.0.109:8080/mjp.swf" width="1024" height="768"><param name="quality" value="high"><param name="bgcolor" value="#cccccc"><param name="allowscriptaccess" value="always"><param name="allowfullscreen" value="true"><param name="flashvars" value="cvideo=/video&amp;video=http://192.168.0.109:8080/video4flash&amp;audio=http://192.168.0.109:8080/audio.wav&amp;twa=http://192.168.0.109:8080//audioin.alaw&amp;mode=Vat&amp;wwidth=1024&amp;wheight=768&amp;debug=true"></object></div>
+  </div>  
+{% endblock %}
+</body>
+</html>
