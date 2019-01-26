@@ -6,7 +6,7 @@
   <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
     {% load staticfiles %}
-    <script src="{% static "/js/virtualjoystick.js" %}"></script>
+    <script src="{% static "js/virtualjoystick.js" %}"></script>
     
     <style>
     body {
@@ -39,7 +39,6 @@
       -moz-user-select  : none;
     }
     </style>
-
 </head>
 <body>
 {% block content %}
@@ -66,13 +65,18 @@
     </form>
     {{output}}
 
+<!--   <div class="row server-stream">
 
+        <div id="video_pane" style="margin: auto; border: 1px solid black; display: table;">
+          
+        <object type="application/x-shockwave-flash" id="flash_video_obj" name="flash_video_obj" class="video-display" data="http://192.168.0.109:8080/mjp.swf" width="1024" height="768"><param name="quality" value="high"><param name="bgcolor" value="#cccccc"><param name="allowscriptaccess" value="always"><param name="allowfullscreen" value="true"><param name="flashvars" value="cvideo=/video&amp;video=http://192.168.0.109:8080/video4flash&amp;audio=http://192.168.0.109:8080/audio.wav&amp;twa=http://192.168.0.109:8080//audioin.alaw&amp;mode=Vat&amp;wwidth=1024&amp;wheight=768&amp;debug=true"></object></div>
+  </div>  -->
   <span id="result"></span>
   <div id="container" ></div>
 
   <script>
       var URL = "{% url 'index' %}";
-    </script>
+  </script>
   <script>
       console.log("touchscreen is", VirtualJoystick.touchScreenAvailable() ? "available" : "not available");
   
@@ -85,12 +89,7 @@
                       stickRadius: 50
                    });
 
-      joystick.addEventListener('touchStart', function(){
-        console.log('down')
-      })
-      joystick.addEventListener('touchEnd', function(){
-        console.log('up')
-      })
+
 
       setInterval(function(){
         var outputEl  = document.getElementById('result');
@@ -105,37 +104,10 @@
 
       setInterval(function (){
         var data = {'dataX': joystick.deltaX(), 'dataY': joystick.deltaY()};
-        $.post(URL, data);
-        // console.log(joystick.pressed());
-      }, 1/30 * 1000);
-
-      
-  </script>
-
-   <!--  <div class="keys">
-      <div ><i class="fa fa-arrow-up"></i></div>
-      <br />
-      <div ><i class="fa fa-arrow-left"></i></div>  
-      <div ><i class="fa fa-arrow-down"></i></div>
-      <div ><i class="fa fa-arrow-right"></i></div>
-    </div>
-
-        <h1>GUI</h1>
-        <form action="" method="POST" class="keys"> 
-        {% csrf_token %}
-            {{ form.as_p }}
-        <input class="up arr" type="submit" name="action" value="Up" ><i class="fa fa-arrow-up"></i></input>
-        <input class="left arr" type="submit" name="action" value="Left" ><i class="fa fa-arrow-left"></i></input>
-        <input class="down arr" type="submit" name="action" value="Down" ><i class="fa fa-arrow-down"></i></input>
-        <input class="right arr" type="submit" name="action" value="Right" ><i class="fa fa-arrow-right"></i></input>
-        </form>
-        {{output}}
-
-      <div class="row server-stream">
-            <div id="video_pane" style="margin: auto; border: 1px solid black; display: table;">
-              
-            <object type="application/x-shockwave-flash" id="flash_video_obj" name="flash_video_obj" class="video-display" data="http://192.168.0.109:8080/mjp.swf" width="1024" height="768"><param name="quality" value="high"><param name="bgcolor" value="#cccccc"><param name="allowscriptaccess" value="always"><param name="allowfullscreen" value="true"><param name="flashvars" value="cvideo=/video&amp;video=http://192.168.0.109:8080/video4flash&amp;audio=http://192.168.0.109:8080/audio.wav&amp;twa=http://192.168.0.109:8080//audioin.alaw&amp;mode=Vat&amp;wwidth=1024&amp;wheight=768&amp;debug=true"></object></div>
-      </div> -->  
+        if(joystick.pressed()){
+          $.post(URL, data);}
+      }, 1/30 * 1000);    
+    </script>
 {% endblock %}
 </body>
 </html>

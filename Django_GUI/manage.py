@@ -26,7 +26,6 @@ def send_joy(data):
 
 
 if __name__ == "__main__":
-
     signal.signal(signal.SIGINT, sigint_handler)
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "mysite.settings")
     try:

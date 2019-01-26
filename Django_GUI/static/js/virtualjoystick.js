@@ -105,9 +105,10 @@ VirtualJoystick.touchScreenAvailable	= function()
 //										//
 //////////////////////////////////////////////////////////////////////////////////
 
-VirtualJoystick.prototype.deltaX	= function(){ return this._stickX - this._baseX;	}
-VirtualJoystick.prototype.deltaY	= function(){ return this._stickY - this._baseY;	}
-// VirtualJoystick.prototype.pressed   = function(){ return this._pressed; }
+VirtualJoystick.prototype.deltaX	= function(){ if(this._pressed == true) {return this._stickX - this._baseX;} else {return 0;}	}
+VirtualJoystick.prototype.deltaY	= function(){ if(this._pressed == true) {return this._stickY - this._baseY;} else {return 0;}	}
+VirtualJoystick.prototype.pressed	= function(){ return this._pressed; }
+
 VirtualJoystick.prototype.up	= function(){
 	if( this._pressed === false )	return false;
 	var deltaX	= this.deltaX();
@@ -147,10 +148,11 @@ VirtualJoystick.prototype.left	= function(){
 
 VirtualJoystick.prototype._onUp	= function()
 {
-	this._pressed	= false;
-	this._baseX	= this._baseY	= 0;
-	this._stickX	= this._stickY	= 0;
+	this._pressed	= false; 
 	this._stickEl.style.display	= "none";
+
+	// this._baseX	= this._baseY	= 0;
+	// this._stickX	= this._stickY	= 0;
 	
 	if(this._stationaryBase == false){	
 		this._baseEl.style.display	= "none";

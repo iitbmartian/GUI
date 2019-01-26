@@ -1,6 +1,6 @@
 from django.shortcuts import render, render_to_response
 from django.views.decorators.csrf import csrf_exempt
-from manage import send_msg,send_joy
+from manage import send_msg, send_joy
 from django.core.exceptions import ValidationError
 import sys
 import pdb
