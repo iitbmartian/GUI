@@ -2,10 +2,11 @@
 import os
 import sys
 import rospy
-from std_msgs.msg import String
+from std_msgs.msg import String, Float32MultiArray
 import signal
 
 pub = rospy.Publisher('Django_node', String, queue_size=10)
+virtjoy_pub = rospy.Publisher('Virtjoy_pub', Float32MultiArray, queue_size=10)
 rospy.init_node('talker', anonymous=True)
 
 def sigint_handler(signal, frame):
@@ -15,12 +16,17 @@ def send_msg(data):
     global pub
     pub.publish(data)
 
+def send_joy(data):
+    global virtjoy_pub
+    virtjoy_pub.publish(Float32MultiArray(data=data))
+
 # def execute_file(data):
     # print("Here")
     # os.system('python ' +str(data)+'.py')
 
 
 if __name__ == "__main__":
+
     signal.signal(signal.SIGINT, sigint_handler)
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "mysite.settings")
     try:

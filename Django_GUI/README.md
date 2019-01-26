@@ -2,7 +2,11 @@
 # GUI
 ## Getting Started
 ### 1.Basic settings
+<<<<<<< HEAD
 First, download or clone the GUI repository into your pc directory. Then,open the file `settings.py` at `your-dir/GUI/mysite/settings.py`. Here, Change the directory in `Templates[{..,'DIRS':['your-direct/GUI/mysite/templates/'],...}]`. 
+=======
+First, download or clone the GUI repository into your pc directory. Then,open the file `settings.py` at `your-dir/GUI/mysite/settings.py`. Here, Change the directory in `Templates[{..,'DIRS':['your-direct/GUI/mysite/templates/'],...}]` to the directory in which GUI is cloned. 
+>>>>>>> 2eaea023202bb669c51d7d26bcfe9c73b43affad
 
 ### 2.ROS Setup
 Now, start the terminal and turn on the ros master.
