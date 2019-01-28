@@ -109,6 +109,7 @@ VirtualJoystick.prototype.deltaX	= function(){ if(this._pressed == true) {return
 VirtualJoystick.prototype.deltaY	= function(){ if(this._pressed == true) {return this._stickY - this._baseY;} else {return 0;}	}
 VirtualJoystick.prototype.pressed	= function(){ return this._pressed; }
 
+
 VirtualJoystick.prototype.up	= function(){
 	if( this._pressed === false )	return false;
 	var deltaX	= this.deltaX();
@@ -230,6 +231,8 @@ VirtualJoystick.prototype._onMouseDown	= function(event)
 	event.preventDefault();
 	var x	= event.clientX;
 	var y	= event.clientY;
+	if( x < (this._baseX - 2*this._stickRadius) - 10 || x > (this._baseX + 2*this._stickRadius) + 10 )
+		return;
 	return this._onDown(x, y);
 }
 
@@ -237,6 +240,8 @@ VirtualJoystick.prototype._onMouseMove	= function(event)
 {
 	var x	= event.clientX;
 	var y	= event.clientY;
+	if( x < (this._baseX - 2*this._stickRadius) - 10 || x > (this._baseX + 2*this._stickRadius) + 10 )
+		return;
 	return this._onMove(x, y);
 }
 
@@ -265,6 +270,9 @@ VirtualJoystick.prototype._onTouchStart	= function(event)
 	// forward the action
 	var x		= touch.pageX;
 	var y		= touch.pageY;
+
+	if( x < (this._baseX - 2*this._stickRadius) - 10 || x > (this._baseX + 2*this._stickRadius) + 10 )
+		return;	
 	return this._onDown(x, y)
 }
 
@@ -297,6 +305,9 @@ VirtualJoystick.prototype._onTouchMove	= function(event)
 	// if there is no touch in progress, do nothing
 	if( this._touchIdx === null )	return;
 
+	var isValid	= this.dispatchEvent('touchStartValidation', event);
+	if( isValid === false )	return;
+
 	// try to find our touch event
 	var touchList	= event.changedTouches;
 	for(var i = 0; i < touchList.length && touchList[i].identifier !== this._touchIdx; i++ );
@@ -308,6 +319,9 @@ VirtualJoystick.prototype._onTouchMove	= function(event)
 
 	var x		= touch.pageX;
 	var y		= touch.pageY;
+
+	if( x < (this._baseX - 2*this._stickRadius) - 10 || x > (this._baseX + 2*this._stickRadius) + 10 )
+		return;
 	return this._onMove(x, y)
 }
 

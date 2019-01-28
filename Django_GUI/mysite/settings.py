@@ -56,7 +56,7 @@ ROOT_URLCONF = 'mysite.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['/home/pranay/Downloads/MRT/Django_GUI/mysite/templates'],
+        'DIRS': ['/home/pranay/Downloads/MRT/GUI/Django_GUI/mysite/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

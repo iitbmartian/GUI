@@ -29,7 +29,7 @@
     #info a:hover {
       text-decoration : underline;
     }
-    #container {
+    .container {
       width   : 500px;
       height    : 500px;
       overflow  : hidden;
@@ -37,7 +37,9 @@
       margin    : 0%;
       -webkit-user-select : none;
       -moz-user-select  : none;
+      display: flex;
     }
+    
     </style>
 </head>
 <body>
@@ -71,8 +73,12 @@
           
         <object type="application/x-shockwave-flash" id="flash_video_obj" name="flash_video_obj" class="video-display" data="http://192.168.0.109:8080/mjp.swf" width="1024" height="768"><param name="quality" value="high"><param name="bgcolor" value="#cccccc"><param name="allowscriptaccess" value="always"><param name="allowfullscreen" value="true"><param name="flashvars" value="cvideo=/video&amp;video=http://192.168.0.109:8080/video4flash&amp;audio=http://192.168.0.109:8080/audio.wav&amp;twa=http://192.168.0.109:8080//audioin.alaw&amp;mode=Vat&amp;wwidth=1024&amp;wheight=768&amp;debug=true"></object></div>
   </div>  -->
-  <span id="result"></span>
-  <div id="container" ></div>
+  <span id="result_1"></span>
+  <br></br>
+  <span id="result_2"></span>
+  <div class="container" >
+
+  </div>
 
   <script>
       var URL = "{% url 'index' %}";
@@ -80,34 +86,60 @@
   <script>
       console.log("touchscreen is", VirtualJoystick.touchScreenAvailable() ? "available" : "not available");
   
-      var joystick = new VirtualJoystick({
+      var joystick1 = new VirtualJoystick({
                       mouseSupport: true,
                       stationaryBase: true,
-                      baseX: 400,
-                      baseY: 400,
+                      baseX: 125,
+                      baseY: 250,
+                      strokeStyle: 'red',
                       limitStickTravel: true,
                       stickRadius: 50
                    });
 
+      var joystick2 = new VirtualJoystick({
+                      mouseSupport: true,
+                      stationaryBase: true,
+                      baseX: 375,
+                      baseY: 250,
+                      strokeStyle: 'blue',
+                      limitStickTravel: true,
+                      stickRadius: 50
+                   });
 
+      // setInterval(function(){
+      //   var outputEl  = document.getElementById('result_1');
+      //   outputEl.innerHTML  = '<b>Result:</b> '
+      //     + ' dx:'+joystick1.deltaX()
+      //     + ' dy:'+joystick1.deltaY()
+      //     + (joystick1.right() ? ' right'  : '')
+      //     + (joystick1.up()  ? ' up'   : '')
+      //     + (joystick1.left()  ? ' left' : '')
+      //     + (joystick1.down()  ? ' down'   : '') 
+      // }, 1/30 * 1000);
 
-      setInterval(function(){
-        var outputEl  = document.getElementById('result');
-        outputEl.innerHTML  = '<b>Result:</b> '
-          + ' dx:'+joystick.deltaX()
-          + ' dy:'+joystick.deltaY()
-          + (joystick.right() ? ' right'  : '')
-          + (joystick.up()  ? ' up'   : '')
-          + (joystick.left()  ? ' left' : '')
-          + (joystick.down()  ? ' down'   : '') 
-      }, 1/30 * 1000);
+      // setInterval(function(){
+      //   var outputEl  = document.getElementById('result_2');
+      //   outputEl.innerHTML  = '<b>Result:</b> '
+      //     + ' dx:'+joystick2.deltaX()
+      //     + ' dy:'+joystick2.deltaY()
+      //     + (joystick2.right() ? ' right'  : '')
+      //     + (joystick2.up()  ? ' up'   : '')
+      //     + (joystick2.left()  ? ' left' : '')
+      //     + (joystick2.down()  ? ' down'   : '') 
+      // }, 1/30 * 1000);
+
 
       setInterval(function (){
-        var data = {'dataX': joystick.deltaX(), 'dataY': joystick.deltaY()};
-        if(joystick.pressed()){
-          $.post(URL, data);}
+        var data_1 = {'dataX_1': joystick1.deltaX(), 'dataY_1': joystick1.deltaY()};
+        var data_2 = {'dataX_2': joystick2.deltaX(), 'dataY_2': joystick2.deltaY()};
+        if(joystick1.pressed()){
+          $.post(URL, data_1);}
+        if(joystick2.pressed()){
+          $.post(URL, data_2);}
       }, 1/30 * 1000);    
     </script>
+
+
 {% endblock %}
 </body>
 </html>
