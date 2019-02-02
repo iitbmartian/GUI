@@ -15,17 +15,25 @@ def index(request):
         # direction=request.POST['action']
         # pdb.set_trace()
         # send_msg(direction)
-        mssg_arr=np.zeros(2)
-        if 'dataX' in request.POST:
-            dataX = request.POST['dataX']
-            print("Data X: " + str(dataX))
-            mssg_arr[0]=float(dataX)
-        if 'dataY' in request.POST:
-            dataY=request.POST['dataY']
-            print("   Data Y: " + str(dataY))
-            mssg_arr[1]=float(dataY)
+        msg_arr=np.zeros(4)
+        if 'dataX_1' in request.POST:
+            dataX_1 = request.POST['dataX_1']
+            print("Data X_1 : " + str(dataX_1))
+            msg_arr[0]=float(dataX_1)
+        if 'dataY_1' in request.POST:
+            dataY_1=request.POST['dataY_1']
+            print("   Data Y_1: " + str(dataY_1))
+            msg_arr[1]=float(dataY_1)
+        if 'dataX_2' in request.POST:
+            dataX_2 = request.POST['dataX_2']
+            print("Data X_2 : " + str(dataX_2))
+            msg_arr[2]=float(dataX_2)
+        if 'dataY_2' in request.POST:
+            dataY_2=request.POST['dataY_2']
+            print("   Data Y_2: " + str(dataY_2))
+            msg_arr[3]=float(dataY_2)
 
-        send_joy(mssg_arr)
+        send_joy(msg_arr)
         return render(request,'index.html',{'output': "Success"})
 
 
