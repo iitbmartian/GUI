@@ -1,0 +1,481 @@
+<robot
+  name="rover19_urdf">
+  <link
+    name="base_link">
+    <inertial>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <mass
+        value="2.7918" />
+      <inertia
+        ixx="0.095684"
+        ixy="0.001902"
+        ixz="-0.00027184"
+        iyy="0.058185"
+        iyz="0.00031126"
+        izz="0.14455" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rover19_urdf/meshes/rover.stl" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.84314 0.81569 0.75294 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rover19_urdf/meshes/rover.stl" />
+      </geometry>
+    </collision>
+  </link>
+  <link
+    name="base_rot">
+    <inertial>
+      <origin
+      xyz="0 0 0 "
+      rpy="0 0 0" />
+      <mass
+        value="11.53" />
+      <inertia
+        ixx="0.13597"
+        ixy="1.2879E-07"
+        ixz="-9.0853E-09"
+        iyy="0.097658"
+        iyz="-3.0537E-14"
+        izz="0.097658" />
+    </inertial>
+    <visual>
+      <origin
+      xyz="0 0 0"
+      rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rover19_urdf/meshes/base_rot.stl" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+      xyz="0 0 0"
+      rpy="0 0 0"/>
+      <geometry>
+        <mesh
+          filename="package://rover19_urdf/meshes/base_rot.stl" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="base_rot_joint"
+    type="revolute">
+    <origin
+      xyz="252.89 -15.47 246.60"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="base_rot" />
+    <axis
+      xyz="0 0 1" />
+    <limit lower="-1" upper="1" effort="0" velocity="0"/>
+  </joint>
+
+  
+  <link
+    name="shoulder">
+    <inertial>
+      <origin
+      xyz="0 0 0"
+      rpy="0 0 0" />
+      <mass
+        value="11.53" />
+      <inertia
+        ixx="0.13597"
+        ixy="1.2879E-07"
+        ixz="-9.0853E-09"
+        iyy="0.097658"
+        iyz="-3.0537E-14"
+        izz="0.097658" />
+    </inertial>
+    <visual>
+      <origin
+      xyz="129.83 -0.93 226.73"
+      rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rover19_urdf/meshes/shoulder.stl" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+      xyz="0 0 0"
+      rpy="0 0 0"/>
+      <geometry>
+        <mesh
+          filename="package://rover19_urdf/meshes/shoulder.stl" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="shoulder_joint"
+    type="continuous">
+    <origin
+      xyz="0 0 0"
+      rpy="0 0 0" />
+    <parent
+      link="base_rot" />
+    <child
+      link="shoulder" />
+    <axis
+      xyz="0 1 0" />
+      <limit lower="-1" upper="1" effort="0" velocity="0"/>
+  </joint>
+
+  <link
+    name="elbow">
+    <inertial>
+      <origin
+      xyz="0 0 0"
+      rpy="0 0 0" />
+      <mass
+        value="11.5298327680895" />
+      <inertia
+        ixx="0.135971148628003"
+        ixy="-5.63856091752789E-08"
+        ixz="91.16335845630891E-07"
+        iyy="0.0976582051487171"
+        iyz="-1.71203329291103E-13"
+        izz="0.0976582051489874" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="172.39 4.32 89.75"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rover19_urdf/meshes/elbow.stl" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rover19_urdf/meshes/elbow.stl" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="elbow_joint"
+    type="continuous">
+    <origin
+      xyz="234.16 -9.84 460.51"
+      rpy="0 0 0" />
+    <parent
+      link="shoulder" />
+    <child
+      link="elbow" />
+    <axis
+      xyz="0 1 0" />
+  </joint>
+
+  <link
+    name="gripper_link1">
+    <inertial>
+      <origin
+      xyz="0 0 0"
+      rpy="0 0 0" />
+      <mass
+        value="11.5298327680895" />
+      <inertia
+        ixx="0.135971148628439"
+        ixy="-2.13278075453915E-13"
+        ixz="1.49984791894007E-14"
+        iyy="0.0976582051486343"
+        iyz="2.16840434497101E-18"
+        izz="0.0976582051486343" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="50.41 0.09 -29.47"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rover19_urdf/meshes/gripper_link1.stl" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rover19_urdf/meshes/gripper_link1.stl" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="gripper_link1_joint"
+    type="continuous">
+    <origin
+      xyz="342.91 1.74 138.36"
+      rpy="0 0 0" />
+    <parent 
+      link="elbow" />
+    <child
+      link="gripper_link1" />
+    <axis
+      xyz="0 1 0" />
+  </joint>
+ 
+  <link
+    name="gripper_link2">
+    <inertial>
+      <origin 
+      xyz="0 0 0"
+      rpy="0 0 0" />
+      <mass
+        value="11.5298327680895" />
+      <inertia
+        ixx="0.135971148628439"
+        ixy="-2.13278075453915E-13"
+        ixz="1.49984791894007E-14"
+        iyy="0.0976582051486343"
+        iyz="2.16840434497101E-18"
+        izz="0.0976582051486343" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="50.71 -3.19 -31.27"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rover19_urdf/meshes/gripper_link2.stl" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rover19_urdf/meshes/gripper_link2.stl" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="gripper_link2_joint"
+    type="revolute">
+    <origin
+      xyz="113.27 -4.19 -56.24"
+      rpy="0 0 0" />
+    <parent
+      link="gripper_link1" />
+    <child
+      link="gripper_link2" />
+    <axis
+      xyz="55.32 -0.68 -36.51" />
+    <limit lower="-1" upper="1" effort="0" velocity="0"/>
+  </joint>
+
+  <link
+    name="finger0">
+    <inertial>
+      <origin
+      xyz="0 0 0"
+      rpy="0 0 0" />
+      <mass
+        value="11.5298327680895" />
+      <inertia
+        ixx="0.135971148628439"
+        ixy="-1.95838647067939E-13"
+        ixz="-9.49762849544681E-14"
+        iyy="0.097658205148634"
+        iyz="2.42861286636753E-17"
+        izz="0.097658205148634" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="53.21 -50.09 -48.38"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rover19_urdf/meshes/finger0.stl" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rover19_urdf/meshes/finger0.stl" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="finger0_joint"
+    type="revolute">
+    <origin      
+      xyz="112.78 -4.82 -60.85"
+      rpy="0 0 0" />
+    <parent
+      link="gripper_link2" />
+    <child
+      link="finger0" />
+    <axis
+      xyz="-0.4811975 -0.22519062  0.84719428" />
+    <limit lower="0" upper="0.22" effort="0" velocity="0"/>
+  </joint>
+  
+  <link
+    name="finger1">
+    <inertial>
+      <origin
+      xyz="0 0 0"
+      rpy="0 0 0" />
+      <mass
+        value="11.5298327680895" />
+      <inertia
+        ixx="0.135971148628439"
+        ixy="-1.95838647067939E-13"
+        ixz="-9.49762849544681E-14"
+        iyy="0.097658205148634"
+        iyz="2.42861286636753E-17"
+        izz="0.097658205148634" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="73.51 -2.91 -11.69"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rover19_urdf/meshes/finger1.stl" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rover19_urdf/meshes/finger1.stl" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="finger1_joint"
+    type="revolute">
+    <origin      
+      xyz="112.78 -4.82 -60.85"
+      rpy="0 0 0" />
+    <parent
+      link="gripper_link2" />
+    <child
+      link="finger1" />
+    <axis
+      xyz="0.19700433 0.97014849  -0.14142563" />
+    <limit lower="0" upper="0.07" effort="0" velocity="0"/>
+  </joint>
+
+  <link
+    name="finger2">
+    <inertial>
+      <origin
+      xyz="0 0 0"
+      rpy="0 0 0" />
+      <mass
+        value="11.5298327680895" />
+      <inertia
+        ixx="0.135971148628439"
+        ixy="-1.95838647067939E-13"
+        ixz="-9.49762849544681E-14"
+        iyy="0.097658205148634"
+        iyz="2.42861286636753E-17"
+        izz="0.097658205148634" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="53.27 36.48 -46.25"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rover19_urdf/meshes/finger2.stl" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rover19_urdf/meshes/finger2.stl" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="finger2_joint"
+    type="revolute">
+    <origin      
+      xyz="112.78 -4.82 -60.85"
+      rpy="0 0 0" />
+    <parent
+      link="gripper_link2" />
+    <child
+      link="finger2" />
+    <axis
+      xyz="0.43525535 -0.23528661 -0.8690184" />
+    <limit lower="0" upper="0.14" effort="0" velocity="0"/>
+  </joint>
+</robot>
