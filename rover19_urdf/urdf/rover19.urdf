@@ -22,7 +22,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://rover19_urdf/meshes/rover.stl" />
+          filename="package://rover19_urdf/meshes/rover.stl"  scale="0.001 0.001 0.001"/>
       </geometry>
       <material
         name="">
@@ -40,6 +40,7 @@
       </geometry>
     </collision>
   </link>
+ 
   <link
     name="base_rot">
     <inertial>
@@ -62,7 +63,7 @@
       rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://rover19_urdf/meshes/base_rot.stl" />
+          filename="package://rover19_urdf/meshes/base_rot.stl"  scale="0.001 0.001 0.001"/>
       </geometry>
       <material
         name="">
@@ -84,7 +85,7 @@
     name="base_rot_joint"
     type="revolute">
     <origin
-      xyz="252.89 -15.47 246.60"
+      xyz="0.25289 -0.01547 0.24660"
       rpy="0 0 0" />
     <parent
       link="base_link" />
@@ -114,11 +115,11 @@
     </inertial>
     <visual>
       <origin
-      xyz="129.83 -0.93 226.73"
+      xyz="0.12983 -0.00093 0.22673"
       rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://rover19_urdf/meshes/shoulder.stl" />
+          filename="package://rover19_urdf/meshes/shoulder.stl" scale="0.001 0.001 0.001"/>
       </geometry>
       <material
         name="">
@@ -169,11 +170,11 @@
     </inertial>
     <visual>
       <origin
-        xyz="172.39 4.32 89.75"
+        xyz="0.17239 0.00432 0.08975"
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://rover19_urdf/meshes/elbow.stl" />
+          filename="package://rover19_urdf/meshes/elbow.stl" scale="0.001 0.001 0.001" />
       </geometry>
       <material
         name="">
@@ -195,7 +196,7 @@
     name="elbow_joint"
     type="continuous">
     <origin
-      xyz="234.16 -9.84 460.51"
+      xyz="0.23416 -0.00984 0.46051"
       rpy="0 0 0" />
     <parent
       link="shoulder" />
@@ -223,11 +224,11 @@
     </inertial>
     <visual>
       <origin
-        xyz="50.41 0.09 -29.47"
+        xyz="0.05041 0.00009 -0.02947"
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://rover19_urdf/meshes/gripper_link1.stl" />
+          filename="package://rover19_urdf/meshes/gripper_link1.stl" scale="0.001 0.001 0.001"/>
       </geometry>
       <material
         name="">
@@ -249,7 +250,7 @@
     name="gripper_link1_joint"
     type="continuous">
     <origin
-      xyz="342.91 1.74 138.36"
+      xyz="0.34291 0.00174 0.13836"
       rpy="0 0 0" />
     <parent 
       link="elbow" />
@@ -277,11 +278,11 @@
     </inertial>
     <visual>
       <origin
-        xyz="50.71 -3.19 -31.27"
+        xyz="0.05071 -0.00319 -0.03127"
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://rover19_urdf/meshes/gripper_link2.stl" />
+          filename="package://rover19_urdf/meshes/gripper_link2.stl" scale="0.001 0.001 0.001"/>
       </geometry>
       <material
         name="">
@@ -303,7 +304,7 @@
     name="gripper_link2_joint"
     type="revolute">
     <origin
-      xyz="113.27 -4.19 -56.24"
+      xyz="0.11327 -0.00419 -0.05624"
       rpy="0 0 0" />
     <parent
       link="gripper_link1" />
@@ -332,11 +333,11 @@
     </inertial>
     <visual>
       <origin
-        xyz="53.21 -50.09 -48.38"
+        xyz="0.05321 -0.05009 -0.04838"
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://rover19_urdf/meshes/finger0.stl" />
+          filename="package://rover19_urdf/meshes/finger0.stl" scale="0.001 0.001 0.001"/>
       </geometry>
       <material
         name="">
@@ -358,7 +359,7 @@
     name="finger0_joint"
     type="revolute">
     <origin      
-      xyz="112.78 -4.82 -60.85"
+      xyz="0.11278 -0.00482 -0.06085"
       rpy="0 0 0" />
     <parent
       link="gripper_link2" />
@@ -387,11 +388,11 @@
     </inertial>
     <visual>
       <origin
-        xyz="73.51 -2.91 -11.69"
+        xyz="0.07351 -0.00291 -0.01169"
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://rover19_urdf/meshes/finger1.stl" />
+          filename="package://rover19_urdf/meshes/finger1.stl" scale="0.001 0.001 0.001"/>
       </geometry>
       <material
         name="">
@@ -413,7 +414,7 @@
     name="finger1_joint"
     type="revolute">
     <origin      
-      xyz="112.78 -4.82 -60.85"
+      xyz="0.11278 -0.00482 -0.06085"
       rpy="0 0 0" />
     <parent
       link="gripper_link2" />
@@ -442,11 +443,11 @@
     </inertial>
     <visual>
       <origin
-        xyz="53.27 36.48 -46.25"
+        xyz="0.05327 0.03648 -0.04625"
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://rover19_urdf/meshes/finger2.stl" />
+          filename="package://rover19_urdf/meshes/finger2.stl" scale="0.001 0.001 0.001"/>
       </geometry>
       <material
         name="">
@@ -460,7 +461,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://rover19_urdf/meshes/finger2.stl" />
+          filename="package://rover19_urdf/meshes/finger2.stl"/>
       </geometry>
     </collision>
   </link>
@@ -468,7 +469,7 @@
     name="finger2_joint"
     type="revolute">
     <origin      
-      xyz="112.78 -4.82 -60.85"
+      xyz="0.11278 -0.00482 -0.06085"
       rpy="0 0 0" />
     <parent
       link="gripper_link2" />
