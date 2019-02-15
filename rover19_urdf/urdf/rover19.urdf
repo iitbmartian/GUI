@@ -479,4 +479,84 @@
       xyz="0.43525535 -0.23528661 -0.8690184" />
     <limit lower="0" upper="0.14" effort="0" velocity="0"/>
   </joint>
+
+
+   <link
+    name="depthcamera_mount">
+    <color rgba="1 0 0 0"/>
+    <inertial>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <mass
+        value="2.7918" />
+      <inertia
+        ixx="0.095684"
+        ixy="0.001902"
+        ixz="-0.00027184"
+        iyy="0.058185"
+        iyz="0.00031126"
+        izz="0.14455" />
+    </inertial>
+   <!--  <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <box size="0.02 0.05 0.05"/>
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.84314 0.81569 0.75294 1" />
+      </material>
+    </visual> -->
+  </link>
+
+  <joint
+    name="depthcam_joint"
+    type="fixed">
+    <origin
+      xyz="0.03252 -0.003 0.09906"
+      rpy="0 0.7 0" />
+    <parent
+      link="gripper_link2" />
+    <child
+      link="depthcamera_mount" />
+</joint>
+
+   <!-- RGB joints & links -->
+  <joint name="camera_rgb_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+    <parent link="depthcamera_mount"/>
+    <child link="camera_rgb_frame"/>
+  </joint>
+  <link name="camera_rgb_frame"/>
+  <!-- RGB optical frame is rotated relative to the camera -->
+  <joint name="camera_rgb_optical_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+    <parent link="camera_rgb_frame"/>
+    <child link="camera_rgb_optical_frame"/>
+  </joint>
+  <link name="camera_rgb_optical_frame"/>
+  <!-- Depth joints & links -->
+  <joint name="camera_depth_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+    <parent link="camera_rgb_frame"/>
+    <child link="camera_depth_frame"/>
+  </joint>
+  <link name="camera_depth_frame"/>
+  <!-- Depth optical frame is rotated relative to the camera -->
+  <joint name="camera_depth_optical_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+    <parent link="camera_depth_frame"/>
+    <child link="camera_depth_optical_frame"/>
+  </joint>
+  <link name="camera_depth_optical_frame"/>
+  <joint name="camera_color_optical_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+    <parent link="camera_depth_frame"/>
+    <child link="camera_color_optical_frame"/>
+  </joint>
+<link name="camera_color_optical_frame"/>
 </robot>

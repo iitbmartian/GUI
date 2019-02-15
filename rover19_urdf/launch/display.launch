@@ -36,4 +36,9 @@
         type="JSP" 
         output="screen" 
         required="true" />
+    <node name="arm_angs"
+        pkg="rover19_urdf"
+        type="arm_angs.py" 
+        output="screen" 
+        required="true" />
 </launch>

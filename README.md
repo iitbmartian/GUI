@@ -1,11 +1,11 @@
 # GUI
 GUI for controlling various subsystems of the Mars Rover Project, IIT-Bombay.
 
-![ASPHA-18 URDF](ASPHA-18_urdf.png)
+<!-- ![ASPHA-18 URDF](ASPHA-18_urdf.png) -->
 
 ## Visualisation of Rover on RViz
 
-* Execute `roslaunch aspha18_urdf display.launch` in root of a ROS workspace, after cloning the repo.
+* Execute `roslaunch rover19_urdf display.launch` in root of a ROS workspace, after cloning the repo.
 
 ## Design steps involved in making the URDF
 
