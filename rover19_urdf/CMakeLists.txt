@@ -19,6 +19,8 @@ include_directories(
 )
 
 ## Declare a C++ executable
-## add_executable(Odometry_new src/Odometry_new.cpp)
+add_executable(Odometry_new src/Odometry_new.cpp)
 add_executable(JSP src/JSP.cpp)
+target_link_libraries(Odometry_new ${catkin_LIBRARIES}) 
 target_link_libraries(JSP ${catkin_LIBRARIES}) 
+
