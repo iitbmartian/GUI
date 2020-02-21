@@ -2,26 +2,19 @@
 # GUI
 ## Getting Started
 ### 1.Basic settings
-<<<<<<< HEAD
-First, download or clone the GUI repository into your pc directory. Then,open the file `settings.py` at `your-dir/GUI/mysite/settings.py`. Here, Change the directory in `Templates[{..,'DIRS':['your-direct/GUI/mysite/templates/'],...}]`. 
-=======
-First, download or clone the GUI repository into your pc directory. Then,open the file `settings.py` at `your-dir/GUI/mysite/settings.py`. Here, Change the directory in `Templates[{..,'DIRS':['your-direct/GUI/mysite/templates/'],...}]` to the directory in which GUI is cloned. 
->>>>>>> 2eaea023202bb669c51d7d26bcfe9c73b43affad
+1. First, download or clone the GUI repository into your pc directory.  
+2. Then,open the file `settings.py` at `your-dir/GUI/mysite/settings.py`. Here, Change the directory in `Templates[{..,'DIRS':['your-direct/GUI/mysite/templates/'],...}]` to the directory in which GUI is cloned.
+
 
 ### 2.ROS Setup
 Now, start the terminal and turn on the ros master.
-
 `$ roscore`
-
-> **Note: Don't close this terminal for the entire project.** 
 
 ### 3.Running the Server
 Now start new terminal and enter into GUI directory.
-
 `$ cd your-dir/GUI`
 
 **_To run project locally on a pc server_:**
-
 `$ python manage.py runserver`
 
 Now, you can run the project on the chrome at http://127.0.0.1:8000
@@ -71,11 +64,3 @@ The `views.py` is in `../GUI/mysite directory`.
 When the function `index(request)` receives an `GET` type request like Webpage Loading, Refreshing etc. it loads the `index.html` page.
 
 When further the buttons are pressed on the webpage the `POST` type requests are made to the function `index(request)`. Here `request.POST['action']` identifies the `value` attribute of the button pressed and assigns to `direction` variable. This `direction` is then sent to `manage.py` using `send_msg` function where the publisher publishes it.
-
-
-
-
-
-
-
-
