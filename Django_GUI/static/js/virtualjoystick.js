@@ -233,6 +233,8 @@ VirtualJoystick.prototype._onMouseDown	= function(event)
 	var y	= event.clientY;
 	if( x < (this._baseX - 2*this._stickRadius) - 10 || x > (this._baseX + 2*this._stickRadius) + 10 )
 		return;
+	if( y < (this._baseY - 2*this._stickRadius) - 10 || y > (this._baseY + 2*this._stickRadius) + 10 )
+		return;
 	return this._onDown(x, y);
 }
 
@@ -241,6 +243,8 @@ VirtualJoystick.prototype._onMouseMove	= function(event)
 	var x	= event.clientX;
 	var y	= event.clientY;
 	if( x < (this._baseX - 2*this._stickRadius) - 10 || x > (this._baseX + 2*this._stickRadius) + 10 )
+		return;
+	if( y < (this._baseY - 2*this._stickRadius) - 10 || y > (this._baseY + 2*this._stickRadius) + 10 )
 		return;
 	return this._onMove(x, y);
 }

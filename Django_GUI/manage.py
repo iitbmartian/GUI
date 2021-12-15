@@ -18,6 +18,7 @@ def send_msg(data):
 
 def send_joy(data):
     global virtjoy_pub
+    # print(data)
     virtjoy_pub.publish(Float32MultiArray(data=data))
 
 # def execute_file(data):
