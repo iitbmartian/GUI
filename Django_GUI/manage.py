@@ -2,24 +2,25 @@
 import os
 import sys
 import rospy
-from std_msgs.msg import String, Float32MultiArray
+#from std_msgs.msg import String, Float32MultiArray
+from sensor_msgs.msg import Joy
 import signal
 
-pub = rospy.Publisher('Django_node', String, queue_size=10)
-virtjoy_pub = rospy.Publisher('Virtjoy_pub', Float32MultiArray, queue_size=10)
+#pub = rospy.Publisher('Django_node', String, queue_size=10)
+virtjoy_pub = rospy.Publisher('Virtjoy_pub', Joy, queue_size=10)
 rospy.init_node('talker', anonymous=True)
 
 def sigint_handler(signal, frame):
     sys.exit(0)
 
-def send_msg(data):
-    global pub
-    pub.publish(data)
+#def send_msg(data):
+#    global pub
+#    pub.publish(data)
 
-def send_joy(data):
+def send_joy(axes, buttons):
     global virtjoy_pub
     # print(data)
-    virtjoy_pub.publish(Float32MultiArray(data=data))
+    virtjoy_pub.publish(Joy(axes = axes, buttons = buttons))
 
 # def execute_file(data):
     # print("Here")
