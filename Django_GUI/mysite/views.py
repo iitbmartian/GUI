@@ -74,25 +74,66 @@ def bio(request):
         # pdb.set_trace()
         # send_msg(direction)
         # joy_arr=np.zeros(4)
-        but_arr=np.zeros(10)
-        if 'channeling' in request.POST:#for buttons add here
-            if request.POST['channeling'] == 'Stop_All':
+        raman_arr = np.zeros(2)
+        channel_arr = np.zeros(7)
+        microscope_arr = np.zeros(2)
+        stewart_arr = np.zeros(9)
+        req = request.POST
+        print(req)
+        if 'channeling' in req:#for buttons add here
+            if req['channeling'] == 'Stop_All':
               print("Stop all")
-            elif str(request.POST['channeling']) == 'funnel':
-              print(str(request.POST['channeling']))
-              but_arr[0] = but_arr[0]
-            elif str(request.POST['channeling'])[:2] == 'Gr':
-              print (str(request.POST['channeling']))
-              but_arr[8 + int(str(request.POST['channeling'])[5:7] == 'Do') ] = 1
-        print(request.POST)
+            elif str(req['channeling']) == 'funnel':
+              print(str(req['channeling']))
+              channel_arr[0] = 1
+            elif str(req['channeling'])[:12] == 'push buttons':
+              print (str(req['channeling']))
+              channel_arr[int(str(req['channeling'])[12:13]) ] = 1
+        if 'raman' in req:
+            if str(req['raman']) == 'laser':
+              print(str(req['raman']))
+              raman_arr[0] = 1
+            elif str(req['raman']) == 'servo':
+              print(str(req['raman']))
+              raman_arr[1] = 1
+            send_raman(raman_arr)
+            print( str(req['raman']) + ': 1')
+        if 'microscope' in req:
+            if 'dummy' in req.getlist('microscope'):
+              print(str(req['microscope']))
+              microscope_arr[1] = int(req['microscope'])
+            else:
+              print("val", req.getlist('microscope')[0])
+            microscope_arr[0] = int(req.getlist('microscope')[0])
+            send_microscope(microscope_arr)
+        if 'stewart' in req:
+            req_list = [int(x.encode('UTF8')) for x in req.getlist('stewart')[1:]]
+            random = 0
+            if not 'dummy' in req.getlist('stewart'):#random is the only visible button
+                random = 1
+
+            req_list.append(random)
+            stewart_arr = req_list
+            print(stewart_arr)
+            send_stewart(stewart_arr)
+            
+            # elif str(req['raman']) == 'servo':
+            #   print(str(req['raman']))
+            #   raman_arr[1] = 1
+            # send_raman(raman_arr)
+            # print( str(req['raman']) + ': 1')
+
+
+        print(req)
+        # get_arr
         # send_joy(buttons = but_arr)
-        if 'action' in request.POST:
-          if request.POST['action'] != 'Stop_All':
+        if 'action' in req:
+          if req['action'] != 'Stop_All':
             rospy.sleep(0.2)#change time duration here
             # send_joy(axes = np.zeros(4), buttons = np.zeros(10))
-            print( str(request.POST['action']) + ': 0')
-        # print(request.POST)
-        return render(request,'bio.html',{'output1': "Success", "servo_angle":"45"})
+            print( str(req['action']) + ': 0')
+        # print(req)
+        return render(request,'bio.html',{"servo_angle":"45"})
 
 
 # def my_view(request):

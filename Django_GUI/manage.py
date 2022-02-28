@@ -33,7 +33,7 @@ def send_raman(array):
     global raman_pub
     # print(array)
     raman_pub.publish(Float32MultiArray(data = array))
-def send_channeling(array):
+def send_microscope(array):
     global microscope_pub
     # print(array)
     microscope_pub.publish(Float32MultiArray(data = array))
