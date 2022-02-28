@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    {% load staticfiles %}
+    <!-- <script src="{% static 'js/virtualjoystick.js' %}"></script> -->
+    <script src="{% static 'js/jquery_min.js' %}"></script>
+
+    
+    <style>
+    body {
+      overflow  : hidden;
+      padding   : 0;
+      margin    : 0;
+      background-color: #BBB;
+    }
+    #info {
+      position  : relative;
+      top   : 0px;
+      width   : 100%;
+      padding   : 5px;
+      text-align  : center;
+    }
+    #info a {
+      color   : #66F;
+      text-decoration : none;
+    }
+    #info a:hover {
+      text-decoration : underline;
+    }
+    .container {
+      width   : 500px;
+      height    : 1500px;
+      overflow  : hidden;
+      padding   : 0;
+      margin    : 0%;
+      -webkit-user-select : none;
+      -moz-user-select  : none;
+      display: flex;
+    }
+    
+    </style>
+</head>
+<body>
+{% block content %}
+
+    <h1>GUI</h1>
+    <h1>Channeling</h1>
+    <form action="" method="POST"> 
+    {% csrf_token %}
+        {{ form.as_p }}
+    <input type="submit" name="channeling" value="funnel" ></input>
+    <input type="submit" name="channeling" value="push button 1" ></input>
+    <input type="submit" name="channeling" value="push button 2" ></i></input>
+    <input type="submit" name="channeling" value="push button 3" ></input>
+    <input type="submit" name="channeling" value="push button 4" ></input>
+    <input type="submit" name="channeling" value="push button 5" ></input>
+    <input type="submit" name="channeling" value="push button 6" ></input>
+    <input type="submit" name="channeling" value="Stop_All" ></input>
+    </form>
+    {{output1}}
+
+    <h1>Raman</h1>
+    <form action="" method="POST"> 
+    {% csrf_token %}
+        {{ form.as_p }}
+    <input type="submit" name="raman" value="laser" ></input>
+    <input type="submit" name="raman" value="servo" ></input>
+    <input type="submit" name="raman" value="Stop_All" ></input>
+    </form>
+    {{output2}}
+    <h1>Microscope</h1>
+    <form action="" method="POST"> 
+    {% csrf_token %}
+        {{ form.as_p }}
+
+    <input type="submit" name="microscope" value="dummy" style="display: none;"></input> <!-- this dummy button gets sent when text input is entered -->
+    <input type="submit" name="microscope" value="+1" ></input>
+    <input type="submit" name="microscope" value="0" ></input>
+    <input type="submit" name="microscope" value="-1" ></input>
+    <br>
+    <label>servo angle</label>
+    <input type="text" name="microscope" value={{ servo_angle }} ></input>
+    <br>
+    <input type="submit" name="microscope" value="Stop_All" ></input>
+    </form>
+    {{output3}}
+    <h1>Stewart</h1>
+    <form action="" method="POST"> 
+    {% csrf_token %}
+        {{ form.as_p }}
+    <input type="submit" name="stewart" value="dummy" style="display: none;"></input> <!-- this dummy button gets sent when text input is entered -->
+    <label>val1</label>
+    <input type="text" name="stewart" value={{ val1 }} ></input>
+
+    <label>val2</label>
+    <input type="text" name="stewart" value={{ val2 }} ></input>
+
+    <label>val3</label>
+    <input type="text" name="stewart" value={{ val3 }} ></input>
+    <br>
+    <label>val4</label>
+    <input type="text" name="stewart" value={{ val4 }} ></input>
+
+    <label>val5</label>
+    <input type="text" name="stewart" value={{ val5 }} ></input>
+
+    <label>val6</label>
+    <input type="text" name="stewart" value={{ val6 }} ></input>
+    <br>
+    <label>vertical motion(-2 to +2)</label>
+    <input type="text" name="stewart" value={{ vertical_motion }} ></input>
+    <label>roll</label>
+    <input type="text" name="stewart" value={{ roll }} ></input>
+    <input type="submit" name="stewart" value="Random" ></input>    
+    <input type="submit" name="stewart" value="Stop_All" ></input>
+    </form>
+    {{output4}}
+
+<!--   <div class="row server-stream">
+
+        <div id="video_pane" style="margin: auto; border: 1px solid black; display: table;">
+          
+        <object type="application/x-shockwave-flash" id="flash_video_obj" name="flash_video_obj" class="video-display" data="http://192.168.0.109:8080/mjp.swf" width="1024" height="768"><param name="quality" value="high"><param name="bgcolor" value="#cccccc"><param name="allowscriptaccess" value="always"><param name="allowfullscreen" value="true"><param name="flashvars" value="cvideo=/video&amp;video=http://192.168.0.109:8080/video4flash&amp;audio=http://192.168.0.109:8080/audio.wav&amp;twa=http://192.168.0.109:8080//audioin.alaw&amp;mode=Vat&amp;wwidth=1024&amp;wheight=768&amp;debug=true"></object></div>
+  </div>  -->
+  
+  <span id="result_1"></span>
+  <br></br>
+  <span id="result_2"></span>
+  <div class="container" >
+
+  </div>
+<!--  <script>
+      var URL = "{% url 'index' %}";
+  </script>
+   <script>
+      console.log("touchscreen is", VirtualJoystick.touchScreenAvailable() ? "available" : "not available");
+  
+      var was_pressed_1 = false
+      var was_pressed_2 = false
+      
+      var joystick1 = new VirtualJoystick({
+                      mouseSupport: true,
+                      stationaryBase: true,
+                      baseX: 125,
+                      baseY: 300,
+                      strokeStyle: 'red',
+                      limitStickTravel: true,
+                      stickRadius: 50
+                   });
+
+      var joystick2 = new VirtualJoystick({
+                      mouseSupport: true,
+                      stationaryBase: true,
+                      baseX: 375,
+                      baseY: 300,
+                      strokeStyle: 'blue',
+                      limitStickTravel: true,
+                      stickRadius: 50
+                   });
+
+      // setInterval(function(){
+      //   var outputEl  = document.getElementById('result_1');
+      //   outputEl.innerHTML  = '<b>Result:</b> '
+      //     + ' dx:'+joystick1.deltaX()
+      //     + ' dy:'+joystick1.deltaY()
+      //     + (joystick1.right() ? ' right'  : '')
+      //     + (joystick1.up()  ? ' up'   : '')
+      //     + (joystick1.left()  ? ' left' : '')
+      //     + (joystick1.down()  ? ' down'   : '') 
+      // }, 1/30 * 1000);
+
+      // setInterval(function(){
+      //   var outputEl  = document.getElementById('result_2');
+      //   outputEl.innerHTML  = '<b>Result:</b> '
+      //     + ' dx:'+joystick2.deltaX()
+      //     + ' dy:'+joystick2.deltaY()
+      //     + (joystick2.right() ? ' right'  : '')
+      //     + (joystick2.up()  ? ' up'   : '')
+      //     + (joystick2.left()  ? ' left' : '')
+      //     + (joystick2.down()  ? ' down'   : '') 
+      // }, 1/30 * 1000);
+
+
+      setInterval(function (){
+        var data_1 = {'dataX_1': joystick1.deltaX(), 'dataY_1': joystick1.deltaY()};
+        var data_2 = {'dataX_2': joystick2.deltaX(), 'dataY_2': joystick2.deltaY()};
+        if(joystick1.pressed()){
+          $.post(URL, data_1);
+          was_pressed_1 = true;}
+        else if(was_pressed_1){
+          $.post(URL, data_1);
+          was_pressed_1 = false;}
+        if(joystick2.pressed()){
+          $.post(URL, data_2);
+          was_pressed_2 = true;}
+        else if(was_pressed_2){
+          $.post(URL, data_2);
+          was_pressed_2 = false;}
+      }, 1/30 * 1000);    
+    </script> -->
+
+
+
+{% endblock %}
+</body>
+</html>

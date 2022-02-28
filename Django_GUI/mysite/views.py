@@ -65,6 +65,35 @@ def index(request):
         # print(request.POST)
         return render(request,'index.html',{'output': "Success"})
 
+@csrf_exempt
+def bio(request):
+    if request.method == 'GET':
+        return render(request, 'bio.html', {'output': ''})
+    elif request.method == 'POST':
+        # direction=request.POST['action']
+        # pdb.set_trace()
+        # send_msg(direction)
+        # joy_arr=np.zeros(4)
+        but_arr=np.zeros(10)
+        if 'channeling' in request.POST:#for buttons add here
+            if request.POST['channeling'] == 'Stop_All':
+              print("Stop all")
+            elif str(request.POST['channeling']) == 'funnel':
+              print(str(request.POST['channeling']))
+              but_arr[0] = but_arr[0]
+            elif str(request.POST['channeling'])[:2] == 'Gr':
+              print (str(request.POST['channeling']))
+              but_arr[8 + int(str(request.POST['channeling'])[5:7] == 'Do') ] = 1
+        print(request.POST)
+        # send_joy(buttons = but_arr)
+        if 'action' in request.POST:
+          if request.POST['action'] != 'Stop_All':
+            rospy.sleep(0.2)#change time duration here
+            # send_joy(axes = np.zeros(4), buttons = np.zeros(10))
+            print( str(request.POST['action']) + ': 0')
+        # print(request.POST)
+        return render(request,'bio.html',{'output1': "Success", "servo_angle":"45"})
+
 
 # def my_view(request):
 #     if request.method == 'POST':

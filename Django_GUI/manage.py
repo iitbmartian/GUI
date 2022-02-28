@@ -2,13 +2,17 @@
 import os
 import sys
 import rospy
-#from std_msgs.msg import String, Float32MultiArray
+from std_msgs.msg import Float32MultiArray
 from sensor_msgs.msg import Joy
 import signal
 
 #pub = rospy.Publisher('Django_node', String, queue_size=10)
 virtjoy_pub = rospy.Publisher('Virtjoy_pub', Joy, queue_size=10)
-rospy.init_node('talker', anonymous=True)
+channeling_pub = rospy.Publisher('channeling', Float32MultiArray, queue_size=10)
+raman_pub = rospy.Publisher('raman', Float32MultiArray, queue_size=10)
+microscope_pub = rospy.Publisher('microscope', Float32MultiArray, queue_size=10)
+stewart_pub = rospy.Publisher('stewart', Float32MultiArray, queue_size=10)
+rospy.init_node('talker')#, anonymous=True
 
 def sigint_handler(signal, frame):
     sys.exit(0)
@@ -19,8 +23,24 @@ def sigint_handler(signal, frame):
 
 def send_joy(axes, buttons):
     global virtjoy_pub
-    # print(data)
+    # print(array)
     virtjoy_pub.publish(Joy(axes = axes, buttons = buttons))
+def send_channeling(array):
+    global channeling_pub
+    # print(array)
+    channeling_pub.publish(Float32MultiArray(data = array))
+def send_raman(array):
+    global raman_pub
+    # print(array)
+    raman_pub.publish(Float32MultiArray(data = array))
+def send_channeling(array):
+    global microscope_pub
+    # print(array)
+    microscope_pub.publish(Float32MultiArray(data = array))
+def send_channeling(array):
+    global stewart_pub
+    # print(array)
+    stewart_pub.publish(Float32MultiArray(data = array))
 
 # def execute_file(data):
     # print("Here")
