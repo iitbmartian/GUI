@@ -12,7 +12,24 @@ channeling_pub = rospy.Publisher('channeling', Float32MultiArray, queue_size=10)
 raman_pub = rospy.Publisher('raman', Float32MultiArray, queue_size=10)
 microscope_pub = rospy.Publisher('microscope', Float32MultiArray, queue_size=10)
 stewart_pub = rospy.Publisher('stewart', Float32MultiArray, queue_size=10)
-rospy.init_node('talker')#, anonymous=True
+node = rospy.init_node('talker')#, anonymous=True
+
+
+# def microscope_callback(msg):
+#     global _actuator_angle
+#     _actuator_angle = msg.data[0]
+
+# def stewart_callback(msg):
+#     global _stewart_data
+#     _stewart_data = msg.data
+
+# global _actuator_angle
+# _actuator_angle = 0
+# microscope_sub = rospy.Subscriber('actuator', Float32MultiArray, microscope_callback)
+
+# global _stewart_data# 1,...6, vertical motion, roll
+# _stewart_data = [0,0,0,0,0,0,0,0]
+# microscope_sub = rospy.Subscriber('stewart_text', Float32MultiArray, stewart_callback)
 
 def sigint_handler(signal, frame):
     sys.exit(0)
@@ -37,7 +54,7 @@ def send_microscope(array):
     global microscope_pub
     # print(array)
     microscope_pub.publish(Float32MultiArray(data = array))
-def send_channeling(array):
+def send_stewart(array):
     global stewart_pub
     # print(array)
     stewart_pub.publish(Float32MultiArray(data = array))
