@@ -1,0 +1,33 @@
+{
+  "name": "black-dashboard-django",
+  "mastertemplate": "boilerplate-code-django-dashboard",
+  "version": "1.0.2",
+  "description": "Template project - Django Boilerplate Code ",
+  "scripts": {
+    "dev": "webpack --mode development --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/creativetimofficial/black-dashboard-django.git"
+  },
+  "bugs": {
+    "url": "https://github.com/creativetimofficial/black-dashboard-django/issues",
+    "email": "support@appseed.us"
+  },
+  "author": "Creative-Tim / AppSeed.us",
+  "engines": {
+    "node": ">=10.0.0"
+  },
+  "devDependencies": {
+    "webpack": "^5.71.0",
+    "webpack-cli": "^4.9.2"
+  },
+  "homepage": "https://github.com/creativetimofficial/black-dashboard-django#readme",
+  "main": "index.js",
+  "keywords": [],
+  "license": "ISC",
+  "dependencies": {
+    "lodash": "^4.17.21",
+    "ol": "^6.14.1"
+  }
+}

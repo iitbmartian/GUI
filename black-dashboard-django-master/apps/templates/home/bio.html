@@ -1,0 +1,381 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Bio-GUI {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="card ">
+      <div class="card-header">
+        <h4 class="card-title"> BioSensor Data</h4>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table tablesorter " id="">
+            <thead class=" text-primary">
+              <tr>
+                <th>
+                  Physical Quantity
+                </th>
+                <th>
+                  Value
+                </th>
+                <th>
+                  Mean
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  Humidity
+                </td>
+                <td>
+                  {{humidity}} %
+                </td>
+                <td>
+                  {{humidity_mean}} %
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Methane
+                </td>
+                <td>
+                  {{methane}} ppm
+                </td>
+                <td>
+                  {{methane_mean}} ppm
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Temperature: 
+                </td>
+                <td>
+                  {{temp}} &#8451;
+                </td>
+                <td>
+                  {{temp_mean}} &#8451;
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="col-12">
+        <div class="card card-chart">
+          <div class="card-header ">
+            <div class="row">
+              <div class="col-sm-6 text-left">
+                <h5 class="card-category">Bio-Sensor data</h5>
+                <h2 class="card-title">Graphs</h2>
+              </div>
+              <div class="col-sm-6">
+                <div class="btn-group btn-group-toggle float-right" data-toggle="buttons">
+                  <label class="btn btn-sm btn-primary btn-simple active" id="0">
+                    <input type="radio" name="options" checked>
+                    <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block">Humidity</span>
+                    <span class="d-block d-sm-none">
+                      <i class="tim-icons icon-single-02"></i>
+                    </span>
+                  </label>
+                  <label class="btn btn-sm btn-primary btn-simple" id="1">
+                    <input type="radio" class="d-none d-sm-none" name="options">
+                    <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block">Methane</span>
+                    <span class="d-block d-sm-none">
+                      <i class="tim-icons icon-gift-2"></i>
+                    </span>
+                  </label>
+                  <label class="btn btn-sm btn-primary btn-simple" id="2">
+                    <input type="radio" class="d-none" name="options">
+                    <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block">Temperature</span>
+                    <span class="d-block d-sm-none">
+                      <i class="tim-icons icon-tap-02"></i>
+                    </span>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="chart-area">
+              <canvas id="chartBig1"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+
+  <div class="col-md-12">
+    <div class="card  card-plain">
+      <div class="card-header">
+        <h4 class="card-title"> Bio-Controls</h4>
+        <p class="category">Controls for Channelling, Raman spectroscopy, Microscope and Stewart platform</p>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table tablesorter " id="">
+            <thead class=" text-primary">
+              <tr>
+                <th>
+                  Channelling
+                </th>
+                <th>
+                </th>
+                <th>
+                  
+                </th>
+                <th class="text-center">
+                  
+                </th>
+              </tr>
+            </thead>
+            <form action="" method="POST"> 
+              {% csrf_token %}
+              {{ form.as_p }}
+            <tbody>
+              <tr>
+                <td>
+                Funnel Holder Rotation &nbsp; <input type="checkbox" name="channeling" class="on-off" value="funnel" ></input>
+                </td>
+                <td>
+                  <input type="submit" name="channeling" value="water pump funnel" class="btn btn-sm"></input>
+                </td>
+                <td>
+                 <input type="submit" name="channeling" value="water pump microscope" class="btn btn-sm"></input>
+                </td>
+                <td>
+                  <input type="submit" name="channeling" value="sample 1 raman" class="btn btn-sm" ></input>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  
+                </td>
+                <td>
+                  <input type="submit" name="channeling" value="sample 1 microscope" class="btn btn-sm"></input>
+                </td>
+                <td>
+                  <input type="submit" name="channeling" value="sample 1 microscope" class="btn btn-sm"></input>
+                </td>
+                <td>
+                  <input type="submit" name="channeling" value="sample 2 raman"  class="btn btn-sm" ></input>
+                </td>
+              </tr>
+            </tbody>
+          </form>
+            <thead class=" text-primary">
+              <tr>
+                <th>
+                  Raman
+                </th>
+                <th>
+                </th>
+                <th>
+                  
+                </th>
+                <th>
+                  
+                </th>
+              </tr>
+            </thead>
+            <form action="" method="POST"> 
+              {% csrf_token %}
+              {{ form.as_p }}
+            <tbody>
+              <tr>
+                <td>
+                  laser &nbsp; <input type="checkbox" name="raman" class="on-off" value="laser" ></input>
+
+                </td>
+                <td>
+                  cubette holder rotation &nbsp; <input type="checkbox" name="raman" class="on-off" value="servo" ></input>
+
+                </td>
+                <td>
+                </td>
+                <td>
+                </td>
+              </tr>
+            </tbody>
+          </form>
+          <form action="" method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" name="microscope" value="dummy" style="display: none;"></input> <!-- this dummy button gets sent when text input is entered -->
+            <thead class=" text-primary">
+              <tr>
+                <th>
+                  Microscope
+                </th>
+                <th>
+                </th>
+                <th>
+                  
+                </th>
+                <th>
+                  
+                </th>
+              </tr>
+            </thead>
+              <tbody>
+              <tr>
+                <td>
+                  Push Rod Translation :
+                </td>
+                <td>
+                 +1 &nbsp; <input type="radio" name="microscope" class="on-off" value="+1" ></input>
+                </td>
+                <td>
+
+                 0 &nbsp; <input type="radio" name="microscope" class="on-off" value="0" ></input>
+                </td>
+                <td>
+                 -1 &nbsp; <input type="radio" name="microscope" class="on-off" value="-1" ></input>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Push Rod Rotation :
+                </td>
+                <td>
+                  <input type="text" name="microscope" value={{ servo_angle_input }} ></input>
+                </td>
+                <td>
+                </td>
+                <td>
+                </td>
+              </tr>
+            </tbody>
+          </form>
+
+          <form action="" method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}    
+            <input type="submit" name="stewart" value="dummy" style="display: none;"></input> <!-- this dummy button gets sent when text input is entered -->
+          <thead class=" text-primary">
+              <tr>
+                <th>
+                  Stewart
+                </th>
+                <th>
+                </th>
+                <th>
+                  
+                </th>
+                <th>
+                  
+                </th>
+              </tr>
+            </thead>
+              <tr>
+                <td>
+                  Servo motor 1-2-3
+                </td>
+                <td>
+                  <input type="text" name="stewart" value={{ val1_inp }} ></input>
+                </td>
+                <td>
+                  <input type="text" name="stewart" value={{ val2_inp }} ></input>
+                </td>
+                <td>
+                  <input type="text" name="stewart" value={{ val3_inp }} ></input>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Servo motor 4-5-6
+                </td>
+                <td>
+                  <input type="text" name="stewart" value={{ val4_inp }} ></input>
+                </td>
+                <td>
+                  <input type="text" name="stewart" value={{ val5_inp }} ></input>
+                </td>
+                <td>
+                  <input type="text" name="stewart" value={{ val6_inp }} ></input>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Vertical motion(-2 to +2)
+                </td>
+                <td>
+                  
+                  <input type="text" name="stewart" value={{ vertical_motion_inp }} ></input>
+                </td>
+                <td>
+                  <span id='stewart_7'>({{ vertical_motion }})</span>
+                </td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>
+                  Roll
+                </td>
+                <td>
+                  
+                  <input type="text" name="stewart" value={{ roll_inp }} ></input>
+                </td>
+                <td><span id='stewart_8'>({{ roll }})</span></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>
+                  Random
+                </td>
+                <td>
+                  <input type="checkbox" name="stewart" class="on-off" value="random" ></input>
+                </td>
+                <td></td><td></td>
+              </tr>
+            </tbody>
+          </form>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+  <script>
+    $(document).ready(function() {
+      // Javascript method's body can be found in assets/js/demos.js
+      bio.initDashboardPageCharts();
+
+    });
+    var URL = "{{ request.path }}";
+    // custom bio script for reload
+    // 
+    var data = {}
+    setInterval(function (){
+      $('.on-off').each(function(i, obj) {
+        data[obj.value] = obj.checked
+      });
+      data['biosensor'] = 'True'
+      $.post(URL, data);
+      $('#sensor').load(document.URL +  ' #sensor')
+      // $('#microscope_1').load(document.URL +  ' #microscope_1');
+      // $('#stewart').load(document.URL +  ' #stewart');
+      // $('.update').each(function(){
+      //   $(this.id).load(document.URL + ' ' + $(this).attr('id'));
+      //   console.log($(this.id))
+      // })
+      // for(let i = 1; i<3; i++){
+        // $('#stewart_'+i.toString()).load(document.URL +  ' #stewart_'+i.toString());
+      // }
+      // $("#stewart").load(" #stewart > *");
+      }, 1/5 * 1000);
+  </script>
+{% endblock javascripts %}

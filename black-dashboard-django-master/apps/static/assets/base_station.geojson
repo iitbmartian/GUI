@@ -1,0 +1,4 @@
+{"type":"FeatureCollection","features":[
+{"type":"Feature","id":"CHE","properties":{"name":"Lab"},"geometry":{"type":"Polygon","coordinates":[[[72.918461,19.130876],[72.918670,19.130898],[72.918690,19.130737], [72.918476,19.130722]]]}},
+{"type":"Feature","id":"LSNE","properties":{"name":"BaseStation"},"geometry":{"type":"Point","coordinates":[72.918584, 19.130790]}}
+]}

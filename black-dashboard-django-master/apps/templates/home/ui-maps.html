@@ -1,0 +1,69 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Maps {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="card card-plain">
+      <div class="card-header">
+        Rover Map
+      </div>
+      <div class="card-body">
+        <div id="map" class="map"></div>
+          <div class="text-center"><button id="zoomtobasestation" class="btn btn-fill btn-primary">Zoom to BaseStation</button>
+          <button id="zoomtorover" class="btn btn-fill btn-primary">Zoom to Rover</button>
+          <button id="centerrover" class="btn btn-fill btn-primary">Center on the Rover</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+  <!--  Google Maps Plugin    -->
+  <!-- Place this tag in your head or just before your close body tag. -->
+  <!-- <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script> -->
+  <!-- <div id="map" class="map"></div> -->
+    <!-- <script type="text/javascript">
+      var map = new ol.Map({
+        target: 'map',
+        layers: [
+          new ol.layer.Tile({
+            source: new ol.source.OSM()
+          })
+        ],
+        view: new ol.View({
+          center: ol.proj.fromLonLat([72.918584, 19.130790]),
+          zoom: 18
+        })
+      });
+    </script> -->
+    
+    <div class="mapcontainer">
+      <div id="map" class="map"></div>
+      <div class="padding-top"></div>
+      <div class="padding-left"></div>
+      <div class="padding-right"></div>
+      <div class="padding-bottom"></div>
+      <div class="center"></div>
+    </div>
+    
+  <script src="/static/assets/js/map.js"></script>
+
+  <!-- <script>
+    $(document).ready(function() {
+      // Javascript method's body can be found in assets/js/demos.js
+      demo.initGoogleMaps();
+    });
+  </script> -->
+  
+{% endblock javascripts %}
