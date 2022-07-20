@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <title> Bio-GUI </title>
   <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
     {% load staticfiles %}
@@ -50,14 +51,14 @@
     <form action="" method="POST"> 
     {% csrf_token %}
         {{ form.as_p }}
-    <label>Funnel</label><input type="checkbox" name="channeling" class="on-off" value="funnel" ></input>
-    <input type="submit" name="channeling" value="push button 1" ></input>
-    <input type="submit" name="channeling" value="push button 2" ></i></input>
-    <input type="submit" name="channeling" value="push button 3" ></input>
-    <input type="submit" name="channeling" value="push button 4" ></input>
-    <input type="submit" name="channeling" value="push button 5" ></input>
-    <input type="submit" name="channeling" value="push button 6" ></input>
-<!--     <input type="submit" name="channeling" value="Stop_All" ></input> -->
+    <label>Funnel Holder Rotation</label><input type="checkbox" name="channeling" class="on-off" value="funnel" ></input>
+    <input type="submit" name="channeling" value="water pump funnel" ></input>
+    <input type="submit" name="channeling" value="water pump microscope" ></input>
+    <input type="submit" name="channeling" value="sample 1 raman" ></input>
+    <input type="submit" name="channeling" value="sample 2 raman" ></input>
+    <input type="submit" name="channeling" value="sample 1 microscope" ></input>
+    <input type="submit" name="channeling" value="sample 2 microscope" ></input>
+<!--     <input type="submit" name="channeling" value="Stop_Allpush button 3" ></input> -->
     </form>
     {{output1}}
 
@@ -66,7 +67,7 @@
     {% csrf_token %}
         {{ form.as_p }}
     <label>laser</label><input type="checkbox" name="raman" class="on-off" value="laser" ></input>
-    <label>servo</label><input type="checkbox" name="raman" class="on-off" value="servo" ></input>
+    <label>cubette holder rotation</label><input type="checkbox" name="raman" class="on-off" value="servo" ></input>
     <!-- <input type="submit" name="raman" value="Stop_All" ></input> -->
     </form>
     {{output2}}
@@ -76,13 +77,12 @@
         {{ form.as_p }}
 
     <input type="submit" name="microscope" value="dummy" style="display: none;"></input> <!-- this dummy button gets sent when text input is entered -->
-    <label>Actuator</label>
+    <label>Push Rod translation</label>
     <label>+1</label><input type="radio" name="microscope" class="on-off" value="+1" ></input>
     <label>0</label><input type="radio" name="microscope" class="on-off" value="0" ></input>
     <label>-1</label><input type="radio" name="microscope" class="on-off" value="-1" ></input>
     <br>
-    <label>servo angle</label>
-    <span id="microscope_1">(current: {{ servo_angle }})</span>
+    <label>Push Rod rotation</label>
     <input type="text" name="microscope" value={{ servo_angle_input }} ></input>
     <br>
     <!-- <input type="submit" name="microscope" value="Stop_All" ></input> -->
@@ -95,28 +95,22 @@
     {% csrf_token %}
         {{ form.as_p }}
     <input type="submit" name="stewart" value="dummy" style="display: none;"></input> <!-- this dummy button gets sent when text input is entered -->
-    val1
-    <span id='stewart_1'> ({{ val1 }}) </span>
+    <label>servo1</label>
     <input type="text" name="stewart" value={{ val1_inp }} ></input>
 
-    val2
-    <span id='stewart_2'>({{ val2 }})</span>
+    <label>servo2</label>
     <input type="text" name="stewart" value={{ val2_inp }} ></input>
 
-    <label>val3</label>
-    <span id='stewart_3'>({{ val3 }})</span>
+    <label>servo3</label>
     <input type="text" name="stewart" value={{ val3_inp }} ></input>
     <br>
-    <label>val4</label>
-    <span id='stewart_4'>({{ val4 }})</span>
+    <label>servo4</label>
     <input type="text" name="stewart" value={{ val4_inp }} ></input>
 
-    <label>val5</label>
-    <span id='stewart_5'>({{ val5 }})</span>
+    <label>servo5</label>
     <input type="text" name="stewart" value={{ val5_inp }} ></input>
 
-    <label>val6</label>
-    <span id='stewart_6'>({{ val6 }})</span>
+    <label>servo6</label>
     <input type="text" name="stewart" value={{ val6_inp }} ></input>
     <br>
     <label>vertical motion(-2 to +2)</label>
@@ -130,7 +124,13 @@
     </form>
     {{output4}}
     </div>
+    <div id="sensor">
+    <h1>BioSensor Data</h1>
+    <h4>Humidity: {{humidity}} %</h4>
+    <h4>Methane: {{methane}} ppm</h4>
+    <h4>Temperature: {{temp}} &#8451;</h4>
 
+    </div>
 <!--   <div class="row server-stream">
 
         <div id="video_pane" style="margin: auto; border: 1px solid black; display: table;">
@@ -189,18 +189,20 @@
       $('.on-off').each(function(i, obj) {
         data[obj.value] = obj.checked
       });
+      data['biosensor'] = 'True'
       $.post(URL, data);
-      $('#microscope_1').load(document.URL +  ' #microscope_1');
+      $('#sensor').load(document.URL +  ' #sensor')
+      // $('#microscope_1').load(document.URL +  ' #microscope_1');
       // $('#stewart').load(document.URL +  ' #stewart');
       // $('.update').each(function(){
       //   $(this.id).load(document.URL + ' ' + $(this).attr('id'));
       //   console.log($(this.id))
       // })
-      for(let i = 1; i<3; i++){
-        $('#stewart_'+i.toString()).load(document.URL +  ' #stewart_'+i.toString());
-      }
+      // for(let i = 1; i<3; i++){
+        // $('#stewart_'+i.toString()).load(document.URL +  ' #stewart_'+i.toString());
+      // }
       // $("#stewart").load(" #stewart > *");
-      }, 1 * 1000);
+      }, 1/5 * 1000);
     // function task(e)
     // {
     //   // var data_1 = {'dataX_1': joystick1.deltaX(), 'dataY_1': joystick1.deltaY()};

@@ -5,6 +5,7 @@ import rospy
 from std_msgs.msg import Float32MultiArray
 from sensor_msgs.msg import Joy
 import signal
+from numpy.random import rand
 
 #pub = rospy.Publisher('Django_node', String, queue_size=10)
 virtjoy_pub = rospy.Publisher('Virtjoy_pub', Joy, queue_size=10)
@@ -12,6 +13,8 @@ channeling_pub = rospy.Publisher('channeling', Float32MultiArray, queue_size=10)
 raman_pub = rospy.Publisher('raman', Float32MultiArray, queue_size=10)
 microscope_pub = rospy.Publisher('microscope', Float32MultiArray, queue_size=10)
 stewart_pub = rospy.Publisher('stewart', Float32MultiArray, queue_size=10)
+dummy_pub = rospy.Publisher('biosensor', Float32MultiArray, queue_size=10)
+
 node = rospy.init_node('talker')#, anonymous=True
 
 
@@ -59,6 +62,25 @@ def send_stewart(array):
     # print(array)
     stewart_pub.publish(Float32MultiArray(data = array))
 
+def limit(num, lo, hi):
+    if num < lo:
+        return lo + rand()/2
+    if num > hi:
+        return hi - rand()/2
+    return num
+
+def send_biosensor(array):
+    global dummy_pub
+    # temp:28-30 celsius; methane(RO):20:25; humidity: 15%;  
+
+    temp = 29 + 0.25*(float(array[0])-29) + rand()-0.5
+    temp = limit(temp, 28, 30)
+    methane = 22.5 + 0.65*(float(array[1])-25) + 1.5*rand()-0.75
+    methane = limit(methane, 20, 25)
+    humidity = 15.0
+    array = [temp, methane, humidity]
+    print(array)
+    dummy_pub.publish(Float32MultiArray(data = array))
 # def execute_file(data):
     # print("Here")
     # os.system('python ' +str(data)+'.py')

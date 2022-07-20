@@ -39,7 +39,18 @@
       -moz-user-select  : none;
       display: flex;
     }
-    
+    div.video {
+      position: fixed;
+      bottom: 0;
+      right: 0;
+      width: 700px;
+      border: 3px solid #AAFF00;
+    }
+    img {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
     </style>
 </head>
 <body>
@@ -66,14 +77,16 @@
     <input type="submit" name="action" value="Stop_All" ></input>
     </form>
     {{output}}
-
+<!-- <iframe src="https://www.google.com/maps/d/u/0/embed?mid=1QyP0kvVUbjNsw3DTC3BAnXvu9oqVgmX6&ehbc=2E312F" width="640" height="480"></iframe> -->
 <!--   <div class="row server-stream">
 
         <div id="video_pane" style="margin: auto; border: 1px solid black; display: table;">
           
         <object type="application/x-shockwave-flash" id="flash_video_obj" name="flash_video_obj" class="video-display" data="http://192.168.0.109:8080/mjp.swf" width="1024" height="768"><param name="quality" value="high"><param name="bgcolor" value="#cccccc"><param name="allowscriptaccess" value="always"><param name="allowfullscreen" value="true"><param name="flashvars" value="cvideo=/video&amp;video=http://192.168.0.109:8080/video4flash&amp;audio=http://192.168.0.109:8080/audio.wav&amp;twa=http://192.168.0.109:8080//audioin.alaw&amp;mode=Vat&amp;wwidth=1024&amp;wheight=768&amp;debug=true"></object></div>
   </div>  -->
-  
+   <h1>Video Live Stream</h1>
+    <div class="video" ><img src="{% url 'video_feed' %}"></div>
+    <!-- <img src="{% url 'webcam_feed' %}"> -->
   <span id="result_1"></span>
   <br></br>
   <span id="result_2"></span>

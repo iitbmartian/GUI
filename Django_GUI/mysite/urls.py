@@ -14,8 +14,9 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf.urls import url
+# from django.urls import path, include #for > Django 2.0
 from django.contrib import admin
-from mysite.views import index, bio
+from mysite.views import index, bio, video_feed, webcam_feed
 
 
 urlpatterns = [
@@ -23,4 +24,6 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^index/',index, name='index'),
     url(r'^bio/',bio, name='bio'),
+    url(r'^video_feed', video_feed, name='video_feed'),
+    url(r'^webcam_feed', webcam_feed, name='webcam_feed')
 ]
