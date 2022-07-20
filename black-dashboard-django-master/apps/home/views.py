@@ -6,6 +6,7 @@ Copyright (c) 2019 - present AppSeed.us
 from django import template
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect, HttpRequest
+from django.http.response import StreamingHttpResponse
 from django.template import loader
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
@@ -17,9 +18,14 @@ from django.core.exceptions import ValidationError
 import sys
 import pdb
 import numpy as np
-import rospy
+import rospy, cv2
+import urllib
 from std_msgs.msg import Float32MultiArray
-
+from sensor_msgs.msg import Image
+from cv_bridge import CvBridge
+ros_topic = 'camera/image_raw'
+ros_side_topic1 = 'zed2/left/image_rect_color'
+ros_side_topic2 = 'zed2/right/image_rect_color'
 
 @login_required(login_url="/login/")
 def index(request):
@@ -75,8 +81,9 @@ def piloting(request):
         # send_msg(direction)
         joy_arr=np.zeros(4)
         but_arr=np.zeros(10)
+        but_arr[0] = 1 ## for joystick node that requires button pushed
         if 'dataX_1' in request.POST:
-            dataX_1 = -float(request.POST['dataX_1'])/50
+            dataX_1 = float(request.POST['dataX_1'])/50
             print("Data X_1 : " + str(dataX_1))
             joy_arr[0]=dataX_1
         if 'dataY_1' in request.POST:
@@ -126,3 +133,96 @@ def piloting(request):
         return HttpResponse(html_template.render({'output': 'Success'}, request))
         # return render(request,'piloting.html',{'output': "Success"})
 
+#class for webcam/modify for each case
+class VideoCamera(object):
+    def __init__(self):
+        self.video = cv2.VideoCapture(0)
+
+    def __del__(self):
+        self.video.release()
+
+    def get_frame(self):
+        success, image = self.video.read()
+        image = cv2.resize(image,[720,540])
+        # We are using Motion JPEG, but OpenCV defaults to capture raw images,
+        # so we must encode it into JPEG in order to correctly display the
+        # video stream.
+        frame_flip = cv2.flip(image,1)
+        ret, jpeg = cv2.imencode('.jpg', frame_flip)
+        return jpeg.tobytes()
+
+class IPWebCam(object):#TODO check; IP - Internet Protocol
+    def __init__(self):
+        self.url = "http://192.168.2.103:8080/shot.jpg"
+
+    def __del__(self):
+        cv2.destroyAllWindows()
+
+    def get_frame(self):
+        imgResp = urllib.request.urlopen(self.url)
+        imgNp = np.array(bytearray(imgResp.read()),dtype=np.uint8)
+        img= cv2.imdecode(imgNp,-1)
+        # We are using Motion JPEG, but OpenCV defaults to capture raw images,
+        # so we must encode it into JPEG in order to correctly display the
+        # video stream
+        gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        faces_detected = face_detection_webcam.detectMultiScale(gray, scaleFactor=1.3, minNeighbors=5)
+        for (x, y, w, h) in faces_detected:
+            cv2.rectangle(img, pt1=(x, y), pt2=(x + w, y + h), color=(255, 0, 0), thickness=2)
+        resize = cv2.resize(img, (640, 480), interpolation = cv2.INTER_LINEAR) 
+        frame_flip = cv2.flip(resize,1)
+        ret, jpeg = cv2.imencode('.jpg', frame_flip)
+        return jpeg.tobytes()
+
+class RosCamera(object):
+    def __init__(self, topic):
+        self.bridge = CvBridge()
+        self.sub = rospy.Subscriber(topic, Image, self.cam_callback)
+        rospy.wait_for_message(topic, Image, timeout=15)
+        
+    # def __del__(self):
+    #     self.video.release()
+
+    def cam_callback(self, ros_image):
+        # Convert ROS Image message to OpenCV image
+        self.frame = self.bridge.imgmsg_to_cv2(ros_image)
+
+
+    def get_frame(self):
+        # We are using Motion JPEG, but OpenCV defaults to capture raw images,
+        # so we must encode it into JPEG in order to correctly display the
+        # video stream.
+        image = cv2.resize(self.frame,[720,540])
+        frame_flip = cv2.flip(image,1)
+        ret, jpeg = cv2.imencode('.jpg', frame_flip)
+        return jpeg.tobytes()
+
+def gen(camera):
+    while True:
+        frame = camera.get_frame()
+        yield (b'--frame\r\n'
+                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
+
+
+def video_feed(request):
+    return StreamingHttpResponse(gen(VideoCamera()),
+                    content_type='multipart/x-mixed-replace; boundary=frame')
+
+def ros_feed(request):
+    global ros_topic
+    return StreamingHttpResponse(gen(RosCamera(ros_topic)),
+                    content_type='multipart/x-mixed-replace; boundary=frame')
+
+def ros_side1_feed(request):
+    global ros_side_topic1
+    return StreamingHttpResponse(gen(RosCamera(ros_side_topic1)),
+                    content_type='multipart/x-mixed-replace; boundary=frame')
+
+def ros_side2_feed(request):
+    global ros_side_topic2
+    return StreamingHttpResponse(gen(RosCamera(ros_side_topic2)),
+                    content_type='multipart/x-mixed-replace; boundary=frame')
+
+def webcam_feed(request):
+    return StreamingHttpResponse(gen(IPWebCam()),
+                    content_type='multipart/x-mixed-replace; boundary=frame')

@@ -12,7 +12,7 @@ from sensor_msgs.msg import Joy
 import signal
 
 #pub = rospy.Publisher('Django_node', String, queue_size=10)
-virtjoy_pub = rospy.Publisher('Virtjoy_pub', Joy, queue_size=10)
+virtjoy_pub = rospy.Publisher('joy', Joy, queue_size=10)
 # channeling_pub = rospy.Publisher('channeling', Float32MultiArray, queue_size=10)
 # raman_pub = rospy.Publisher('raman', Float32MultiArray, queue_size=10)
 # microscope_pub = rospy.Publisher('microscope', Float32MultiArray, queue_size=10)
