@@ -1,0 +1,128 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Maps {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+
+<div class="row">
+  <div class="col-lg-8 col-md-8 col-sm-12">
+    <div class="card card-plain">
+          <div class="card-header">
+            <h5 class="card-category">Camera Image feed</h5>
+            <h3 class="card-title"><i class="tim-icons icon-double-right text-primary"></i>camera/image_raw</h3>
+          </div>
+          <div class="card-body">
+              <div class="video" ><img src="{% url 'ros_feed' %}"></div>
+          </div>
+    </div>
+  </div>
+
+  <!-- <div class="col-lg-4 col-md-4">
+    <div class="col-md-12">
+    <div class="row">
+        <div class="card card-plain">
+          <div class="card-header">
+            <h5 class="card-category">ZED2 Left Image feed</h5>
+            <h3 class="card-title"><i class="tim-icons icon-double-right text-primary"></i>zed2/left/image_rect_color</h3>
+          </div>
+          <div class="card-body">
+              <div class="video" ><img src="{% url 'ros_side1_feed' %}"></div>
+          </div>
+        </div>
+    </div></div>
+    <div class="row">
+        <div class="card card-plain">
+          <div class="card-header">
+            <h5 class="card-category">ZED2 Right Image feed</h5>
+            <h3 class="card-title"><i class="tim-icons icon-double-right text-primary"></i>zed2/right/image_rect_color</h3>
+          </div>
+          <div class="card-body">
+              <div class="video" ><img src="{% url 'ros_side2_feed' %}"></div>
+          </div>
+        </div>
+    </div>
+  </div> -->
+  <!-- </div> -->
+</div>
+
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+    
+{% block javascripts %}
+
+<script>
+        var URL = "{% url 'piloting' %}";
+    </script>
+    <script window.CSRF_TOKEN = "{{ csrf_token }}">
+        console.log("touchscreen is", VirtualJoystick.touchScreenAvailable() ? "available" : "not available");
+    
+        var was_pressed_1 = false
+        var was_pressed_2 = false
+        
+        var joystick1 = new VirtualJoystick({
+                        mouseSupport: true,
+                        stationaryBase: true,
+                        baseX: 400,
+                        baseY: 600,
+                        strokeStyle: 'red',
+                        limitStickTravel: true,
+                        stickRadius: 50
+                     });
+  
+        var joystick2 = new VirtualJoystick({
+                        mouseSupport: true,
+                        stationaryBase: true,
+                        baseX: 900,
+                        baseY: 600,
+                        strokeStyle: 'blue',
+                        limitStickTravel: true,
+                        stickRadius: 50
+                     });
+  
+        // setInterval(function(){
+        //   var outputEl  = document.getElementById('result_1');
+        //   outputEl.innerHTML  = '<b>Result:</b> '
+        //     + ' dx:'+joystick1.deltaX()
+        //     + ' dy:'+joystick1.deltaY()
+        //     + (joystick1.right() ? ' right'  : '')
+        //     + (joystick1.up()  ? ' up'   : '')
+        //     + (joystick1.left()  ? ' left' : '')
+        //     + (joystick1.down()  ? ' down'   : '') 
+        // }, 1/30 * 1000);
+  
+        // setInterval(function(){
+        //   var outputEl  = document.getElementById('result_2');
+        //   outputEl.innerHTML  = '<b>Result:</b> '
+        //     + ' dx:'+joystick2.deltaX()
+        //     + ' dy:'+joystick2.deltaY()
+        //     + (joystick2.right() ? ' right'  : '')
+        //     + (joystick2.up()  ? ' up'   : '')
+        //     + (joystick2.left()  ? ' left' : '')
+        //     + (joystick2.down()  ? ' down'   : '') 
+        // }, 1/30 * 1000);
+  
+        setInterval(function (){
+          var data_1 = {'dataX_1': joystick1.deltaX(), 'dataY_1': joystick1.deltaY(), csrfmiddlewaretoken: '{{ csrf_token }}' };
+          var data_2 = {'dataX_2': joystick2.deltaX(), 'dataY_2': joystick2.deltaY(), csrfmiddlewaretoken: '{{ csrf_token }}' };
+          if(joystick1.pressed()){
+            $.post(URL, data_1);
+            was_pressed_1 = true;}
+          else if(was_pressed_1){
+            $.post(URL, data_1);
+            was_pressed_1 = false;}
+          if(joystick2.pressed()){
+            $.post(URL, data_2);
+            was_pressed_2 = true;}
+          else if(was_pressed_2){
+            $.post(URL, data_2);
+            was_pressed_2 = false;}
+        }, 1/30 * 1000);    
+    </script>
+  
+{% endblock javascripts %}

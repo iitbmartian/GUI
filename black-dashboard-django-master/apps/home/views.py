@@ -23,7 +23,7 @@ import urllib
 from std_msgs.msg import Float32MultiArray
 from sensor_msgs.msg import Image
 from cv_bridge import CvBridge
-ros_topic = 'camera/image_raw'
+ros_topic = 'camera_image/image_raw'
 ros_side_topic1 = 'zed2/left/image_rect_color'
 ros_side_topic2 = 'zed2/right/image_rect_color'
 
@@ -65,6 +65,9 @@ def pages(request):
         html_template = loader.get_template('home/page-500.html')
         return HttpResponse(html_template.render(context, request))
 
+#for robotic arm: https://github.com/ros-planning/moveit/blob/master/moveit_ros/visualization/src/moveit_ros_visualization/moveitjoy_module.py#L449
+# https://github.com/ros-planning/panda_moveit_config/blob/melodic-devel/launch/joystick_control.launch
+# https://ros-planning.github.io/moveit_tutorials/doc/joystick_control_teleoperation/joystick_control_teleoperation_tutorial.html?highlight=joystick
 
 # @login_required(login_url="/login/")
 @csrf_exempt
@@ -133,6 +136,72 @@ def piloting(request):
         return HttpResponse(html_template.render({'output': 'Success'}, request))
         # return render(request,'piloting.html',{'output': "Success"})
 
+@csrf_exempt
+def robotic_arm(request):
+    print(request)
+    if request.method == 'GET':
+        print("get")
+        html_template = loader.get_template('home/robotic_arm.html')
+        return HttpResponse(html_template.render({'output': ''}, request))
+        # return render(request, 'piloting.html', {'output': ''})
+    elif request.method == 'POST':
+        # direction=request.POST['action']
+        # pdb.set_trace()
+        # send_msg(direction)
+        joy_arr=np.zeros(4)
+        but_arr=np.zeros(10)
+        but_arr[0] = 1 ## for joystick node that requires button pushed
+        if 'dataX_1' in request.POST:
+            dataX_1 = float(request.POST['dataX_1'])/50
+            print("Data X_1 : " + str(dataX_1))
+            joy_arr[0]=dataX_1
+        if 'dataY_1' in request.POST:
+            dataY_1= -float(request.POST['dataY_1'])/50
+            print("   Data Y_1: " + str(dataY_1))
+            joy_arr[1]=dataY_1
+        if 'dataX_2' in request.POST:
+            dataX_2 = -float(request.POST['dataX_2'])/50
+            print("Data X_2 : " + str(dataX_2))
+            joy_arr[2]=dataX_2
+        if 'dataY_2' in request.POST:
+            dataY_2= -float(request.POST['dataY_2'])/50
+            print("   Data Y_2: " + str(dataY_2))
+            joy_arr[3]=dataY_2
+        if 'action' in request.POST:#for buttons add here
+            if request.POST['action'] == 'Up':
+              print("Up: Data Y_1 : " + str(1))
+              joy_arr[1]=float(1)
+            elif request.POST['action'] == 'Down':
+              print("Down: Data Y_1 : " + str(-1))
+              joy_arr[1]=float(-1)
+            elif request.POST['action'] == 'Right':
+              print("Right: Data X_1 : " + str(-1))
+              joy_arr[0]=float(-1)
+            elif request.POST['action'] == 'Left':
+              print("Left: Data X_1 : " + str(1))
+              joy_arr[0]=float(1)
+            elif request.POST['action'] == 'Stop_All':
+              print("Stop all")
+            elif str(request.POST['action'])[:2] == 'Ac':
+              print (str(request.POST['action']))
+              but_arr[int(str(request.POST['action'])[2])*2 + int(str(request.POST['action'])[4:6] == 'Do') -2 ] = 1
+            elif str(request.POST['action'])[:2] == 'Gr':
+              print (str(request.POST['action']))
+              but_arr[8 + int(str(request.POST['action'])[5:7] == 'Do') ] = 1
+
+        send_joy(axes = list(joy_arr), buttons = list(but_arr.astype(np.uint32)))
+        # print("sending joy")
+        if 'action' in request.POST:
+          if request.POST['action'] != 'Stop_All':
+            rospy.sleep(0.2)#change time duration here
+            send_joy(axes = np.zeros(4), buttons = np.zeros(10))
+            print( str(request.POST['action']) + ': 0')
+        # print(request.POST)
+
+        html_template = loader.get_template('home/robotic_arm.html')
+        return HttpResponse(html_template.render({'output': 'Success'}, request))
+        # return render(request,'piloting.html',{'output': "Success"})
+
 #class for webcam/modify for each case
 class VideoCamera(object):
     def __init__(self):
@@ -151,7 +220,7 @@ class VideoCamera(object):
         ret, jpeg = cv2.imencode('.jpg', frame_flip)
         return jpeg.tobytes()
 
-class IPWebCam(object):#TODO check; IP - Internet Protocol
+class IPWebCam(object):#TODO check; IP - Internet Protocol; check web_video_server for rostopics
     def __init__(self):
         self.url = "http://192.168.2.103:8080/shot.jpg"
 
