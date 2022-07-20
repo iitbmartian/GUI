@@ -58,10 +58,18 @@
   </div>
 </div>
 
-    <script>
+
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+    
+{% block javascripts %}
+
+<script>
         var URL = "{% url 'piloting' %}";
     </script>
-    <script>
+    <script window.CSRF_TOKEN = "{{ csrf_token }}">
         console.log("touchscreen is", VirtualJoystick.touchScreenAvailable() ? "available" : "not available");
     
         var was_pressed_1 = false
@@ -70,8 +78,8 @@
         var joystick1 = new VirtualJoystick({
                         mouseSupport: true,
                         stationaryBase: true,
-                        baseX: 125,
-                        baseY: 300,
+                        baseX: 500,
+                        baseY: 600,
                         strokeStyle: 'red',
                         limitStickTravel: true,
                         stickRadius: 50
@@ -80,8 +88,8 @@
         var joystick2 = new VirtualJoystick({
                         mouseSupport: true,
                         stationaryBase: true,
-                        baseX: 375,
-                        baseY: 300,
+                        baseX: 1300,
+                        baseY: 600,
                         strokeStyle: 'blue',
                         limitStickTravel: true,
                         stickRadius: 50
@@ -109,10 +117,9 @@
         //     + (joystick2.down()  ? ' down'   : '') 
         // }, 1/30 * 1000);
   
-  
         setInterval(function (){
-          var data_1 = {'dataX_1': joystick1.deltaX(), 'dataY_1': joystick1.deltaY()};
-          var data_2 = {'dataX_2': joystick2.deltaX(), 'dataY_2': joystick2.deltaY()};
+          var data_1 = {'dataX_1': joystick1.deltaX(), 'dataY_1': joystick1.deltaY(), csrfmiddlewaretoken: '{{ csrf_token }}' };
+          var data_2 = {'dataX_2': joystick2.deltaX(), 'dataY_2': joystick2.deltaY(), csrfmiddlewaretoken: '{{ csrf_token }}' };
           if(joystick1.pressed()){
             $.post(URL, data_1);
             was_pressed_1 = true;}
@@ -127,12 +134,5 @@
             was_pressed_2 = false;}
         }, 1/30 * 1000);    
     </script>
-
-
-{% endblock content %}
-
-<!-- Specific Page JS goes HERE  -->
-{% block javascripts %}
-
   
 {% endblock javascripts %}

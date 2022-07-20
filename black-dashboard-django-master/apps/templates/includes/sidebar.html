@@ -28,6 +28,12 @@
               <p>Autonomous</p>
             </a>
           </li>
+          <li class="{% if 'piloting' in segment %} active {% endif %}">
+            <a href="/piloting.html">
+              <i class="tim-icons icon-controller"></i>
+              <p>Pilot</p>
+            </a>
+          </li>
           <li class="{% if 'comms' in segment %} active {% endif %}">
             <a href="/comms.html">
               <i class="tim-icons icon-wifi"></i>
@@ -36,7 +42,7 @@
           </li>
           <li class="{% if 'maps' in segment %} active {% endif %}">
             <a href="/ui-maps.html">
-              <i class="tim-icons icon-pin"></i>
+              <i class="tim-icons icon-square-pin"></i>
               <p>Maps</p>
             </a>
           </li>
@@ -48,7 +54,7 @@
           </li>
           <li class="{% if 'bio' in segment %} active {% endif %}">
             <a href="/bio.html">
-              <i class="tim-icons icon-sound-wave"></i>
+              <i class="tim-icons icon-molecule-40"></i>
               <p>Bio-GUI</p>
             </a>
           </li>

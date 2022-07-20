@@ -11,7 +11,7 @@ from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 
 
-from django.shortcuts import render, render_to_response
+from django.shortcuts import render
 from manage import send_joy#, send_channeling, send_microscope, send_stewart, send_raman #, _actuator_angle, _stewart_data
 from django.core.exceptions import ValidationError
 import sys
@@ -41,8 +41,9 @@ def pages(request):
         if load_template == 'admin':
             return HttpResponseRedirect(reverse('admin:index'))
         context['segment'] = load_template
-
-        if load_template == 'piloting':
+        # print(load_template)
+        if 'piloting' in load_template:
+            print("Pilot page rendering")
             return piloting(request)
 
         html_template = loader.get_template('home/' + load_template)
@@ -59,10 +60,15 @@ def pages(request):
         return HttpResponse(html_template.render(context, request))
 
 
+# @login_required(login_url="/login/")
 @csrf_exempt
 def piloting(request):
+    print(request)
     if request.method == 'GET':
-        return render(request, 'piloting.html', {'output': ''})
+        print("get")
+        html_template = loader.get_template('home/piloting.html')
+        return HttpResponse(html_template.render({'output': ''}, request))
+        # return render(request, 'piloting.html', {'output': ''})
     elif request.method == 'POST':
         # direction=request.POST['action']
         # pdb.set_trace()
@@ -107,12 +113,16 @@ def piloting(request):
               print (str(request.POST['action']))
               but_arr[8 + int(str(request.POST['action'])[5:7] == 'Do') ] = 1
 
-        send_joy(axes = joy_arr, buttons = but_arr)
+        send_joy(axes = list(joy_arr), buttons = list(but_arr.astype(np.uint32)))
+        # print("sending joy")
         if 'action' in request.POST:
           if request.POST['action'] != 'Stop_All':
             rospy.sleep(0.2)#change time duration here
             send_joy(axes = np.zeros(4), buttons = np.zeros(10))
             print( str(request.POST['action']) + ': 0')
         # print(request.POST)
-        return render(request,'piloting.html',{'output': "Success"})
+
+        html_template = loader.get_template('home/piloting.html')
+        return HttpResponse(html_template.render({'output': 'Success'}, request))
+        # return render(request,'piloting.html',{'output': "Success"})
 

@@ -45,7 +45,7 @@ def sigint_handler(signal, frame):
 
 def send_joy(axes, buttons):
     global virtjoy_pub
-    # print(array)
+    # print(axes)
     virtjoy_pub.publish(Joy(axes = axes, buttons = buttons))
 # def send_channeling(array):
 #     global channeling_pub
