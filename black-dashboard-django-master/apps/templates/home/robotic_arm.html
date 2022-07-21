@@ -57,7 +57,7 @@
 {% block javascripts %}
 
 <script>
-        var URL = "{% url 'piloting' %}";
+        var URL = "{% url 'robotic_arm' %}";
     </script>
     <script window.CSRF_TOKEN = "{{ csrf_token }}">
         console.log("touchscreen is", VirtualJoystick.touchScreenAvailable() ? "available" : "not available");
