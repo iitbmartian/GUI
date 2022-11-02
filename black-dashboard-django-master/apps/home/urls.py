@@ -15,7 +15,8 @@ urlpatterns = [
     #pilot page
     path('piloting/', views.piloting, name='piloting'),
     path('robotic_arm/', views.robotic_arm, name='robotic_arm'),
-    url(r'^ros_feed', views.ros_feed, name='ros_feed'),
+    url(r'^ros_nav_feed', views.ros_nav_feed, name='ros_nav_feed'),
+    url(r'^ros_arm_feed', views.ros_arm_feed, name='ros_arm_feed'),
     url(r'^ros_side1_feed', views.ros_side1_feed, name='ros_side1_feed'),
     url(r'^ros_side2_feed', views.ros_side2_feed, name='ros_side2_feed'),
     url(r'^video_feed', views.video_feed, name='video_feed'),

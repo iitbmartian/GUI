@@ -1,6 +1,6 @@
 {% extends "layouts/base.html" %}
 
-{% block title %} Maps {% endblock %} 
+{% block title %} Pilot {% endblock %} 
 
 <!-- Specific Page CSS goes HERE  -->
 {% block stylesheets %}{% endblock stylesheets %}
@@ -16,7 +16,7 @@
             <h3 class="card-title"><i class="tim-icons icon-double-right text-primary"></i>camera/image_raw</h3>
           </div>
           <div class="card-body">
-              <div class="video" ><img src="{% url 'ros_feed' %}"></div>
+              <div class="video" ><img src="{% url 'ros_nav_feed' %}"></div>
           </div>
     </div>
   </div>

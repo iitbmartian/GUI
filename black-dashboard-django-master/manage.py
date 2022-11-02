@@ -37,6 +37,7 @@ node = rospy.init_node('talker')#, anonymous=True
 # microscope_sub = rospy.Subscriber('stewart_text', Float32MultiArray, stewart_callback)
 
 def sigint_handler(signal, frame):
+    print("Exiting")
     sys.exit(0)
 
 #def send_msg(data):

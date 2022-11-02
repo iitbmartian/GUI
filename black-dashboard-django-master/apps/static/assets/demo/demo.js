@@ -17,7 +17,7 @@ demo = {
   
   // grey rect
   roll_image = new Image();
-  roll_image.src = '/static/assets/img/favicon.png';
+  roll_image.src = '/static/assets/img/mars_rover_icon.png';
   roll_image.onload = function(){
     ctx.setTransform(1,0,0,1,0,0); 
     ctx.translate(w/2, w/2);
@@ -38,7 +38,7 @@ demo = {
   var ctx2 = c2.getContext('2d');
   // grey rect
   pitch_image = new Image();
-  pitch_image.src = '/static/assets/img/favicon.png';
+  pitch_image.src = '/static/assets/img/mars_rover_icon_front.png';
   pitch_image.onload = function(){
     ctx2.setTransform(1,0,0,1,0,0); 
     ctx2.translate(w/2, w/2);
@@ -51,7 +51,8 @@ demo = {
   var ctx3 = c3.getContext('2d');
   // grey rect
   yaw_image = new Image();
-  yaw_image.src = '/static/assets/img/pin.png';
+  yaw_image.src = '/static/assets/img/arrow_icon.png';
+  // TODO: icon stretches bad
   yaw_image.onload = function(){
     ctx3.setTransform(1,0,0,1,0,0); 
     ctx3.translate(w/2, w/2);
@@ -506,7 +507,9 @@ demo = {
 
 
 
-    var chart_labels = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+    // var chart_labels = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+    var chart_labels = ['13:40', '13:45', '13:50', '13:55', '14:00', '14:05', '14:10', '14:15', '14:20', '14:25', '14:30', '14:35'];
+
     var chart_data = [100, 70, 90, 70, 85, 60, 75, 60, 90, 80, 110, 100];
 
 

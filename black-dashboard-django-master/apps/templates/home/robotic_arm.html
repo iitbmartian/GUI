@@ -1,6 +1,6 @@
 {% extends "layouts/base.html" %}
 
-{% block title %} Maps {% endblock %} 
+{% block title %} Robotic Arm {% endblock %} 
 
 <!-- Specific Page CSS goes HERE  -->
 {% block stylesheets %}{% endblock stylesheets %}
@@ -13,14 +13,13 @@
     <div class="card card-plain">
           <div class="card-header">
             <h5 class="card-category">Camera Image feed</h5>
-            <h3 class="card-title"><i class="tim-icons icon-double-right text-primary"></i>camera/image_raw</h3>
+            <h3 class="card-title"><i class="tim-icons icon-double-right text-primary"></i>camera_image/image_raw</h3>
           </div>
           <div class="card-body">
-              <div class="video" ><img src="{% url 'ros_feed' %}"></div>
+              <div class="video" ><img src="{% url 'ros_arm_feed' %}"></div>
           </div>
     </div>
   </div>
-
   <!-- <div class="col-lg-4 col-md-4">
     <div class="col-md-12">
     <div class="row">
@@ -46,9 +45,20 @@
         </div>
     </div>
   </div> -->
-  <!-- </div> -->
+  <!-- </div> --><div class="row">
+  <div class="col-lg-4 col-md-4">
+    <div class="card card-plain">
+<div class="card-body"><form action="" method="POST"> 
+    {% csrf_token %}
+    {{ form.as_p }}
+      <input type="submit" name="action" value="Plan" class="btn btn-sm"></input>
+      <input type="submit" name="action" value="Execute" class="btn btn-sm"></input>
+      <input type="submit" name="action" value="Change Planning group" class="btn btn-sm" ></input>
+</form>
+</div></div></div></div>
 </div>
 
+  
 
 {% endblock content %}
 
@@ -64,6 +74,7 @@
     
         var was_pressed_1 = false
         var was_pressed_2 = false
+        var was_pressed_3 = false
         
         var joystick1 = new VirtualJoystick({
                         mouseSupport: true,
@@ -78,12 +89,23 @@
         var joystick2 = new VirtualJoystick({
                         mouseSupport: true,
                         stationaryBase: true,
+                        baseX: 650,
+                        baseY: 600,
+                        strokeStyle: 'yellow',
+                        limitStickTravel: true,
+                        stickRadius: 50
+                     });
+
+        var joystick3 = new VirtualJoystick({
+                        mouseSupport: true,
+                        stationaryBase: true,
                         baseX: 900,
                         baseY: 600,
                         strokeStyle: 'blue',
                         limitStickTravel: true,
                         stickRadius: 50
                      });
+  
   
         // setInterval(function(){
         //   var outputEl  = document.getElementById('result_1');
@@ -110,6 +132,7 @@
         setInterval(function (){
           var data_1 = {'dataX_1': joystick1.deltaX(), 'dataY_1': joystick1.deltaY(), csrfmiddlewaretoken: '{{ csrf_token }}' };
           var data_2 = {'dataX_2': joystick2.deltaX(), 'dataY_2': joystick2.deltaY(), csrfmiddlewaretoken: '{{ csrf_token }}' };
+          var data_3 = {'dataX_3': joystick3.deltaX(), 'dataY_3': joystick3.deltaY(), csrfmiddlewaretoken: '{{ csrf_token }}' };
           if(joystick1.pressed()){
             $.post(URL, data_1);
             was_pressed_1 = true;}
@@ -122,6 +145,12 @@
           else if(was_pressed_2){
             $.post(URL, data_2);
             was_pressed_2 = false;}
+          if(joystick3.pressed()){
+            $.post(URL, data_3);
+            was_pressed_3 = true;}
+          else if(was_pressed_3){
+            $.post(URL, data_3);
+            was_pressed_3 = false;}
         }, 1/30 * 1000);    
     </script>
   

@@ -427,8 +427,11 @@ bio = {
 
 
 
-    var chart_labels = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
-    var chart_data = [100, 70, 90, 70, 85, 60, 75, 60, 90, 80, 110, 100];
+    var chart_labels = ['13:40', '13:45', '13:50', '13:55', '14:00', '14:05', '14:10', '14:15', '14:20', '14:25', '14:30', '14:35'];
+    // var chart_labels = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+
+    // temp:28-30 celsius; methane(RO):20:25; humidity: 15%;  
+    var chart_data = ['28.3', '28.2', '28.5', '28.1', '28.5', '28.1', '28.8', '28.1', '28.6', '28.7', '28.3', '28.4']
 
 
     var ctx = document.getElementById("chartBig1").getContext('2d');
@@ -443,7 +446,7 @@ bio = {
       data: {
         labels: chart_labels,
         datasets: [{
-          label: "My First dataset",
+          label: "Site 1",
           tension: 0.3,
           fill: true,
           backgroundColor: gradientStroke,
@@ -471,7 +474,7 @@ bio = {
       myChartData.update();
     });
     $("#1").click(function() {
-      var chart_data = [80, 120, 105, 110, 95, 105, 90, 100, 80, 95, 70, 120];
+      var chart_data = ['22.7', '21.3', '23.9', '23.5', '23.3', '22.7', '23.5', '22.9', '22.8', '22.5', '21.3', '22.7'];
       var data = myChartData.config.data;
       data.datasets[0].data = chart_data;
       data.labels = chart_labels;
@@ -479,7 +482,7 @@ bio = {
     });
 
     $("#2").click(function() {
-      var chart_data = [60, 80, 65, 130, 80, 105, 90, 130, 70, 115, 60, 130];
+      var chart_data = [15., 15., 15., 15., 15., 15., 15., 15., 15., 15., 15., 15.];
       var data = myChartData.config.data;
       data.datasets[0].data = chart_data;
       data.labels = chart_labels;
