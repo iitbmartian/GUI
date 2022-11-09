@@ -28,6 +28,18 @@ nav_ros_topic = 'camera/image_raw'
 ros_side_topic1 = 'zed2/left/image_rect_color'
 ros_side_topic2 = 'zed2/right/image_rect_color'
 
+def bio_sensor_callback(msg):
+    global _bio_sensor_data
+    array = msg.data
+    _bio_sensor_data = ["%.1f" % array[0],"%.1f" % array[1],"%.1f" % array[2]]
+
+
+# global _bio_sensor_data# temp:28-30 celsius; methane(RO):20:25; humidity: 15%;
+microscope_pub = rospy.Publisher('microscope', Float32MultiArray, queue_size=10)
+collection_pub = rospy.Publisher('collection', Float32MultiArray, queue_size=10)
+_bio_sensor_data = [29.0,21.5,15.0]
+# microscope_sub = rospy.Subscriber('biosensor', Float32MultiArray, bio_sensor_callback)
+
 @login_required(login_url="/login/")
 def index(request):
     context = {'segment': 'index'}
@@ -55,6 +67,9 @@ def pages(request):
         if 'robotic' in load_template:
             print("Robotic Arm page rendering")
             return robotic_arm(request)
+        if 'bio' in load_template:
+            print("Bio page rendering")
+            return bio(request)
 
         html_template = loader.get_template('home/' + load_template)
         return HttpResponse(html_template.render(context, request))
@@ -208,6 +223,122 @@ def robotic_arm(request):
         return HttpResponse(html_template.render({'output': 'Success'}, request))
         # return render(request,'piloting.html',{'output': "Success"})
 
+
+@csrf_exempt
+def bio(request):
+    global _bio_sensor_data, _output, microscope_pub, collection_pub
+    if request.method == 'GET':
+        return render(request, 'home/bio-new.html', {'temp': _bio_sensor_data[0]})
+    elif request.method == 'POST':
+        # direction=request.POST['action']
+        # pdb.set_trace()
+        # send_msg(direction)
+        # joy_arr=np.zeros(4)
+
+        # raman_arr = np.zeros(2)
+        # channel_arr = np.zeros(7)
+        # stewart_arr = np.zeros(9)
+
+        # output = ['','','','']
+        req = request.POST
+        print(req)
+        collection_arr = np.zeros(3)
+        microscope_arr = np.zeros(3)
+
+        if 'collection' in req:
+            buttons = {"gripper":0}
+
+            req_list = [int('0{}'.format(x).encode('UTF8')) for x in req.getlist('collection')[1:3]]
+            print("relist:", req_list)
+
+            if 'dummy' in req.getlist('collection'):
+              print(str(req['collection']))
+              collection_arr[1:] = req_list
+            else:
+              print("val", req.getlist('collection'))
+
+            if str(req.getlist('collection')[0]) in buttons:
+              print (str(req.getlist('collection')))
+              collection_arr[buttons[str(req.getlist('collection')[0])] ] = 1
+            collection_pub.publish(Float32MultiArray(data=collection_arr))
+
+        if 'microscope' in req:
+            buttons = {"water_valve":1, "chem_valve":2}
+            if 'dummy' in req.getlist('microscope'):
+              print(str(req['microscope']))
+              microscope_arr[0] = int('0'+str(req['microscope']))
+            else:
+              print("val", req.getlist('microscope'))
+            print(str(req.getlist('microscope')[1]))
+            for val in req.getlist('microscope'):
+                if str(val) in buttons:
+                    print (str(req.getlist('microscope')))
+                    microscope_arr[buttons[str(val)] ] = 1
+            microscope_pub.publish(Float32MultiArray(data=microscope_arr))
+        # send_microscope(microscope_arr)
+
+        if 'funnel' in req:#on-off buttons
+            data = {k:int(str(v) == 'true') for k,v in req.dict().items()}
+            channel_arr[0] = data['funnel']
+            raman_arr[0] = data['laser']
+            raman_arr[1] = data['servo']
+            actuator = 0
+            for i in ['+1','0','-1']:
+                if data[i] == 1:
+                    actuator = int(i)
+            microscope_arr[0] = actuator
+            stewart_arr[-1] = data['random']
+
+        # print(_data)
+        if 'channeling' in req:
+            # if req['channeling'] == 'Stop_All':
+            #   print("Stop all")
+            if 'funnel' in req.getlist('channeling'):
+              print(str(req.getlist('channeling')))
+              channel_arr[0] = 1
+            buttons = {'water pump funnel':1, 'water pump microscope':2, 'sample 1 raman':3, 'sample 2 raman':4, 'sample 1 microscope':5, 'sample 2 microscope':6}
+            if str(req['channeling']) in buttons:
+              print (str(req.getlist('channeling')))
+              channel_arr[buttons[str(req['channeling'])] ] = 1
+            # if str(req['channeling'])[:11] == 'push button':
+            #   print (str(req.getlist('channeling')))
+            #   channel_arr[int(str(req['channeling'])[12:13]) ] = 1
+              # _output[0] = str(_output[0])+'You pressed push button ' + str(req['channeling'])[12:13]
+        # send_channeling(channel_arr)
+        if 'raman' in req:
+            if 'laser' in str(req.getlist('raman')):
+              print(str(req['raman']))
+              raman_arr[0] = 1
+            elif 'servo' in str(req.getlist('raman')):
+              print(str(req['raman']))
+              raman_arr[1] = 1
+        # send_raman(raman_arr)
+        #     print( str(req['raman']) + ': 1')
+
+        if 'stewart' in req:
+            req_list = [int('0'+x.encode('UTF8')) for x in req.getlist('stewart')[1:9]]
+            # random = 0
+            # if not 'dummy' in req.getlist('stewart'):#random is the only visible button
+            #     random = 1
+
+            # req_list.append(random)
+            print(stewart_arr)
+            stewart_arr[:-1] = req_list
+            print(stewart_arr)
+        # send_stewart(stewart_arr)
+
+            # elif str(req['raman']) == 'servo':
+            #   print(str(req['raman']))
+            #   raman_arr[1] = 1
+            # send_raman(raman_arr)
+            # print( str(req['raman']) + ': 1')
+
+        # if 'biosensor' in req:
+        #     send_biosensor(_bio_sensor_data)
+        print(req)#bool(channel_arr[0])"funnel":"0", "laser":bool(raman_arr[0]), "servo":bool(raman_arr[1]), "plus1":microscope_arr[0]==1, "zero": microscope_arr[0]==0,"minus1":microscope_arr[0]==-1,
+        return render(request, 'home/bio-new.html', {'humidity':_bio_sensor_data[2],'methane':_bio_sensor_data[1],'temp': _bio_sensor_data[0]})
+
+#class for webcam/modify for each case
 #class for webcam/modify for each case
 class VideoCamera(object):
     def __init__(self):
@@ -244,7 +375,7 @@ class IPWebCam(object):#TODO check; IP - Internet Protocol; check web_video_serv
         faces_detected = face_detection_webcam.detectMultiScale(gray, scaleFactor=1.3, minNeighbors=5)
         for (x, y, w, h) in faces_detected:
             cv2.rectangle(img, pt1=(x, y), pt2=(x + w, y + h), color=(255, 0, 0), thickness=2)
-        resize = cv2.resize(img, (640, 480), interpolation = cv2.INTER_LINEAR) 
+        resize = cv2.resize(img, (640, 480), interpolation = cv2.INTER_LINEAR)
         frame_flip = cv2.flip(resize,1)
         ret, jpeg = cv2.imencode('.jpg', frame_flip)
         return jpeg.tobytes()
@@ -254,7 +385,7 @@ class RosCamera(object):
         self.bridge = CvBridge()
         self.sub = rospy.Subscriber(topic, Image, self.cam_callback)
         rospy.wait_for_message(topic, Image, timeout=15)
-        
+
     # def __del__(self):
     #     self.video.release()
 
