@@ -27,6 +27,10 @@ arm_ros_topic = 'camera_image/image_raw'
 nav_ros_topic = 'camera/image_raw'
 ros_side_topic1 = 'zed2/left/image_rect_color'
 ros_side_topic2 = 'zed2/right/image_rect_color'
+front_topic = "/mrt/camera/color/image_raw"
+front_down_ip = "192.168.2.9:8080/video"
+rear_right_topic = "/mrt/camera1/image_raw"
+rear_left_topic = "/mrt/camera2/image_raw"
 
 def bio_sensor_callback(msg):
     global _bio_sensor_data
@@ -358,8 +362,8 @@ class VideoCamera(object):
         return jpeg.tobytes()
 
 class IPWebCam(object):#TODO check; IP - Internet Protocol; check web_video_server for rostopics
-    def __init__(self):
-        self.url = "http://192.168.2.103:8080/shot.jpg"
+    def __init__(self,ip_address):
+        self.url = ip_address#"http://192.168.2.103:8080/shot.jpg"
 
     def __del__(self):
         cv2.destroyAllWindows()
@@ -436,4 +440,21 @@ def ros_side2_feed(request):
 
 def webcam_feed(request):
     return StreamingHttpResponse(gen(IPWebCam()),
+                    content_type='multipart/x-mixed-replace; boundary=frame')
+
+def front_feed(request):
+    global front_topic
+    return StreamingHttpResponse(gen(RosCamera(front_topic)),
+                    content_type='multipart/x-mixed-replace; boundary=frame')
+def front_down_feed(request):
+    global front_down_ip
+    return StreamingHttpResponse(gen(IPWebCam(front_down_ip)),
+                    content_type='multipart/x-mixed-replace; boundary=frame')
+def rear_right_feed(request):
+    global rear_right_topic
+    return StreamingHttpResponse(gen(RosCamera(rear_right_topic)),
+                    content_type='multipart/x-mixed-replace; boundary=frame')
+def rear_left_feed(request):
+    global rear_left_topic
+    return StreamingHttpResponse(gen(RosCamera(rear_left_topic)),
                     content_type='multipart/x-mixed-replace; boundary=frame')
