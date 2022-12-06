@@ -28,7 +28,7 @@ nav_ros_topic = 'camera/image_raw'
 ros_side_topic1 = 'zed2/left/image_rect_color'
 ros_side_topic2 = 'zed2/right/image_rect_color'
 front_topic = "/mrt/camera/color/image_raw"
-front_down_ip = "192.168.2.9:8080/video"
+front_down_ip = "http://192.168.2.9:8080/video"
 rear_right_topic = "/mrt/camera1/image_raw"
 rear_left_topic = "/mrt/camera2/image_raw"
 
@@ -402,7 +402,7 @@ class RosCamera(object):
         # We are using Motion JPEG, but OpenCV defaults to capture raw images,
         # so we must encode it into JPEG in order to correctly display the
         # video stream.
-        image = cv2.resize(self.frame,[720,540])
+        image = cv2.resize(self.frame,(720,540))
         frame_flip = cv2.flip(image,1)
         ret, jpeg = cv2.imencode('.jpg', frame_flip)
         return jpeg.tobytes()
