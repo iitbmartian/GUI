@@ -21,7 +21,7 @@ import numpy as np
 import rospy, cv2
 import urllib
 from std_msgs.msg import Float32MultiArray
-from sensor_msgs.msg import Image
+from sensor_msgs.msg import Image, CompressedImage
 from cv_bridge import CvBridge
 arm_ros_topic = 'camera_image/image_raw'
 nav_ros_topic = 'camera/image_raw'
@@ -29,8 +29,8 @@ ros_side_topic1 = 'zed2/left/image_rect_color'
 ros_side_topic2 = 'zed2/right/image_rect_color'
 front_topic = "/mrt/camera/color/image_raw"
 front_down_ip = "http://192.168.2.89:8080/shot.jpg?1"#"http://192.168.2.9:8080/video"
-rear_right_topic = "/mrt/camera1/image_raw"
-rear_left_topic = "/mrt/camera2/image_raw"
+rear_right_topic = "/mrt/camera1/image_compressed"
+rear_left_topic = "/mrt/camera2/image_compressed"
 
 def bio_sensor_callback(msg):
     global _bio_sensor_data
@@ -403,6 +403,29 @@ class RosCamera(object):
         ret, jpeg = cv2.imencode('.jpg', frame_flip)
         return jpeg.tobytes()
 
+class CompressedRosCamera(object):
+    def __init__(self, topic):
+        self.sub = rospy.Subscriber(topic, CompressedImage, self.cam_callback)
+        rospy.wait_for_message(topic, CompressedImage, timeout=15)
+
+    # def __del__(self):
+    #     self.video.release()
+
+    def cam_callback(self, ros_image):
+        # Convert ROS Image message to OpenCV image
+        self.frame = ros_image.data
+
+
+    def get_frame(self):
+        # We are using Motion JPEG, but OpenCV defaults to capture raw images,
+        # so we must encode it into JPEG in order to correctly display the
+        # video stream.
+        # image = cv2.resize(self.frame,(256,144))
+        # frame_flip = cv2.flip(image,1)
+        # ret, jpeg = cv2.imencode('.jpg', frame_flip)
+        # return jpeg.tobytes()
+        return self.frame
+
 def gen(camera):
     while True:
         frame = camera.get_frame()
@@ -418,17 +441,14 @@ def ros_arm_feed(request):
     global arm_ros_topic
     return StreamingHttpResponse(gen(RosCamera(arm_ros_topic)),
                     content_type='multipart/x-mixed-replace; boundary=frame')
-
 def ros_nav_feed(request):
     global nav_ros_topic
     return StreamingHttpResponse(gen(RosCamera(nav_ros_topic)),
                     content_type='multipart/x-mixed-replace; boundary=frame')
-
 def ros_side1_feed(request):
     global ros_side_topic1
     return StreamingHttpResponse(gen(RosCamera(ros_side_topic1)),
                     content_type='multipart/x-mixed-replace; boundary=frame')
-
 def ros_side2_feed(request):
     global ros_side_topic2
     return StreamingHttpResponse(gen(RosCamera(ros_side_topic2)),
@@ -448,9 +468,9 @@ def front_down_feed(request):
                     content_type='multipart/x-mixed-replace; boundary=frame')
 def rear_right_feed(request):
     global rear_right_topic
-    return StreamingHttpResponse(gen(RosCamera(rear_right_topic)),
+    return StreamingHttpResponse(gen(CompressedRosCamera(rear_right_topic)),
                     content_type='multipart/x-mixed-replace; boundary=frame')
 def rear_left_feed(request):
     global rear_left_topic
-    return StreamingHttpResponse(gen(RosCamera(rear_left_topic)),
+    return StreamingHttpResponse(gen(CompressedRosCamera(rear_left_topic)),
                     content_type='multipart/x-mixed-replace; boundary=frame')
