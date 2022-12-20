@@ -421,13 +421,16 @@ class CompressedRosCamera(object):
         # so we must encode it into JPEG in order to correctly display the
         # video stream.
         # image = cv2.resize(self.frame,(256,144))
+        image = cv2.resize(self.frame,[720,540])
         # frame_flip = cv2.flip(image,1)
         # ret, jpeg = cv2.imencode('.jpg', frame_flip)
         # return jpeg.tobytes()
         return self.frame
 
 def gen(camera):
+    rate = rospy.Rate(10)
     while True:
+        rate.sleep()
         frame = camera.get_frame()
         yield (b'--frame\r\n'
                 b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
