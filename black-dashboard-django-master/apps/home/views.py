@@ -32,6 +32,8 @@ front_down_ip = "http://192.168.2.89:8080/shot.jpg?1"#"http://192.168.2.9:8080/v
 rear_right_topic = "/mrt/camera1/image_compressed"
 rear_left_topic = "/mrt/camera2/image_compressed"
 
+panorama_ips = ['192.168.2.60:8080/shot.jpg?1','192.168.2.61:8080/shot.jpg?1']
+
 def bio_sensor_callback(msg):
     global _bio_sensor_data
     array = msg.data
@@ -361,6 +363,41 @@ class VideoCamera(object):
         ret, jpeg = cv2.imencode('.jpg', frame_flip)
         return jpeg.tobytes()
 
+class IPWebCamPanorama(object):#TODO check; IP - Internet Protocol; check web_video_server for rostopics
+    def __init__(self,ip_address_list):
+        self.urls = ip_address_list#"http://192.168.2.103:8080/shot.jpg"
+
+    def __del__(self):
+        cv2.destroyAllWindows()
+
+    def get_frame(self):
+        imgs = []
+        for url in self.urls:
+            imgResp = urllib.request.urlopen(url)
+            imgNp = np.array(bytearray(imgResp.read()),dtype=np.uint8)
+            imgs.append(cv2.imdecode(imgNp,-1))
+        if len(imgs) == 0:
+            return None
+
+
+        stitchy=cv2.Stitcher.create()
+        (dummy,img)=stitchy.stitch(imgs)
+        # if dummy != cv2.STITCHER_OK:
+        #       # checking if the stitching procedure is successful
+        #       # .stitch() function returns a true value if stitching is 
+        #       # done successfully
+        #         print("stitching ain't successful")
+        # else: 
+        #     print('Your Panorama is ready!!!')
+
+        # We are using Motion JPEG, but OpenCV defaults to capture raw images,
+        # so we must encode it into JPEG in order to correctly display the
+        # video stream
+        resize = cv2.resize(img, (640, 480), interpolation = cv2.INTER_LINEAR)
+        frame_flip = cv2.flip(resize,1)
+        ret, jpeg = cv2.imencode('.jpg', frame_flip)
+        return jpeg.tobytes()
+
 class IPWebCam(object):#TODO check; IP - Internet Protocol; check web_video_server for rostopics
     def __init__(self,ip_address):
         self.url = ip_address#"http://192.168.2.103:8080/shot.jpg"
@@ -456,8 +493,8 @@ def ros_side2_feed(request):
     return StreamingHttpResponse(gen(RosCamera(ros_side_topic2)),
                     content_type='multipart/x-mixed-replace; boundary=frame')
 
-def webcam_feed(request):
-    return StreamingHttpResponse(gen(IPWebCam()),
+def panorama_feed(request):
+    return StreamingHttpResponse(gen(IPWebCamPanorama(panorama_ips)),
                     content_type='multipart/x-mixed-replace; boundary=frame')
 
 def front_feed(request):
