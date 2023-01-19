@@ -31,6 +31,10 @@ front_topic = "/mrt/camera/color/image_raw"
 front_down_ip = "http://192.168.2.89:8080/shot.jpg?1"#"http://192.168.2.9:8080/video"
 rear_right_topic = "/mrt/camera1/image_compressed"
 rear_left_topic = "/mrt/camera2/image_compressed"
+bio_cam1=''
+bio_cam2=''
+bio_cam3=''
+bio_cam4=''
 
 panorama_ips = ['192.168.2.60:8080/shot.jpg?1','192.168.2.61:8080/shot.jpg?1']
 
@@ -512,4 +516,20 @@ def rear_right_feed(request):
 def rear_left_feed(request):
     global rear_left_topic
     return StreamingHttpResponse(gen(CompressedRosCamera(rear_left_topic)),
+                    content_type='multipart/x-mixed-replace; boundary=frame')
+def bio_cam1_feed(request):
+    global bio_cam1
+    return StreamingHttpResponse(gen(IPWebCam(bio_cam1)),
+                    content_type='multipart/x-mixed-replace; boundary=frame')
+def bio_cam2_feed(request):
+    global bio_cam2
+    return StreamingHttpResponse(gen(IPWebCam(bio_cam2)),
+                    content_type='multipart/x-mixed-replace; boundary=frame')
+def bio_cam3_feed(request):
+    global bio_cam3
+    return StreamingHttpResponse(gen(IPWebCam(bio_cam3)),
+                    content_type='multipart/x-mixed-replace; boundary=frame')
+def bio_cam4_feed(request):
+    global bio_cam4
+    return StreamingHttpResponse(gen(IPWebCam(bio_cam4)),
                     content_type='multipart/x-mixed-replace; boundary=frame')
