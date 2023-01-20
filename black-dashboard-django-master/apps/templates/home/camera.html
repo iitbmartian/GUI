@@ -14,7 +14,17 @@
         Camera-Feed
       </div>
       <div class="row">
-      <div class="col-lg-6">
+      <div class="col-lg-4">
+        <div class="card card-chart">
+          <div class="card-header">
+            <h5 class="card-category">Front Left Camera</h5>
+          </div>
+          <div class="card-body">
+              <div class="video" ><img src="{% url 'front_left_feed' %}" width="720" height="540"></div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4">
         <div class="card card-chart">
           <div class="card-header">
             <h5 class="card-category">Front Camera</h5>
@@ -24,19 +34,19 @@
           </div>
         </div>
       </div>
-      <div class="col-lg-6">
+      <div class="col-lg-4">
         <div class="card card-chart">
           <div class="card-header">
-            <h5 class="card-category">Front Down Camera</h5>
+            <h5 class="card-category">Front Right Camera</h5>
           </div>
           <div class="card-body">
-              <div class="video" ><img src="{% url 'front_down_feed' %}" width="720" height="540"></div>
+              <div class="video" ><img src="{% url 'front_right_feed' %}" width="720" height="540"></div>
           </div>
         </div>
       </div>
     </div>
     <div class="row">
-      <div class="col-lg-6">
+      <div class="col-lg-4">
         <div class="card card-chart">
           <div class="card-header">
             <h5 class="card-category">Rear Left Camera</h5>
@@ -46,7 +56,17 @@
           </div>
         </div>
       </div>
-      <div class="col-lg-6">
+      <div class="col-lg-4">
+        <div class="card card-chart">
+          <div class="card-header">
+            <h5 class="card-category">Front Down Camera</h5>
+          </div>
+          <div class="card-body">
+              <div class="video" ><img src="{% url 'front_down_feed' %}" width="720" height="540"></div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4">
         <div class="card card-chart">
           <div class="card-header">
             <h5 class="card-category">Rear Right Camera</h5>

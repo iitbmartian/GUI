@@ -3365,7 +3365,7 @@ input[type="button"].btn-block {
     padding-right: 0;
     padding-left: 0; } }
 
-@media (min-width: 992px) {
+@media (min-width: 2900px) {
   .navbar-expand-lg {
     flex-flow: row nowrap;
     justify-content: flex-start; }
@@ -10485,7 +10485,7 @@ img {
     vertical-align: middle;
     font-size: 20px; }
 
-@media screen and (max-width: 991px) {
+@media screen and (max-width: 2900px) {
   .navbar .container-fluid {
     padding-right: 15px;
     padding-left: 15px; }
@@ -11667,7 +11667,7 @@ table.tablesorter thead tr .headerSortDown {
   height: 100%;
   max-height: 100%; }
 
-@media (min-width: 991px) {
+@media (min-width: 2000px) {
   .sidebar,
   .main-panel,
   .sidebar-wrapper {
@@ -11750,7 +11750,7 @@ table.tablesorter thead tr .headerSortDown {
 .panel-header-lg {
   height: 380px; }
 
-@media screen and (max-width: 991px) {
+@media screen and (max-width: 2000px) {
   .sidebar {
     position: fixed;
     display: block;
@@ -11767,18 +11767,18 @@ table.tablesorter thead tr .headerSortDown {
     padding: 0;
     transition: 0.5s cubic-bezier(0.685, 0.0473, 0.346, 1);
     transform: translate3d(-260px, 0, 0); } }
-  @media screen and (max-width: 991px) and (prefers-reduced-motion: reduce) {
+  @media screen and (max-width: 2000px) and (prefers-reduced-motion: reduce) {
     .sidebar {
       transition: none; } }
 
-@media screen and (max-width: 991px) {
+@media screen and (max-width: 2000px) {
   .wrapper {
     transition: 0.5s, cubic-bezier(0.685, 0.0473, 0.346, 1); } }
-  @media screen and (max-width: 991px) and (prefers-reduced-motion: reduce) {
+  @media screen and (max-width: 2000px) and (prefers-reduced-motion: reduce) {
     .wrapper {
       transition: none; } }
 
-@media screen and (max-width: 991px) {
+@media screen and (max-width: 2000px) {
   .main-panel {
     width: 100%; }
     .main-panel .content {
@@ -11789,11 +11789,11 @@ table.tablesorter thead tr .headerSortDown {
   .nav-open .sidebar {
     transition: 0.5s cubic-bezier(0.685, 0.0473, 0.346, 1);
     transform: translate3d(0px, 0, 0); } }
-  @media screen and (max-width: 991px) and (prefers-reduced-motion: reduce) {
+  @media screen and (max-width: 2000px) and (prefers-reduced-motion: reduce) {
     .nav-open .sidebar {
       transition: none; } }
 
-@media screen and (max-width: 991px) {
+@media screen and (max-width: 2000px) {
     .nav-open .sidebar:before {
       content: unset; }
   .nav-open body {

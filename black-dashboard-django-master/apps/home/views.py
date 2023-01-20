@@ -10,7 +10,7 @@ from django.http.response import StreamingHttpResponse
 from django.template import loader
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
-
+from django.views import View
 
 from django.shortcuts import render
 from manage import send_joy#, send_channeling, send_microscope, send_stewart, send_raman #, _actuator_angle, _stewart_data
@@ -32,7 +32,7 @@ front_down_ip = "http://192.168.2.89:8080/shot.jpg?1"#"http://192.168.2.9:8080/v
 rear_right_topic = "/mrt/camera1/image_compressed"
 rear_left_topic = "/mrt/camera2/image_compressed"
 
-panorama_ips = ['192.168.2.60:8080/shot.jpg?1','192.168.2.61:8080/shot.jpg?1']
+panorama_ips = ['http://192.168.2.60:8080/shot.jpg?1','http://192.168.2.61:8080/shot.jpg?1']
 
 def bio_sensor_callback(msg):
     global _bio_sensor_data
@@ -45,6 +45,9 @@ microscope_pub = rospy.Publisher('microscope', Float32MultiArray, queue_size=10)
 collection_pub = rospy.Publisher('collection', Float32MultiArray, queue_size=10)
 _bio_sensor_data = [29.0,21.5,15.0]
 # microscope_sub = rospy.Subscriber('biosensor', Float32MultiArray, bio_sensor_callback)
+
+cam_ip_address_list = ['192.168.2.51', '192.168.2.52', '192.168.2.53', '192.168.2.54']
+cam_flip  = [0,0,0,0]
 
 @login_required(login_url="/login/")
 def index(request):
@@ -373,6 +376,7 @@ class IPWebCamPanorama(object):#TODO check; IP - Internet Protocol; check web_vi
     def get_frame(self):
         imgs = []
         for url in self.urls:
+            print(url)
             imgResp = urllib.request.urlopen(url)
             imgNp = np.array(bytearray(imgResp.read()),dtype=np.uint8)
             imgs.append(cv2.imdecode(imgNp,-1))
@@ -382,13 +386,10 @@ class IPWebCamPanorama(object):#TODO check; IP - Internet Protocol; check web_vi
 
         stitchy=cv2.Stitcher.create()
         (dummy,img)=stitchy.stitch(imgs)
-        # if dummy != cv2.STITCHER_OK:
-        #       # checking if the stitching procedure is successful
-        #       # .stitch() function returns a true value if stitching is 
-        #       # done successfully
-        #         print("stitching ain't successful")
-        # else: 
-        #     print('Your Panorama is ready!!!')
+        if dummy != cv2.STITCHER_OK:
+            print(f"stitching ain't successful {dummy}")
+        else:
+            print(f'Your Panorama is ready!!!')
 
         # We are using Motion JPEG, but OpenCV defaults to capture raw images,
         # so we must encode it into JPEG in order to correctly display the
@@ -399,8 +400,9 @@ class IPWebCamPanorama(object):#TODO check; IP - Internet Protocol; check web_vi
         return jpeg.tobytes()
 
 class IPWebCam(object):#TODO check; IP - Internet Protocol; check web_video_server for rostopics
-    def __init__(self,ip_address):
+    def __init__(self,ip_address, flip=0):
         self.url = ip_address#"http://192.168.2.103:8080/shot.jpg"
+        self.flip = flip
 
     def __del__(self):
         cv2.destroyAllWindows()
@@ -413,15 +415,16 @@ class IPWebCam(object):#TODO check; IP - Internet Protocol; check web_video_serv
         # so we must encode it into JPEG in order to correctly display the
         # video stream
         resize = cv2.resize(img, (640, 480), interpolation = cv2.INTER_LINEAR)
-        frame_flip = cv2.flip(resize,1)
-        ret, jpeg = cv2.imencode('.jpg', frame_flip)
+        if self.flip:
+            resize = cv2.flip(resize,1)
+        ret, jpeg = cv2.imencode('.jpg', resize)
         return jpeg.tobytes()
 
 class RosCamera(object):
     def __init__(self, topic):
         self.bridge = CvBridge()
         self.sub = rospy.Subscriber(topic, Image, self.cam_callback)
-        rospy.wait_for_message(topic, Image, timeout=15)
+        # rospy.wait_for_message(topic, Image, timeout=15)
 
     # def __del__(self):
     #     self.video.release()
@@ -497,19 +500,68 @@ def panorama_feed(request):
     return StreamingHttpResponse(gen(IPWebCamPanorama(panorama_ips)),
                     content_type='multipart/x-mixed-replace; boundary=frame')
 
-def front_feed(request):
-    global front_topic
-    return StreamingHttpResponse(gen(RosCamera(front_topic)),
+class IPCamView(View):
+    ip = "192.168.1.61"#http://192.168.1.61:8080/video
+    flip = 0
+    initialized = False
+
+    def get(self, request):
+        if not self.initialized:
+            if not self.ip.startswith('http'):
+                self.ip = 'http://' + self.ip + ':8080/shot.jpg?'
+            self.camera = IPWebCam(self.ip,self.flip)
+        return StreamingHttpResponse(gen(self.camera),\
                     content_type='multipart/x-mixed-replace; boundary=frame')
-def front_down_feed(request):
-    global front_down_ip
-    return StreamingHttpResponse(gen(IPWebCam(front_down_ip)),
+    def post(self, request):
+        print(request)
+
+
+class ROSCamView(View):
+    ros_topic = "/mrt/camera/image_raw"
+    camera = RosCamera(ros_topic)
+    def get(self, request):
+        return StreamingHttpResponse(gen(camera),\
                     content_type='multipart/x-mixed-replace; boundary=frame')
-def rear_right_feed(request):
-    global rear_right_topic
-    return StreamingHttpResponse(gen(CompressedRosCamera(rear_right_topic)),
-                    content_type='multipart/x-mixed-replace; boundary=frame')
-def rear_left_feed(request):
-    global rear_left_topic
-    return StreamingHttpResponse(gen(CompressedRosCamera(rear_left_topic)),
-                    content_type='multipart/x-mixed-replace; boundary=frame')
+
+
+# class DriveCam(View):
+
+#     """Class for cameras used while driving"""
+
+#     def __init__(self, cam_ip_address_list, cam_flip):
+#         if len(cam_ip_address_list != 4):
+#                print("not 4 in ip list")
+#         self.front, self.front_down, self.rear_right, self.rear_left =\
+#             [IPWebCam(ip, flip) for ip in zip(cam_ip_address_list,cam_flip)]
+
+#     def front_feed(self, request):
+#         return StreamingHttpResponse(gen(self.front_right),\
+#                     content_type='multipart/x-mixed-replace; boundary=frame')
+#     def front_down_feed(self, request):
+#         return StreamingHttpResponse(gen(self.front_left),\
+#                     content_type='multipart/x-mixed-replace; boundary=frame')
+#     def rear_right_feed(self, request):
+#         return StreamingHttpResponse(gen(self.rear_right),\
+#                     content_type='multipart/x-mixed-replace; boundary=frame')
+#     def rear_left_feed(self, request):
+#         return StreamingHttpResponse(gen(self.rear_left),\
+#                     content_type='multipart/x-mixed-replace; boundary=frame')
+
+#     @csrf_exempt
+#     def drive_cam(self, request):
+#         if request.method == 'GET':
+#             return render(request, 'home/camera.html', {'cam_ip_list': self.cam_ip_address_list, 'cam_flip': self.cam_flip})
+#         if request.method == 'POST':
+#             req = request.POST
+#             print(req)
+#             if 'dummy' in req.getlist('collection'):
+#               print(str(req['collection']))
+#               collection_arr[1:] = req_list
+#             else:
+#               print("val", req.getlist('collection'))
+
+#             if str(req.getlist('collection')[0]) in buttons:
+#               print (str(req.getlist('collection')))
+#               collection_arr[buttons[str(req.getlist('collection')[0])] ] = 1
+#             return render(request, 'home/camera.html', {'cam_ip_list': self.cam_ip_address_list, 'cam_flip': self.cam_flip})
+
