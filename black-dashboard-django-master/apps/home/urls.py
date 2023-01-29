@@ -30,10 +30,10 @@ urlpatterns = [
     url(r'^front_right_feed', IPCamView.as_view(ip='192.168.1.62',flip=0), name='front_right_feed'),
     url(r'^rear_left_feed', IPCamView.as_view(ip='192.168.1.63',flip=0), name='rear_left_feed'),
     # url(r'^front_down_feed', ROSCamView.as_view(ros_topic='/mrt/camera3/image_raw'), name='front_down_feed'),
-    url(r'^front_down_feed', IPCamView.as_view(ip='192.168.1.64',flip=0), name='front_down_feed'),
+    url(r'^front_down_feed', IPCamView.as_view(ip='192.168.1.66',flip=0), name='front_down_feed'),
     url(r'^rear_right_feed', IPCamView.as_view(ip='192.168.1.64',flip=0), name='rear_right_feed'),
 
-    url(r'^arm_feed', IPCamView.as_view(ip='192.168.1.75',flip=0), name='arm_feed'),
+    url(r'^arm_feed', IPCamView.as_view(ip='192.168.1.67',flip=0), name='arm_feed'),
     url(r'^arm_gripper_up', ROSCamView.as_view(ros_topic='/mrt/camera1/image_raw'), name='arm_gripper_up'),
     url(r'^arm_gripper_side', ROSCamView.as_view(ros_topic='/mrt/camera2/image_raw'), name='arm_gripper_side'),
 
