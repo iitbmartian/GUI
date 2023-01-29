@@ -41,10 +41,18 @@ def bio_sensor_callback(msg):
 
 
 # global _bio_sensor_data# temp:28-30 celsius; methane(RO):20:25; humidity: 15%;
-microscope_pub = rospy.Publisher('microscope', Float32MultiArray, queue_size=10)
-collection_pub = rospy.Publisher('collection', Float32MultiArray, queue_size=10)
+# microscope_pub = rospy.Publisher('microscope', Float32MultiArray, queue_size=10)
+# collection_pub = rospy.Publisher('collection', Float32MultiArray, queue_size=10)
 _bio_sensor_data = [29.0,21.5,15.0]
 # microscope_sub = rospy.Subscriber('biosensor', Float32MultiArray, bio_sensor_callback)
+
+pump_pub = rospy.Publisher('pump', Float32MultiArray, queue_size=10)#0,1
+servo_pub = rospy.Publisher('servo', Float32MultiArray, queue_size=10)# -1, 0, 1
+stepper_pub = rospy.Publisher('stepper', Float32MultiArray, queue_size=10)# -1, 0, 1
+gripper_pub = rospy.Publisher('gripper', Float32MultiArray, queue_size=10)# -1, 0, 1
+laser_pub = rospy.Publisher('laser', Float32MultiArray, queue_size=10)# -1, 1
+
+# pump_val = [0,0,0,0]
 
 cam_ip_address_list = ['192.168.2.51', '192.168.2.52', '192.168.2.53', '192.168.2.54']
 cam_flip  = [0,0,0,0]
@@ -239,6 +247,75 @@ def bio(request):
     if request.method == 'GET':
         return render(request, 'home/bio-new.html', {'temp': _bio_sensor_data[0]})
     elif request.method == 'POST':
+        req = request.POST
+        print(req)
+        pump_arr = np.zeros(4)
+        stepper_arr = np.zeros(2)
+        servo_arr = np.zeros(1)
+        gripper_arr = np.zeros(1)
+        laser_arr = np.zeros(1)
+
+        if 'collection' in req:
+            # buttons = {"gripper":0}
+
+            req_list = [int('{}0'.format(x).encode('UTF8'))/10 for x in req.getlist('collection')[1:4]]
+            print("relist:", req_list)
+
+            if 'dummy' in req.getlist('collection'):
+                print(str(req['collection']))
+                gripper_arr[0] = req_list[0]
+                servo_arr[0] = req_list[1]
+                stepper_arr[0] = req_list[2]
+            else:
+                print("val", req.getlist('collection'))
+
+        if 'transfer' in req:
+            buttons = {"pump_valve1":0, "pump_valve2":1}
+            if 'dummy' in req.getlist('transfer'):
+                print(str(req['transfer']))
+                stepper_arr[1] = int(str(req['transfer'])+'0')/10
+            else:
+                print("val", req.getlist('transfer'))
+            # print(str(req.getlist('microscope')[1]))
+            for val in req.getlist('transfer'):
+                print(str(val))
+                if str(val) in buttons:
+                    print(str(req.getlist('transfer')))
+                    pump_arr[buttons[str(val)]] = 1
+
+        if 'microscope' in req:
+            buttons = {"water_valve":2, "chem_valve":3}
+            if 'dummy' in req.getlist('microscope'):
+                print(str(req['microscope']))
+                # stepper_arr[1] = int('0'+str(req['microscope']))
+            else:
+                print("val", req.getlist('microscope'))
+            # print(str(req.getlist('microscope')[1]))
+            for val in req.getlist('microscope'):
+                if str(val) in buttons:
+                    print(str(req.getlist('microscope')))
+                    pump_arr[buttons[str(val)]] = 1
+                elif str(val) == "laser":
+                    laser_arr[0] = 1
+
+
+        # for i,val in pump_arr:
+        #     if i:
+        #         pump_val[i] = not pump_val[1]
+
+        pump_pub.publish(Float32MultiArray(data=pump_arr))
+        servo_pub.publish(Float32MultiArray(data=servo_arr))
+        stepper_pub.publish(Float32MultiArray(data=stepper_arr))
+        laser_pub.publish(Float32MultiArray(data=laser_arr))
+        gripper_pub.publish(Float32MultiArray(data=gripper_arr))
+        return render(request, 'home/bio-new.html', {'humidity':_bio_sensor_data[2],'methane':_bio_sensor_data[1],'temp': _bio_sensor_data[0]})
+
+@csrf_exempt
+def bio_old(request):
+    global _bio_sensor_data, _output, microscope_pub, collection_pub
+    if request.method == 'GET':
+        return render(request, 'home/bio-new.html', {'temp': _bio_sensor_data[0]})
+    elif request.method == 'POST':
         # direction=request.POST['action']
         # pdb.set_trace()
         # send_msg(direction)
@@ -421,10 +498,14 @@ class IPWebCam(object):#TODO check; IP - Internet Protocol; check web_video_serv
         return jpeg.tobytes()
 
 class RosCamera(object):
-    def __init__(self, topic):
+    def __init__(self, topic, flip):
         self.bridge = CvBridge()
         self.sub = rospy.Subscriber(topic, Image, self.cam_callback)
-        # rospy.wait_for_message(topic, Image, timeout=15)
+        self.flip = flip
+        try:
+            rospy.wait_for_message(topic, Image, timeout=15)
+        except:
+            print("topic not published")
 
     # def __del__(self):
     #     self.video.release()
@@ -438,9 +519,10 @@ class RosCamera(object):
         # We are using Motion JPEG, but OpenCV defaults to capture raw images,
         # so we must encode it into JPEG in order to correctly display the
         # video stream.
-        image = cv2.resize(self.frame,(720,540))
-        frame_flip = cv2.flip(image,1)
-        ret, jpeg = cv2.imencode('.jpg', frame_flip)
+        image = cv2.resize(self.frame, (720, 540))
+        if self.flip:
+            image = cv2.flip(image, 1)
+        ret, jpeg = cv2.imencode('.jpg', image)
         return jpeg.tobytes()
 
 class CompressedRosCamera(object):
@@ -518,11 +600,26 @@ class IPCamView(View):
 
 class ROSCamView(View):
     ros_topic = "/mrt/camera/image_raw"
-    camera = RosCamera(ros_topic)
+    flip = 0
+    initialized = False
     def get(self, request):
-        return StreamingHttpResponse(gen(camera),\
+        if not self.initialized:
+            self.camera = RosCamera(self.ros_topic, self.flip)
+            self.initialized = True
+        return StreamingHttpResponse(gen(self.camera),\
                     content_type='multipart/x-mixed-replace; boundary=frame')
 
+
+class CompressedROSCamView(View):
+    ros_topic = "/mrt/camera/image_compressed"
+    flip = 0
+    initialized = False
+    def get(self, request):
+        if not self.initialized:
+            self.camera = CompressedRosCamera(self.ros_topic, self.flip)
+            self.initialized = True
+        return StreamingHttpResponse(gen(self.camera),\
+                    content_type='multipart/x-mixed-replace; boundary=frame')
 
 # class DriveCam(View):
 

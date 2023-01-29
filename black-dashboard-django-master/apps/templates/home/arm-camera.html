@@ -1,0 +1,61 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Maps {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+<div class="row">
+<div class="flex-column">
+  <div class="col-md-12">
+    <div class="card card-plain">
+      <div class="card-header">
+        Camera-Feed
+      </div>
+      <div class="row">
+      <div class="col-lg-6">
+        <div class="card card-chart">
+          <div class="card-header">
+            <h5 class="card-category">Front Left Camera</h5>
+          </div>
+          <div class="card-body">
+              <div class="video" ><img src="{% url 'arm_gripper_up' %}" width="720" height="540"></div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="card card-chart">
+          <div class="card-header">
+            <h5 class="card-category">Front Camera</h5>
+          </div>
+          <div class="card-body">
+              <div class="video" ><img src="{% url 'arm_gripper_side' %}" width="720" height="540"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card card-chart">
+          <div class="card-header">
+            <h5 class="card-category">Rear Left Camera</h5>
+          </div>
+          <div class="card-body">
+              <div class="video" ><img src="{% url 'arm_feed' %}" width="720" height="540"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+  
+{% endblock javascripts %}
