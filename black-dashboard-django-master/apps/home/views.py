@@ -24,7 +24,7 @@ from std_msgs.msg import Float32MultiArray
 from sensor_msgs.msg import Image, CompressedImage
 from cv_bridge import CvBridge
 arm_ros_topic = 'camera_image/image_raw'
-nav_ros_topic = 'camera/image_raw'
+nav_ros_topic = '/mrt/camera/color/image_raw'
 ros_side_topic1 = 'zed2/left/image_rect_color'
 ros_side_topic2 = 'zed2/right/image_rect_color'
 front_topic = "/mrt/camera/color/image_raw"
@@ -33,6 +33,7 @@ rear_right_topic = "/mrt/camera1/image_compressed"
 rear_left_topic = "/mrt/camera2/image_compressed"
 
 panorama_ips = ['http://192.168.2.60:8080/shot.jpg?1','http://192.168.2.61:8080/shot.jpg?1']
+
 
 def bio_sensor_callback(msg):
     global _bio_sensor_data
@@ -427,8 +428,8 @@ def bio_old(request):
 #class for webcam/modify for each case
 #class for webcam/modify for each case
 class VideoCamera(object):
-    def __init__(self):
-        self.video = cv2.VideoCapture(0)
+    def __init__(self, dev=0):
+        self.video = cv2.VideoCapture(dev)
 
     def __del__(self):
         self.video.release()
@@ -498,7 +499,7 @@ class IPWebCam(object):#TODO check; IP - Internet Protocol; check web_video_serv
         return jpeg.tobytes()
 
 class RosCamera(object):
-    def __init__(self, topic, flip):
+    def __init__(self, topic, flip=False):
         self.bridge = CvBridge()
         self.sub = rospy.Subscriber(topic, Image, self.cam_callback)
         self.flip = flip
@@ -549,7 +550,7 @@ class CompressedRosCamera(object):
         return self.frame
 
 def gen(camera):
-    rate = rospy.Rate(10)
+    rate = rospy.Rate(20)
     while True:
         rate.sleep()
         frame = camera.get_frame()
@@ -559,23 +560,6 @@ def gen(camera):
 
 def video_feed(request):
     return StreamingHttpResponse(gen(VideoCamera()),
-                    content_type='multipart/x-mixed-replace; boundary=frame')
-
-def ros_arm_feed(request):
-    global arm_ros_topic
-    return StreamingHttpResponse(gen(RosCamera(arm_ros_topic)),
-                    content_type='multipart/x-mixed-replace; boundary=frame')
-def ros_nav_feed(request):
-    global nav_ros_topic
-    return StreamingHttpResponse(gen(RosCamera(nav_ros_topic)),
-                    content_type='multipart/x-mixed-replace; boundary=frame')
-def ros_side1_feed(request):
-    global ros_side_topic1
-    return StreamingHttpResponse(gen(RosCamera(ros_side_topic1)),
-                    content_type='multipart/x-mixed-replace; boundary=frame')
-def ros_side2_feed(request):
-    global ros_side_topic2
-    return StreamingHttpResponse(gen(RosCamera(ros_side_topic2)),
                     content_type='multipart/x-mixed-replace; boundary=frame')
 
 def panorama_feed(request):
@@ -620,6 +604,19 @@ class CompressedROSCamView(View):
             self.initialized = True
         return StreamingHttpResponse(gen(self.camera),\
                     content_type='multipart/x-mixed-replace; boundary=frame')
+
+
+class VideoCamView(View):
+    dev = 0
+    flip = 0
+    initialized = False
+    def get(self, request):
+        if not self.initialized:
+            self.camera = VideoCamera(self.dev, self.flip)
+            self.initialized = True
+        return StreamingHttpResponse(gen(self.camera),\
+                    content_type='multipart/x-mixed-replace; boundary=frame')
+
 
 # class DriveCam(View):
 
