@@ -7,90 +7,128 @@
 
 {% block content %}
 
+<div class="row" style="max-height:100vh">
+  <div class="col-md-12" style="max-height:100vh">
+    <div class="card card-plain h-50">
+      <div class="card-header">
+        Camera-Feed
+      </div>
+      <div class="row h-100">
+
+          <div class="col-lg-6 h-95">
+              <div class="card card-chart h-100">
+                  <div class="card-header">
+                      <h5 class="card-category">Left Camera</h5>
+                  </div>
+                  <div class="card-body h-100">
+                      <div class="video h-100" ><img class="h-100" src="{% url 'left_feed' %}" width="720" height="540"></div>
+                  </div>
+              </div>
+          </div>
+
+          <div class="col-lg-6 h-95">
+              <div class="card card-chart h-100">
+                  <div class="card-header">
+                      <h5 class="card-category">Right Camera</h5>
+                  </div>
+                  <div class="card-body h-100">
+                      <div class="video h-100" ><img class="h-100" src="{% url 'right_feed' %}" width="720" height="540"></div>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+
+  <div class="col-12">
+        <div class="card card-chart">
+          <div class="card-header ">
+            <div class="row">
+              <div class="col-sm-6 text-left">
+                <h5 class="card-category">Bio-Sensor data</h5>
+                <h2 class="card-title">Graphs</h2>
+              </div>
+              <div class="col-sm-6">
+                <div class="btn-group btn-group-toggle float-right" data-toggle="buttons">
+                  <label class="btn btn-sm btn-primary btn-simple active" id="0">
+                    <input type="radio" name="options" checked>
+                    <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block">Temperature &#8451;</span>
+                    <span class="d-block d-sm-none">
+                      <i class="tim-icons icon-single-02"></i>
+                    </span>
+                  </label>
+                  <!-- <label class="btn btn-sm btn-primary btn-simple" id="1"> -->
+                  <!--   <input type="radio" class="d-none d-sm-none" name="options"> -->
+                  <!--   <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block">Methane ppm</span> -->
+                  <!--   <span class="d-block d-sm-none"> -->
+                  <!--     <i class="tim-icons icon-gift-2"></i> -->
+                  <!--   </span> -->
+                  <!-- </label> -->
+                  <!-- <label class="btn btn-sm btn-primary btn-simple" id="2"> -->
+                  <!--   <input type="radio" class="d-none" name="options"> -->
+                  <!--   <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block">Humidity %</span> -->
+                  <!--   <span class="d-block d-sm-none"> -->
+                  <!--     <i class="tim-icons icon-tap-02"></i> -->
+                  <!--   </span> -->
+                  <!-- </label> -->
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="chart-area">
+              <canvas id="chartBig1"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
 <div class="row">
-  <!-- <div class="col-md-12"> -->
-  <!--   <div class="card "> -->
-  <!--     <div class="card-header"> -->
-  <!--       <h4 class="card-title"> BioSensor Data</h4> -->
-  <!--     </div> -->
-  <!--     <div class="card-body"> -->
-  <!--       <div class="table-responsive"> -->
-  <!--         <table class="table tablesorter " id=""> -->
-  <!--           <thead class=" text-primary"> -->
-  <!--             <tr> -->
-  <!--               <th> -->
-  <!--                 Physical Quantity -->
-  <!--               </th> -->
-  <!--               <th> -->
-  <!--                 Value -->
-  <!--               </th> -->
-  <!--               <th> -->
-  <!--                 Mean -->
-  <!--               </th> -->
-  <!--             </tr> -->
-  <!--           </thead> -->
-  <!--           <tbody> -->
-  <!--             <tr> -->
-  <!--               <td> -->
-  <!--                 Temperature: --> 
-  <!--               </td> -->
-  <!--               <td> -->
-  <!--                 {{temp}}28.4 &#8451; -->
-  <!--               </td> -->
-  <!--               <td> -->
-  <!--                 {{temp_mean}}28.4 &#8451; -->
-  <!--               </td> -->
-  <!--             </tr> -->
-  <!--           </tbody> -->
-  <!--         </table> -->
-  <!--       </div> -->
-  <!--     </div> -->
-  <!--   </div> -->
-  <!-- </div> -->
 
 
-  <!-- <div class="col-12"> -->
-  <!--       <div class="card card-chart"> -->
-  <!--         <div class="card-header "> -->
-  <!--           <div class="row"> -->
-  <!--             <div class="col-sm-6 text-left"> -->
-  <!--               <h5 class="card-category">Bio-Sensor data</h5> -->
-  <!--               <h2 class="card-title">Graphs</h2> -->
-  <!--             </div> -->
-  <!--             <div class="col-sm-6"> -->
-  <!--               <div class="btn-group btn-group-toggle float-right" data-toggle="buttons"> -->
-  <!--                 <label class="btn btn-sm btn-primary btn-simple active" id="0"> -->
-  <!--                   <input type="radio" name="options" checked> -->
-  <!--                   <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block">Temperature &#8451;</span> -->
-  <!--                   <span class="d-block d-sm-none"> -->
-  <!--                     <i class="tim-icons icon-single-02"></i> -->
-  <!--                   </span> -->
-  <!--                 </label> -->
-  <!--                 <!-1- <label class="btn btn-sm btn-primary btn-simple" id="1"> -1-> -->
-  <!--                 <!-1-   <input type="radio" class="d-none d-sm-none" name="options"> -1-> -->
-  <!--                 <!-1-   <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block">Methane ppm</span> -1-> -->
-  <!--                 <!-1-   <span class="d-block d-sm-none"> -1-> -->
-  <!--                 <!-1-     <i class="tim-icons icon-gift-2"></i> -1-> -->
-  <!--                 <!-1-   </span> -1-> -->
-  <!--                 <!-1- </label> -1-> -->
-  <!--                 <!-1- <label class="btn btn-sm btn-primary btn-simple" id="2"> -1-> -->
-  <!--                 <!-1-   <input type="radio" class="d-none" name="options"> -1-> -->
-  <!--                 <!-1-   <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block">Humidity %</span> -1-> -->
-  <!--                 <!-1-   <span class="d-block d-sm-none"> -1-> -->
-  <!--                 <!-1-     <i class="tim-icons icon-tap-02"></i> -1-> -->
-  <!--                 <!-1-   </span> -1-> -->
-  <!--                 <!-1- </label> -1-> -->
-  <!--               </div> -->
-  <!--             </div> -->
-  <!--           </div> -->
-  <!--         </div> -->
-  <!--         <div class="card-body"> -->
-  <!--           <div class="chart-area"> -->
-  <!--             <canvas id="chartBig1"></canvas> -->
-  <!--           </div> -->
-  <!--         </div> -->
-  <!--       </div> -->
-  <!--     </div> -->
+<!--   <div class="col-md-12"> -->
+<!--     <div class="card "> -->
+<!--       <div class="card-header"> -->
+<!--         <h4 class="card-title"> BioSensor Data</h4> -->
+<!--       </div> -->
+<!--       <div class="card-body"> -->
+<!--         <div class="table-responsive"> -->
+<!--           <table class="table tablesorter " id=""> -->
+<!--             <thead class=" text-primary"> -->
+<!--               <tr> -->
+<!--                 <th> -->
+<!--                   Physical Quantity -->
+<!--                 </th> -->
+<!--                 <th> -->
+<!--                   Value -->
+<!--                 </th> -->
+<!--                 <th> -->
+<!--                   Mean -->
+<!--                 </th> -->
+<!--               </tr> -->
+<!--             </thead> -->
+<!--             <tbody> -->
+<!--               <tr> -->
+<!--                 <td> -->
+<!--                   Temperature: --> 
+<!--                 </td> -->
+<!--                 <td> -->
+<!--                   {{temp}}28.4 &#8451; -->
+<!--                 </td> -->
+<!--                 <td> -->
+<!--                   {{temp_mean}}28.4 &#8451; -->
+<!--                 </td> -->
+<!--               </tr> -->
+<!--             </tbody> -->
+<!--           </table> -->
+<!--         </div> -->
+<!--       </div> -->
+<!--     </div> -->
+<!--   </div> -->
+
 
   <div class="col-md-12">
     <div class="card  card-plain">

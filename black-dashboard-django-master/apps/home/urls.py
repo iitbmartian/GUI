@@ -9,8 +9,10 @@ from apps.home.views import IPCamView, ROSCamView, CompressedROSCamView, VideoCa
 
 from django.conf.urls import url
 
+import cv2
+
 rtsp_template = "rtsp://admin:rover2409@192.168.69.{ip}:554/cam/realmonitor?channel=1&subtype=0&unicast=true&proto=Onvif"
-rtsp_ips = [rtsp_template.format(ip) for ip in ["200", "202", "203"]]
+rtsp_ips = [rtsp_template.format(ip=ip) for ip in ["200", "202", "203"]]
 
 urlpatterns = [
 
@@ -28,9 +30,9 @@ urlpatterns = [
     url(r'^arm_gripper_up', ROSCamView.as_view(ros_topic='/mrt/camera1/image_raw'), name='arm_gripper_up'),
     url(r'^arm_gripper_side', ROSCamView.as_view(ros_topic='/mrt/camera2/image_raw'), name='arm_gripper_side'),
 
-    url(r'^front_down_feed', VideoCamView.as_view(dev=rtsp_ips[2]), name='front'),
-    url(r'^right_feed', VideoCamView.as_view(dev=rtsp_ips[0]), name='right'),
-    url(r'^left_feed', VideoCamView.as_view(dev=rtsp_ips[1]), name='left'),
+    url(r'^front_down_feed', VideoCamView.as_view(dev=rtsp_ips[2], rotate=cv2.ROTATE_180), name='front_down_feed'),
+    url(r'^right_feed', VideoCamView.as_view(dev=rtsp_ips[0], rotate=cv2.ROTATE_90_CLOCKWISE), name='right_feed'),
+    url(r'^left_feed', VideoCamView.as_view(dev=rtsp_ips[1], rotate=cv2.ROTATE_90_COUNTERCLOCKWISE), name='left_feed'),
     # 200 right
     # 202 left
     # 203 down

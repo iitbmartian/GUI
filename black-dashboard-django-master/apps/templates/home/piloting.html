@@ -9,43 +9,47 @@
 
 
 <div class="row">
-  <div class="col-lg-8 col-md-8 col-sm-12">
-    <div class="card card-plain">
-          <div class="card-header">
-            <h5 class="card-category">HazCamera Image feed</h5>
-            <h3 class="card-title"><i class="tim-icons icon-double-right text-primary"></i>camera/image_raw</h3>
+  <div class="col-md-12">
+    <div class="card card-plain h-100">
+      <div class="card-header">
+        Camera-Feed
+      </div>
+      <div class="row">
+          <div class="col-lg-4 h-95">
+              <div class="card card-chart h-100">
+                  <div class="card-header">
+                      <h5 class="card-category">Left Camera</h5>
+                  </div>
+                  <div class="card-body h-100">
+                      <div class="video h-100" ><img class="h-100" src="{% url 'left_feed' %}" width="720" height="540"></div>
+                  </div>
+              </div>
           </div>
-          <div class="card-body">
-              <div class="video" ><img src="{% url 'front_down_feed' %}"></div>
+          <div class="col-lg-4">
+              <div class="card card-chart h-50">
+                  <div class="card-header">
+                      <h5 class="card-category">Front Down Camera</h5>
+                  </div>
+                  <div class="card-body">
+                      <div class="video" ><img src="{% url 'front_down_feed' %}" width="720" height="540"></div>
+                  </div>
+              </div>
           </div>
+          <div class="col-lg-4">
+              <div class="card card-chart h-100">
+                  <div class="card-header">
+                      <h5 class="card-category">Right Camera</h5>
+                  </div>
+                  <div class="card-body h-100">
+                      <div class="video h-100" ><img class="h-100" src="{% url 'right_feed' %}" width="720" height="540"></div>
+                  </div>
+              </div>
+          </div>
+      </div>
     </div>
   </div>
+</div>
 
-  <!-- <div class="col-lg-4 col-md-4">
-    <div class="col-md-12">
-    <div class="row">
-        <div class="card card-plain">
-          <div class="card-header">
-            <h5 class="card-category">ZED2 Left Image feed</h5>
-            <h3 class="card-title"><i class="tim-icons icon-double-right text-primary"></i>zed2/left/image_rect_color</h3>
-          </div>
-          <div class="card-body">
-              <div class="video" ><img src="{% url 'ros_side1_feed' %}"></div>
-          </div>
-        </div>
-    </div></div>
-    <div class="row">
-        <div class="card card-plain">
-          <div class="card-header">
-            <h5 class="card-category">ZED2 Right Image feed</h5>
-            <h3 class="card-title"><i class="tim-icons icon-double-right text-primary"></i>zed2/right/image_rect_color</h3>
-          </div>
-          <div class="card-body">
-              <div class="video" ><img src="{% url 'ros_side2_feed' %}"></div>
-          </div>
-        </div>
-    </div>
-  </div> -->
   <!-- </div> -->
 </div>
 
@@ -68,7 +72,7 @@
         var joystick1 = new VirtualJoystick({
                         mouseSupport: true,
                         stationaryBase: true,
-                        baseX: 400,
+                        baseX: 630,
                         baseY: 600,
                         strokeStyle: 'red',
                         limitStickTravel: true,
@@ -78,7 +82,7 @@
         var joystick2 = new VirtualJoystick({
                         mouseSupport: true,
                         stationaryBase: true,
-                        baseX: 900,
+                        baseX: 1000,
                         baseY: 600,
                         strokeStyle: 'blue',
                         limitStickTravel: true,

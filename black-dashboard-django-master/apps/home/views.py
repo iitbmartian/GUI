@@ -119,9 +119,9 @@ def piloting(request):
         # direction=request.POST['action']
         # pdb.set_trace()
         # send_msg(direction)
-        joy_arr=np.zeros(4)
-        but_arr=np.zeros(10)
-        but_arr[0] = 1 ## for joystick node that requires button pushed
+        joy_arr=np.zeros(8)
+        but_arr=np.zeros(11)
+        but_arr[0] = 0 ## for joystick node that requires button pushed
         if 'dataX_1' in request.POST:
             dataX_1 = float(request.POST['dataX_1'])/50
             print("Data X_1 : " + str(dataX_1))
@@ -428,25 +428,23 @@ def bio_old(request):
 #class for webcam/modify for each case
 #class for webcam/modify for each case
 class VideoCamera(object):
-    def __init__(self, dev=0):
+    def __init__(self, dev=0, flip=False, rotate=None):
         self.video = cv2.VideoCapture(dev)
+        self.flip = flip
+        self.rotate = rotate
 
     def __del__(self):
         self.video.release()
 
     def get_frame(self):
         success, image = self.video.read()
-        image = cv2.resize(image,[720,540])
-        # We are using Motion JPEG, but OpenCV defaults to capture raw images,
-        # so we must encode it into JPEG in order to correctly display the
-        # video stream.
-        frame_flip = cv2.flip(image,1)
-        ret, jpeg = cv2.imencode('.jpg', frame_flip)
-        return jpeg.tobytes()
+        return preprocess(image, flip=self.flip, rotate=self.rotate)
 
 class IPWebCamPanorama(object):#TODO check; IP - Internet Protocol; check web_video_server for rostopics
     def __init__(self,ip_address_list):
         self.urls = ip_address_list#"http://192.168.2.103:8080/shot.jpg"
+        self.flip = False
+        self.rotate = None
 
     def __del__(self):
         cv2.destroyAllWindows()
@@ -460,27 +458,19 @@ class IPWebCamPanorama(object):#TODO check; IP - Internet Protocol; check web_vi
             imgs.append(cv2.imdecode(imgNp,-1))
         if len(imgs) == 0:
             return None
-
-
         stitchy=cv2.Stitcher.create()
         (dummy,img)=stitchy.stitch(imgs)
         if dummy != cv2.STITCHER_OK:
             print(f"stitching ain't successful {dummy}")
         else:
             print(f'Your Panorama is ready!!!')
-
-        # We are using Motion JPEG, but OpenCV defaults to capture raw images,
-        # so we must encode it into JPEG in order to correctly display the
-        # video stream
-        resize = cv2.resize(img, (640, 480), interpolation = cv2.INTER_LINEAR)
-        frame_flip = cv2.flip(resize,1)
-        ret, jpeg = cv2.imencode('.jpg', frame_flip)
-        return jpeg.tobytes()
+        return preprocess(img, w=640, h=480, flip=self.flip, rotate=self.rotate)
 
 class IPWebCam(object):#TODO check; IP - Internet Protocol; check web_video_server for rostopics
-    def __init__(self,ip_address, flip=0):
+    def __init__(self,ip_address, flip=0, rotate=None):
         self.url = ip_address#"http://192.168.2.103:8080/shot.jpg"
         self.flip = flip
+        self.rotate = rotate
 
     def __del__(self):
         cv2.destroyAllWindows()
@@ -489,14 +479,7 @@ class IPWebCam(object):#TODO check; IP - Internet Protocol; check web_video_serv
         imgResp = urllib.request.urlopen(self.url)
         imgNp = np.array(bytearray(imgResp.read()),dtype=np.uint8)
         img= cv2.imdecode(imgNp,-1)
-        # We are using Motion JPEG, but OpenCV defaults to capture raw images,
-        # so we must encode it into JPEG in order to correctly display the
-        # video stream
-        resize = cv2.resize(img, (640, 480), interpolation = cv2.INTER_LINEAR)
-        if self.flip:
-            resize = cv2.flip(resize,1)
-        ret, jpeg = cv2.imencode('.jpg', resize)
-        return jpeg.tobytes()
+        return preprocess(img, w=640, h=480, flip=self.flip, rotate=self.rotate)
 
 class RosCamera(object):
     def __init__(self, topic, flip=False):
@@ -517,14 +500,7 @@ class RosCamera(object):
 
 
     def get_frame(self):
-        # We are using Motion JPEG, but OpenCV defaults to capture raw images,
-        # so we must encode it into JPEG in order to correctly display the
-        # video stream.
-        image = cv2.resize(self.frame, (720, 540))
-        if self.flip:
-            image = cv2.flip(image, 1)
-        ret, jpeg = cv2.imencode('.jpg', image)
-        return jpeg.tobytes()
+        return preprocess(self.frame, flip=self.flip, rotate=None)
 
 class CompressedRosCamera(object):
     def __init__(self, topic):
@@ -540,13 +516,6 @@ class CompressedRosCamera(object):
 
 
     def get_frame(self):
-        # We are using Motion JPEG, but OpenCV defaults to capture raw images,
-        # so we must encode it into JPEG in order to correctly display the
-        # video stream.
-        # image = cv2.resize(self.frame,(256,144))
-        # frame_flip = cv2.flip(image,1)
-        # ret, jpeg = cv2.imencode('.jpg', frame_flip)
-        # return jpeg.tobytes()
         return self.frame
 
 def gen(camera):
@@ -566,16 +535,29 @@ def panorama_feed(request):
     return StreamingHttpResponse(gen(IPWebCamPanorama(panorama_ips)),
                     content_type='multipart/x-mixed-replace; boundary=frame')
 
+def preprocess(image, w=720, h=540, flip=False, rotate=None):
+        # We are using Motion JPEG, but OpenCV defaults to capture raw images,
+        # so we must encode it into JPEG in order to correctly display the
+        # video stream.
+        image = cv2.resize(image, (w, h))
+        if flip:
+            image = cv2.flip(image, 1)
+        if rotate is not None:
+            image = cv2.rotate(image, rotate)
+        ret, jpeg = cv2.imencode('.jpg', image)
+        return jpeg.tobytes()
+
 class IPCamView(View):
     ip = "192.168.1.61"#http://192.168.1.61:8080/video
     flip = 0
+    rotate = None
     initialized = False
 
     def get(self, request):
         if not self.initialized:
             if not self.ip.startswith('http'):
                 self.ip = 'http://' + self.ip + ':8080/shot.jpg?'
-            self.camera = IPWebCam(self.ip,self.flip)
+            self.camera = IPWebCam(self.ip, self.flip, self.rotate)
         return StreamingHttpResponse(gen(self.camera),\
                     content_type='multipart/x-mixed-replace; boundary=frame')
     def post(self, request):
@@ -585,10 +567,11 @@ class IPCamView(View):
 class ROSCamView(View):
     ros_topic = "/mrt/camera/image_raw"
     flip = 0
+    rotate = None
     initialized = False
     def get(self, request):
         if not self.initialized:
-            self.camera = RosCamera(self.ros_topic, self.flip)
+            self.camera = RosCamera(self.ros_topic, self.flip, self.rotate)
             self.initialized = True
         return StreamingHttpResponse(gen(self.camera),\
                     content_type='multipart/x-mixed-replace; boundary=frame')
@@ -597,10 +580,11 @@ class ROSCamView(View):
 class CompressedROSCamView(View):
     ros_topic = "/mrt/camera/image_compressed"
     flip = 0
+    rotate = None
     initialized = False
     def get(self, request):
         if not self.initialized:
-            self.camera = CompressedRosCamera(self.ros_topic, self.flip)
+            self.camera = CompressedRosCamera(self.ros_topic, self.flip, self.rotate)
             self.initialized = True
         return StreamingHttpResponse(gen(self.camera),\
                     content_type='multipart/x-mixed-replace; boundary=frame')
@@ -609,10 +593,11 @@ class CompressedROSCamView(View):
 class VideoCamView(View):
     dev = 0
     flip = 0
+    rotate = None
     initialized = False
     def get(self, request):
         if not self.initialized:
-            self.camera = VideoCamera(self.dev, self.flip)
+            self.camera = VideoCamera(self.dev, self.flip, self.rotate)
             self.initialized = True
         return StreamingHttpResponse(gen(self.camera),\
                     content_type='multipart/x-mixed-replace; boundary=frame')

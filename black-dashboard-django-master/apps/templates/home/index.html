@@ -65,21 +65,21 @@
               <span class="d-lg-block d-xl-block d-md-block d-none d-sm-none">
               <div class="h-50 row">
               <div class="col-md-4">
-              <canvas id="rover-roll" class="rover col-md-12" height="300">
+                  <canvas id="rover-roll" class="rover col-md-12" height="300" value="{{ roll }}">
               <!-- <i class="tim-icons icon-vector"></i> width="350" height="150" margin="auto" display="block" padding=0-->
             </canvas>
             <!-- <span class="d-sm-block d-sm-none d-block"></span> -->
           </div>
             <div class="col-md-4">
               <!-- <span class="d-lg-block d-xl-block d-md-block d-none"> -->
-            <canvas id="rover-pitch" class="rover col-md-12" height="300">
+              <canvas id="rover-pitch" class="rover col-md-12" height="300" value="{{ pitch }}">
               <!-- <i class="tim-icons icon-vector"></i> width="350" height="150" margin="auto" display="block" padding=0-->
             </canvas>
             <!-- <span class="d-sm-block d-sm-none d-block"></span> -->
           </div>
             <div class="col-md-4">
               <!-- <span class="d-lg-block d-xl-block d-md-block d-none"> -->
-              <canvas id="rover-yaw" class="rover col-md-12" height="300">
+              <canvas id="rover-yaw" class="rover col-md-12" height="300" value="{{ yaw }}">
               <!-- <i class="tim-icons icon-vector"></i> width="350" height="150" margin="auto" display="block" padding=0-->
             </canvas>
             <!-- <span class="d-sm-block d-sm-none d-block"></span> -->
@@ -444,6 +444,18 @@
       demo.initDashboardPageCharts();
       demo.initIMUviz(50,10,30)//roll, pitch, yaw in degrees
     });
+
+    data = {}
+    setInterval(function (){
+        $('.rover').each(function(i, obj) {
+            data[obj.id] = obj.value
+        });
+        console.log(data)
+        // demo.initIMUviz(data['rover-roll'], data['rover-pitch'], data['rover-yaw'])
+        demo.initIMUviz(20,0,00)//roll, pitch, yaw in degrees
+        // $.post(URL, data);
+
+      }, 1/5 * 100000);
   </script>
 
 {% endblock javascripts %}
