@@ -1,4 +1,5 @@
 {% extends "layouts/base.html" %}
+{% load static %}
 
 {% block title %} Bio-GUI {% endblock %} 
 
@@ -18,10 +19,10 @@
           <div class="col-lg-6 h-95">
               <div class="card card-chart h-100">
                   <div class="card-header">
-                      <h5 class="card-category">Left Camera</h5>
+                      <h5 class="card-category">Front Camera</h5>
                   </div>
                   <div class="card-body h-100">
-                      <div class="video h-100" ><img class="h-100" src="{% url 'left_feed' %}" width="720" height="540"></div>
+                      <div class="video h-100" ><img class="h-100" src="{% url 'front_down_feed' %}" width="720" height="540"></div>
                   </div>
               </div>
           </div>
@@ -29,10 +30,10 @@
           <div class="col-lg-6 h-95">
               <div class="card card-chart h-100">
                   <div class="card-header">
-                      <h5 class="card-category">Right Camera</h5>
+                      <h5 class="card-category">BioBox Camera</h5>
                   </div>
                   <div class="card-body h-100">
-                      <div class="video h-100" ><img class="h-100" src="{% url 'right_feed' %}" width="720" height="540"></div>
+                      <div class="video h-100" ><img class="h-100" src="{% url 'bio_box_feed' %}" width="720" height="540"></div>
                   </div>
               </div>
           </div>
@@ -63,13 +64,15 @@
                   <!--     <i class="tim-icons icon-gift-2"></i> -->
                   <!--   </span> -->
                   <!-- </label> -->
-                  <!-- <label class="btn btn-sm btn-primary btn-simple" id="2"> -->
-                  <!--   <input type="radio" class="d-none" name="options"> -->
-                  <!--   <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block">Humidity %</span> -->
-                  <!--   <span class="d-block d-sm-none"> -->
-                  <!--     <i class="tim-icons icon-tap-02"></i> -->
-                  <!--   </span> -->
-                  <!-- </label> -->
+
+                  <label class="btn btn-sm btn-primary btn-simple" id="2">
+                    <input type="radio" class="d-none" name="options">
+                    <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block">Humidity %</span>
+                    <span class="d-block d-sm-none">
+                      <i class="tim-icons icon-tap-02"></i>
+                    </span>
+                  </label>
+
                 </div>
               </div>
             </div>
@@ -87,6 +90,134 @@
 </div>
 
 <div class="row">
+  <div class="col-md-12">
+    <div class="card card-plain">
+      <div class="card-header">
+        Limestone
+      </div>
+    <div class="row">
+      <div class="col-lg-6">
+        <div class="card card-chart">
+          <div class="card-header">
+            <h5 class="card-category">Limestone</h5>
+          </div>
+          <div class="card-body">
+              <div class="video" ><img src="{% static 'rocks/limestone.jpg' %}" width="720" height="540"></div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="card card-chart">
+          <div class="card-header">
+            <h5 class="card-category">Stratigraphic Profile</h5>
+          </div>
+          <div class="card-body">
+              <div class="video" ><img src="{% static 'rocks/limestat.png' %}" width="720" height="540"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="card card-plain">
+      <div class="card-header">
+        Basalt
+      </div>
+    <div class="row">
+      <div class="col-lg-6">
+        <div class="card card-chart">
+          <div class="card-header">
+            <h5 class="card-category">Basalt</h5>
+          </div>
+          <div class="card-body">
+              <div class="video" ><img src="{% static 'rocks/basalt.jpg' %}" width="720" height="540"></div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="card card-chart">
+          <div class="card-header">
+            <h5 class="card-category">Stratigraphic Profile</h5>
+          </div>
+          <div class="card-body">
+              <div class="video" ><img src="{% static 'rocks/basaltstat.jpg' %}" width="720" height="540"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="card card-plain">
+      <div class="card-header">
+        Granite
+      </div>
+    <div class="row">
+      <div class="col-lg-6">
+        <div class="card card-chart">
+          <div class="card-header">
+            <h5 class="card-category">Granite</h5>
+          </div>
+          <div class="card-body">
+              <div class="video" ><img src="{% static 'rocks/granite.jpg' %}" width="720" height="540"></div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="card card-chart">
+          <div class="card-header">
+            <h5 class="card-category">Stratigraphic Profile</h5>
+          </div>
+          <div class="card-body">
+              <div class="video" ><img src="{% static 'rocks/granstat.png' %}" width="720" height="540"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="card card-plain">
+      <div class="card-header">
+        Sandstone
+      </div>
+    <div class="row">
+      <div class="col-lg-6">
+        <div class="card card-chart">
+          <div class="card-header">
+            <h5 class="card-category">Sandstone</h5>
+          </div>
+          <div class="card-body">
+              <div class="video" ><img src="{% static 'rocks/sandstone.jpg' %}" width="720" height="540"></div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="card card-chart">
+          <div class="card-header">
+            <h5 class="card-category">Stratigraphic Profile</h5>
+          </div>
+          <div class="card-body">
+              <div class="video" ><img src="{% static 'rocks/sandstat.png' %}" width="720" height="540"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+</div>
+<!-- <div class="row"> -->
 
 
 <!--   <div class="col-md-12"> -->
@@ -130,160 +261,161 @@
 <!--   </div> -->
 
 
-  <div class="col-md-12">
-    <div class="card  card-plain">
-      <div class="card-header">
-        <h4 class="card-title"> Bio-Controls</h4>
-        <p class="category">Controls for Collection, Transfer, and Microscope</p>
-      </div>
-      <div class="card-body">
-        <div class="table-responsive">
-          <table class="table tablesorter " id="">
+<!--   <div class="col-md-12"> -->
+<!--     <div class="card  card-plain"> -->
+<!--       <div class="card-header"> -->
+<!--         <h4 class="card-title"> Bio-Controls</h4> -->
+<!--         <p class="category">Controls for Collection, Transfer, and Microscope</p> -->
+<!--       </div> -->
+<!--       <div class="card-body"> -->
+<!--         <div class="table-responsive"> -->
+<!--           <table class="table tablesorter " id=""> -->
             
             
-          <form action="" method="POST">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <input type="submit" name="collection" value="dummy" style="display: none;"></input> <!-- this dummy button gets sent when text input is entered -->
-            <thead class=" text-primary">
-              <tr>
-                <th>
-                  Collection
-                </th>
-                <th>
-                </th>
-                <th>
+<!--           <form action="" method="POST"> -->
+<!--             {% csrf_token %} -->
+<!--             {{ form.as_p }} -->
+<!--             <input type="submit" name="collection" value="dummy" style="display: none;"></input> <!-1- this dummy button gets sent when text input is entered -1-> -->
+<!--             <thead class=" text-primary"> -->
+<!--               <tr> -->
+<!--                 <th> -->
+<!--                   Collection -->
+<!--                 </th> -->
+<!--                 <th> -->
+<!--                 </th> -->
+<!--                 <th> -->
                   
-                </th>
-                <th>
+<!--                 </th> -->
+<!--                 <th> -->
                   
-                </th>
-              </tr>
-            </thead>
-              <tbody>
-              <tr>
-                <td>
-                  Gripper:
-                </td>
-                  <td>
-                      <!-- <input type="submit" name="collection" value="gripper" class="btn btn-sm"></input> -->
-                  <input type="text" name="collection" value={{ gripper }} ></input>
-                  </td>
-              </tr>
+<!--                 </th> -->
+<!--               </tr> -->
+<!--             </thead> -->
+<!--               <tbody> -->
+<!--               <tr> -->
+<!--                 <td> -->
+<!--                   Gripper: -->
+<!--                 </td> -->
+<!--                   <td> -->
+<!--                       <!-1- <input type="submit" name="collection" value="gripper" class="btn btn-sm"></input> -1-> -->
+<!--                   <input type="text" name="collection" value={{ gripper }} ></input> -->
+<!--                   </td> -->
+<!--               </tr> -->
               
-              <tr>
-                <td>
-                  Arm_rotation:
-                </td>
-                <td>
-                  <input type="text" name="collection" value={{ arm_rotation }} ></input>
-                </td>
-                <td>
-                </td>
-                <td>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  Arm_vertical:
-                </td>
-                <td>
-                  <input type="text" name="collection" value={{ arm_vertical }} ></input>
-                </td>
-                <td>
-                </td>
-                <td>
-                </td>
-              </tr>
-            </tbody>
-          </form><form action="" method="POST">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <input type="submit" name="transfer" value="dummy" style="display: none;"></input> <!-- this dummy button gets sent when text input is entered -->
-            <thead class=" text-primary">
-              <tr>
-                <th>
-                  Transfer
-                </th>
-                <th>
-                </th>
-                <th>
+<!--               <tr> -->
+<!--                 <td> -->
+<!--                   Arm_rotation: -->
+<!--                 </td> -->
+<!--                 <td> -->
+<!--                   <input type="text" name="collection" value={{ arm_rotation }} ></input> -->
+<!--                 </td> -->
+<!--                 <td> -->
+<!--                 </td> -->
+<!--                 <td> -->
+<!--                 </td> -->
+<!--               </tr> -->
+<!--               <tr> -->
+<!--                 <td> -->
+<!--                   Arm_vertical: -->
+<!--                 </td> -->
+<!--                 <td> -->
+<!--                   <input type="text" name="collection" value={{ arm_vertical }} ></input> -->
+<!--                 </td> -->
+<!--                 <td> -->
+<!--                 </td> -->
+<!--                 <td> -->
+<!--                 </td> -->
+<!--               </tr> -->
+<!--             </tbody> -->
+<!--           </form><form action="" method="POST"> -->
+<!--             {% csrf_token %} -->
+<!--             {{ form.as_p }} -->
+<!--             <input type="submit" name="transfer" value="dummy" style="display: none;"></input> <!-1- this dummy button gets sent when text input is entered -1-> -->
+<!--             <thead class=" text-primary"> -->
+<!--               <tr> -->
+<!--                 <th> -->
+<!--                   Transfer -->
+<!--                 </th> -->
+<!--                 <th> -->
+<!--                 </th> -->
+<!--                 <th> -->
                   
-                </th>
-                <th>
+<!--                 </th> -->
+<!--                 <th> -->
                   
-                </th>
-              </tr>
-            </thead>
-              <tbody>
-              <tr>
-                  <td>
-                      <input type="submit" name="transfer" value="pump_valve1" class="btn btn-sm"></input>
-                  </td>
-                  <td>
-                      <input type="submit" name="transfer" value="pump_valve2" class="btn btn-sm"></input>
-                  </td>
-              </tr>
-              <tr>
-                <td>
-                  Linear_guide:
-                </td>
-                <td>
-                  <input type="text" name="transfer" value={{ linear_guide }} ></input>
-                </td>
-                <td>
-                </td>
-                <td>
-                </td>
-              </tr>
-            </tbody>
-          </form>
-          <form action="" method="POST">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <input type="submit" name="microscope" value="dummy" style="display: none;"></input> <!-- this dummy button gets sent when text input is entered -->
-            <thead class=" text-primary">
-              <tr>
-                <th>
-                  Microscope
-                </th>
-                <th>
-                </th>
-                <th>
+<!--                 </th> -->
+<!--               </tr> -->
+<!--             </thead> -->
+<!--               <tbody> -->
+<!--               <tr> -->
+<!--                   <td> -->
+<!--                       <input type="submit" name="transfer" value="pump_valve1" class="btn btn-sm"></input> -->
+<!--                   </td> -->
+<!--                   <td> -->
+<!--                       <input type="submit" name="transfer" value="pump_valve2" class="btn btn-sm"></input> -->
+<!--                   </td> -->
+<!--               </tr> -->
+<!--               <tr> -->
+<!--                 <td> -->
+<!--                   Linear_guide: -->
+<!--                 </td> -->
+<!--                 <td> -->
+<!--                   <input type="text" name="transfer" value={{ linear_guide }} ></input> -->
+<!--                 </td> -->
+<!--                 <td> -->
+<!--                 </td> -->
+<!--                 <td> -->
+<!--                 </td> -->
+<!--               </tr> -->
+<!--             </tbody> -->
+<!--           </form> -->
+<!--           <form action="" method="POST"> -->
+<!--             {% csrf_token %} -->
+<!--             {{ form.as_p }} -->
+<!--             <input type="submit" name="microscope" value="dummy" style="display: none;"></input> <!-1- this dummy button gets sent when text input is entered -1-> -->
+<!--             <thead class=" text-primary"> -->
+<!--               <tr> -->
+<!--                 <th> -->
+<!--                   Microscope -->
+<!--                 </th> -->
+<!--                 <th> -->
+<!--                 </th> -->
+<!--                 <th> -->
                   
-                </th>
-                <th>
+<!--                 </th> -->
+<!--                 <th> -->
                   
-                </th>
-              </tr>
-            </thead>
-              <tbody>
-              <tr>
-                  <td>
-                      <input type="submit" name="microscope" value="water_valve" class="btn btn-sm"></input>
-                  </td>
-                  <td>
-                      <input type="submit" name="microscope" value="chem_valve" class="btn btn-sm"></input>
-                  </td>
-              </tr>
-              <tr>
-                <td>
-                      <input type="submit" name="microscope" value="laser" class="btn btn-sm"></input>
-                </td>
-                <td>
-                </td>
-                <td>
-                </td>
-              </tr>
-            </tbody>
-          </form>
+<!--                 </th> -->
+<!--               </tr> -->
+<!--             </thead> -->
+<!--               <tbody> -->
+<!--               <tr> -->
+<!--                   <td> -->
+<!--                       <input type="submit" name="microscope" value="water_valve" class="btn btn-sm"></input> -->
+<!--                   </td> -->
+<!--                   <td> -->
+<!--                       <input type="submit" name="microscope" value="chem_valve" class="btn btn-sm"></input> -->
+<!--                   </td> -->
+<!--               </tr> -->
+<!--               <tr> -->
+<!--                 <td> -->
+<!--                       <input type="submit" name="microscope" value="laser" class="btn btn-sm"></input> -->
+<!--                 </td> -->
+<!--                 <td> -->
+<!--                 </td> -->
+<!--                 <td> -->
+<!--                 </td> -->
+<!--               </tr> -->
+<!--             </tbody> -->
+<!--           </form> -->
           
-          </table>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+<!--           </table> -->
+<!--         </div> -->
+<!--       </div> -->
+<!--     </div> -->
+<!--   </div> -->
+<!-- </div> -->
+
 {% endblock content %}
 
 <!-- Specific Page JS goes HERE  -->

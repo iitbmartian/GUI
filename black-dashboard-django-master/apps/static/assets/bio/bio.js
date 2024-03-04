@@ -431,7 +431,7 @@ bio = {
     // var chart_labels = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
 
     // temp:28-30 celsius; methane(RO):20:25; humidity: 15%;  
-    var chart_data = ['28.3', '28.2', '28.5', '28.1', '28.5', '28.1', '28.8', '28.1', '28.6', '28.7', '28.3', '28.4']
+    var chart_data = ['28.4', '28.4', '28.2', '28.3', '28.5', '28.1', '28.6', '28.4', '28.6', '28.7', '28.5', '28.4']
 
 
     var ctx = document.getElementById("chartBig1").getContext('2d');
@@ -482,7 +482,7 @@ bio = {
     });
 
     $("#2").click(function() {
-      var chart_data = [15., 15., 15., 15., 15., 15., 15., 15., 15., 15., 15., 15.];
+      var chart_data = [15., 15., 15., 15., 15., 15., 16., 16., 16., 16., 16., 16.];
       var data = myChartData.config.data;
       data.datasets[0].data = chart_data;
       data.labels = chart_labels;

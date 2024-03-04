@@ -519,7 +519,7 @@ class CompressedRosCamera(object):
         return self.frame
 
 def gen(camera):
-    rate = rospy.Rate(20)
+    rate = rospy.Rate(10)
     while True:
         rate.sleep()
         frame = camera.get_frame()
